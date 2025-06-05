@@ -8,7 +8,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.mycompany.integrador.INTEGRADOR</exec.mainClass>
+        <exec.mainClass>DASH.Main</exec.mainClass>
     </properties>
+    
+        <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version> </dependency>
+        </dependencies>
+        
     <name>INTEGRADORAVANCE</name>
 </project>

@@ -1,0 +1,10 @@
+# Ignorar directorios de compilación de Maven
+target/
+# Ignorar archivos de NetBeans
+nbproject/private/
+*.log
+# Ignorar archivos específicos de IDEs
+.idea/      # Para IntelliJ IDEA
+.vscode/    # Para VS Code
+.DS_Store   # Para macOS
+*~          # Archivos temporales de algunos editores
