@@ -34,7 +34,8 @@ public class Conexión {
                 return conn;
                 
         }
-           
+        
+        /*
         public void CerrarConexion() {
         if (conn != null) {
             try {
@@ -45,7 +46,9 @@ public class Conexión {
                 e.printStackTrace(); // Imprime la traza de la pila para depuración
             }
         }
-}
+        
+        }
+*/
 }
 
 
