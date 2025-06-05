@@ -2,7 +2,7 @@
 package DASH;
 
 import Conexión.Conexión;
-import VIEWS.Login;
+import Vistas.VIEWS.Login;
 import java.sql.Connection;
 import javax.swing.SwingUtilities;
 
@@ -18,7 +18,7 @@ public class Main {
        
         if (connection !=null) {
             System.out.println("Conexión correctamente con la BD");
-           dbConnect.CerrarConexion();
+           //dbConnect.CerrarConexion();
         }else{
             System.out.println("No se puedo establecer la conexión");
         }
