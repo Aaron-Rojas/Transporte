@@ -1,16 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vistas.VIEWS;
 
 import Controlador.NavegacionController;
 import javax.swing.JOptionPane;
+import Modelo.Cliente;
+import dao.ClienteDAO;
+
 
 public class CreacionCliente extends javax.swing.JFrame {
 
-    public CreacionCliente() {
+    private ClienteDAO clienteDAO;
+    private GestionClientes padreGestionClientes;
+            
+    public CreacionCliente(GestionClientes padre) {
     initComponents();
+    
+    this.padreGestionClientes = padre;
+    this.clienteDAO = new ClienteDAO();
+    this.setLocationRelativeTo(null);
+    /*
     NavegacionController.configurarBotones(
     btnHome,       // Botón Home
     btnClientes,   // Botón Clientes
@@ -19,8 +27,8 @@ public class CreacionCliente extends javax.swing.JFrame {
     btnReportes,   // Botón Reportes
     btnConfiguracion, // Botón Configuración
     this          // Referencia al frame actual (this)
-        
     );
+*/
     }
 
     @SuppressWarnings("unchecked")
@@ -44,11 +52,13 @@ public class CreacionCliente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
+        txt_telefono = new javax.swing.JTextField();
+        txt_nombre = new javax.swing.JTextField();
+        txt_preferencias = new javax.swing.JTextField();
+        txt_dni = new javax.swing.JTextField();
+        btn_crearCliente = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txt_email = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,55 +204,64 @@ public class CreacionCliente extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         jLabel3.setText("Crear clientes");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 140, 270, 70);
+        jLabel3.setBounds(220, 130, 260, 40);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setText("Nombres:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(250, 220, 120, 30);
+        jLabel4.setBounds(250, 190, 120, 30);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel5.setText("DNI/Pasaporte");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(570, 210, 140, 40);
+        jLabel5.setBounds(570, 180, 140, 40);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel6.setText("E-mail:");
+        jLabel6.setText("Preferencia:");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(250, 320, 59, 27);
+        jLabel6.setBounds(250, 400, 120, 27);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel7.setText("Telefono:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(570, 320, 80, 27);
+        jLabel7.setBounds(570, 280, 80, 27);
 
-        jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(570, 360, 240, 30);
+        txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        jPanel1.add(txt_telefono);
+        txt_telefono.setBounds(570, 330, 240, 30);
 
-        jTextField2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(250, 260, 240, 30);
+        txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        jPanel1.add(txt_nombre);
+        txt_nombre.setBounds(250, 230, 240, 30);
 
-        jTextField3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(250, 360, 240, 30);
+        txt_preferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        jPanel1.add(txt_preferencias);
+        txt_preferencias.setBounds(370, 400, 280, 30);
 
-        jTextField4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(jTextField4);
-        jTextField4.setBounds(570, 260, 240, 30);
+        txt_dni.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        jPanel1.add(txt_dni);
+        txt_dni.setBounds(570, 230, 240, 30);
 
-        jButton8.setBackground(new java.awt.Color(255, 171, 33));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Crear cliente");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btn_crearCliente.setBackground(new java.awt.Color(255, 171, 33));
+        btn_crearCliente.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btn_crearCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btn_crearCliente.setText("Crear cliente");
+        btn_crearCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btn_crearClienteActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton8);
-        jButton8.setBounds(710, 420, 150, 30);
+        jPanel1.add(btn_crearCliente);
+        btn_crearCliente.setBounds(710, 420, 150, 30);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel8.setText("E-mail:");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(250, 280, 59, 27);
+
+        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        jPanel1.add(txt_email);
+        txt_email.setBounds(250, 330, 240, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,66 +306,36 @@ public class CreacionCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-    // 1. Cerrar el frame actual de creación
-        dispose();
-        
-        // 2. Abrir el frame de gestión
-        GestionClientes gestionFrame = new GestionClientes();
-        gestionFrame.setVisible(true);
-        
-        // 3. Opcional: Centrar la ventana
-        gestionFrame.setLocationRelativeTo(null);
-        
-        
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreacionCliente().setVisible(true);
-            }
-        });
+    private void btn_crearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearClienteActionPerformed
+    // 1. Obtener datos del formulario
+    String dni = txt_dni.getText();
+    String nombreCompleto = txt_nombre.getText();
+    String telefono = txt_telefono.getText();
+    String email = txt_email.getText();
+    String preferencias = txt_preferencias.getText();
+    
+    //Validaciones básicas
+    if (dni.isEmpty() || nombreCompleto.isEmpty() || telefono.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete los campos obligatorios (DNI, Nombre, Teléfono).", "Error de validación", JOptionPane.WARNING_MESSAGE);
+        return; // Detiene la ejecución si faltan datos
     }
+    //Inicializamos el objeto clientes, con los datos del formulario    
+    Cliente nuevoCliente = new Cliente (0, dni, nombreCompleto, telefono, email, preferencias);
+    //llamamos al DAO para guardar el cliente
+    boolean exito = clienteDAO.guardarCliente(nuevoCliente);
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose(); //Cierra el formulario
+            //refrescar la tabla 
+             if (padreGestionClientes != null) {
+                padreGestionClientes.cargarClientesEnTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al guardar el cliente. Verifique la base de datos.", "Error de Guardado", JOptionPane.ERROR_MESSAGE);
+        }
+           
+    }//GEN-LAST:event_btn_crearClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
@@ -355,8 +344,8 @@ public class CreacionCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
+    private javax.swing.JButton btn_crearCliente;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -364,12 +353,14 @@ public class CreacionCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txt_dni;
+    private javax.swing.JTextField txt_email;
+    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_preferencias;
+    private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 }
