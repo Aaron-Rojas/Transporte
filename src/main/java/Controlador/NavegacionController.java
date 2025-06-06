@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controlador;
 import Vistas.VIEWS.Configuración;
-import Vistas.VIEWS.CreacionCliente;
+import Vistas.VIEWS.GestionClientes;
 import Vistas.VIEWS.GestionItinerario;
 import Vistas.VIEWS.Panel123;
 import Vistas.VIEWS.Principal;
@@ -28,7 +25,7 @@ public class NavegacionController {
             if (e.getSource() == btnHome) {
                 new Principal().setVisible(true);
             } else if (e.getSource() == btnClientes) {
-                new CreacionCliente().setVisible(true);
+                new GestionClientes().setVisible(true);
             } else if (e.getSource() == btnReservas) {
                 new GestionItinerario().setVisible(true);
             } else if (e.getSource() == btnProveedores) {

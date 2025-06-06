@@ -7,6 +7,7 @@ package Vistas.VIEWS;
 import Controlador.NavegacionController;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Vistas.VIEWS.CreacionCliente;
 
 /**
  *
@@ -322,7 +323,8 @@ int filaSeleccionada = tablaClientes.getSelectedRow();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+   /*
+    DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
     modelo.addRow(new Object[]{"", "", "", ""});
     
     // Habilitar edición solo para la nueva fila
@@ -332,9 +334,13 @@ DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
     int nuevaFila = modelo.getRowCount() - 1;
     tablaClientes.setRowSelectionInterval(nuevaFila, nuevaFila);
     tablaClientes.scrollRectToVisible(tablaClientes.getCellRect(nuevaFila, 0, true));
+    */
+   
+    //se Llama al JFrame Creación Cliente
+        CreacionCliente crear = new CreacionCliente();
+        crear.setVisible(true);
+        dispose();
     
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
