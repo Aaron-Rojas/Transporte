@@ -17,6 +17,7 @@ Vistas\VIEWS\CreacionCliente$4.class
 Vistas\VIEWS\FormularioBus$4.class
 Vistas\VIEWS\GestionItinerario$1.class
 Vistas\VIEWS\GestionClientes$4.class
+Vistas\VIEWS\ResultadoBusqueda$1.class
 Vistas\VIEWCONFIGURACION\Parametros$6.class
 Vistas\VIEWREPORTE\ReporteViajes$4.class
 Vistas\VIEWS\ConfirmacionReserva$7.class
@@ -40,6 +41,7 @@ Vistas\VIEWREPORTE\ReporteActividades$2.class
 Vistas\VIEWS\ConfirmacionReserva$6.class
 Vistas\VIEWS\GestionClientes$3.class
 Vistas\VIEWREPORTE\ReportePagos$5.class
+Vistas\VIEWS\ResultadoBusqueda$2.class
 Vistas\VIEWS\Principal$6.class
 Vistas\VIEWS\FormularioProveedor$3.class
 Vistas\VIEWS\GestionItinerario$8.class
@@ -140,6 +142,7 @@ Vistas\VIEWS\FormularioBus$6.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$3.class
 DASH\Main.class
 Vistas\VIEWCONFIGURACION\Parametros$3.class
+Vistas\VIEWS\ResultadoBusqueda.class
 Vistas\VIEWS\ConfirmacionReserva$4.class
 Vistas\VIEWREPORTE\ReporteReserva.class
 Vistas\VIEWS\GestionProveedores$10.class
@@ -208,10 +211,12 @@ Vistas\VIEWREPORTE\ReporteReserva$5.class
 Vistas\VIEWS\ConfirmacionReserva$5.class
 Vistas\VIEWS\ItinerarioDeActividad$7.class
 Vistas\VIEWS\GestionProveedores$1.class
+Vistas\VIEWS\ResultadoBusqueda$3.class
 Vistas\VIEWREPORTE\ReporteReserva$9.class
 Vistas\VIEWS\Configuración$7.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$11.class
 Vistas\VIEWS\GestionProveedores$6.class
+Vistas\VIEWS\ResultadoBusqueda$3$1.class
 Vistas\VIEWREPORTE\ReportePagos$6.class
 Vistas\VIEWS\Configuración.class
 Vistas\VIEWS\GestionProveedores$3.class
@@ -239,6 +244,7 @@ Vistas\VIEWS\FormularioProveedor$2.class
 Vistas\VIEWCONFIGURACION\Parametros$13.class
 Vistas\VIEWREPORTE\ReporteCliente$5.class
 Vistas\VIEWS\CrearReserva$9.class
+Vistas\VIEWS\GestionClientes$12.class
 Vistas\VIEWS\ListaBuses$5.class
 Vistas\VIEWS\GestionClientes$7.class
 Vistas\VIEWREPORTE\ReportePagos$8.class
@@ -254,6 +260,7 @@ Vistas\VIEWREPORTE\ReporteActividades$5.class
 Modelo\Cliente.class
 Vistas\VIEWREPORTE\ReporteCliente$6.class
 Vistas\VIEWS\CrearReserva$8.class
+Vistas\VIEWS\GestionClientes$11.class
 Vistas\VIEWS\Configuración$8.class
 Vistas\VIEWCONFIGURACION\Seguridad$6.class
 Vistas\VIEWS\GestionProveedores$5.class

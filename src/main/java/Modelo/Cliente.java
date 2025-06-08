@@ -12,7 +12,7 @@ public class Cliente {
     private String preferencias;
 
 
-    //constructor Vacio
+    //constructor Vacio, para el DAO
     public Cliente() {
     }
 

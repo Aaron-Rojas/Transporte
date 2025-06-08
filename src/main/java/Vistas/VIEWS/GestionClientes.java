@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //importaciones
 import dao.ClienteDAO;
 import Modelo.Cliente;
-
+import Vistas.VIEWS.ResultadoBusqueda;
 
 public class GestionClientes extends javax.swing.JFrame {
     private DefaultTableModel modeloTabla;
@@ -33,6 +33,42 @@ public class GestionClientes extends javax.swing.JFrame {
     cargarClientesEnTabla();
     }
 
+ private void configurarTablaClientes() {
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace que las celdas de la tabla no sean editables
+            }
+        };
+        // Define las columnas de tu tabla (deben coincidir con tu BD y la clase Cliente)
+        modeloTabla.addColumn("ID"); // ID_Cliente
+        modeloTabla.addColumn("DNI/Pasaporte"); // DNI_Documento
+        modeloTabla.addColumn("Nombres"); // NombreCompleto
+        modeloTabla.addColumn("Teléfono"); // Telefono
+        modeloTabla.addColumn("E-mail"); // Email
+        modeloTabla.addColumn("Preferencias"); // Preferencias
+        tbClientes.setModel(modeloTabla); // Asigna el modelo a tu JTable
+    }    
+    
+    
+      // Asegúrate de que este método sea PUBLIC para que CreacionCliente pueda llamarlo
+    public void cargarClientesEnTabla() {
+        modeloTabla.setRowCount(0); // Limpiar filas existentes
+        List<Cliente> clientes = clienteDAO.obtenerTodosLosClientes();
+        for (Cliente cliente : clientes) {
+            Object[] fila = {
+                cliente.getIdCliente(),      // Columna 0: ID del cliente
+                cliente.getDni(),
+                cliente.getNombreCompleto(),
+                cliente.getTelefono(),
+                cliente.getEmail(),
+                cliente.getPreferencias()
+            };
+            modeloTabla.addRow(fila);
+        }
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -55,6 +91,8 @@ public class GestionClientes extends javax.swing.JFrame {
         btnReservas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,6 +292,17 @@ public class GestionClientes extends javax.swing.JFrame {
         });
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
+        jPanel1.add(txtBuscar);
+        txtBuscar.setBounds(680, 150, 190, 30);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(580, 160, 75, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,7 +322,7 @@ public class GestionClientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/*
     //Perpara la estructura del JTable
     public void configurarTablaClientes() {
     modeloTabla = new DefaultTableModel();
@@ -285,7 +334,13 @@ public class GestionClientes extends javax.swing.JFrame {
     modeloTabla.addColumn("Preferencias");
     tbClientes.setModel(modeloTabla);
 }
+*/    
+ 
+
    
+ 
+ 
+ /*
     //metodo para obtener los datos de tbClientes a JTable
     public void cargarClientesEnTabla() {
     // Limpiar la tabla antes de cargar nuevos 
@@ -311,48 +366,35 @@ public class GestionClientes extends javax.swing.JFrame {
     public void refrescarTabla() {
     cargarClientesEnTabla();
     }
+  */
     
     
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-int filaSeleccionada = tbClientes.getSelectedRow();
-    
-    if (filaSeleccionada < 0) {
-        JOptionPane.showMessageDialog(this, 
-            "Seleccione un cliente para eliminar", 
-            "Advertencia", 
-            JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    // Obtener datos del cliente para confirmación
-    String nombre = (String) tbClientes.getValueAt(filaSeleccionada, 0);
-    String dni = (String) tbClientes.getValueAt(filaSeleccionada, 1);
-    
-    // Confirmación de eliminación
-    int confirmacion = JOptionPane.showConfirmDialog(this,
-        "¿Está seguro que desea eliminar al cliente:\n" +
-        nombre + " (DNI: " + dni + ")?", 
-        "Confirmar Eliminación",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE);
-    
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        // Eliminar de la base de datos
-        if (eliminarClienteDeBD(dni)) {
-            // Eliminar de la tabla si éxito en BD
-            ((DefaultTableModel) tbClientes.getModel()).removeRow(filaSeleccionada);
-            JOptionPane.showMessageDialog(this, 
-                "Cliente eliminado correctamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
+
+        int filaSeleccionada = tbClientes.getSelectedRow(); // Obtener la fila seleccionada
+        if (filaSeleccionada >= 0) { // Si hay una fila seleccionada
+            // Obtener el ID del cliente de la primera columna (columna 0) de la fila seleccionada
+            int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+            String nombreCliente = (String) modeloTabla.getValueAt(filaSeleccionada, 2); // Obtener el nombre para el mensaje de confirmación (columna 2)
+
+            // Confirmación al usuario antes de eliminar
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea eliminar a " + nombreCliente + " (ID: " + idCliente + ")?",
+                    "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                boolean exito = clienteDAO.eliminarCliente(idCliente); // Llama al método de eliminación del DAO
+                if (exito) {
+                    JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    cargarClientesEnTabla(); // Refrescar la tabla después de la eliminación
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el cliente. Podría tener dependencias o la base de datos no está accesible.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         } else {
-            JOptionPane.showMessageDialog(this, 
-                "Error al eliminar el cliente", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente de la tabla para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-    }
-        // TODO add your handling code here:
+            
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -362,7 +404,27 @@ int filaSeleccionada = tbClientes.getSelectedRow();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+        int filaSeleccionada = tbClientes.getSelectedRow(); // Obtener la fila seleccionada
+        if (filaSeleccionada >= 0) { // Si hay una fila seleccionada (índice 0 o mayor)
+            // Obtener el ID del cliente de la primera columna (columna 0) de la fila seleccionada
+            // ¡CRÍTICO!: Asegúrate de que la columna 0 de tu tabla SIEMPRE sea el ID_Cliente
+            int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
 
+            // Obtener el cliente completo de la base de datos usando el DAO
+            Cliente clienteParaEditar = clienteDAO.obtenerClientePorId(idCliente);
+
+            if (clienteParaEditar != null) {
+                // Abrir el formulario CreacionCliente, pasándole el cliente para editar
+                CreacionCliente edicionClienteFrame = new CreacionCliente(this, clienteParaEditar);
+                edicionClienteFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo cargar los datos del cliente para editar. El cliente podría no existir.", "Error de Carga", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente de la tabla para editar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+       
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
@@ -388,6 +450,26 @@ int filaSeleccionada = tbClientes.getSelectedRow();
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+      String textoBusqueda = txtBuscar.getText().trim();
+        if (textoBusqueda.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un texto para buscar (DNI, Nombre, Teléfono o Email).", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return; // Sale del método si el campo de búsqueda está vacío
+    }
+        
+    List<Cliente> clientesEncontrados = clienteDAO.buscarClientes(textoBusqueda);
+    
+    if (clientesEncontrados.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "No se encontraron clientes que coincidan con la búsqueda.", "Sin Resultados", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+    // Asumiendo que 'this' es el JFrame de GestionClientes
+    // Y que quieres que el diálogo sea modal (true)
+    ResultadoBusqueda resultadosFrame = new ResultadoBusqueda(this, true, clientesEncontrados);
+    resultadosFrame.setVisible(true);
+}
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -441,6 +523,7 @@ int filaSeleccionada = tbClientes.getSelectedRow();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnEditar;
@@ -458,6 +541,7 @@ int filaSeleccionada = tbClientes.getSelectedRow();
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbClientes;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
     private void habilitarEdicionTabla(boolean b) {
