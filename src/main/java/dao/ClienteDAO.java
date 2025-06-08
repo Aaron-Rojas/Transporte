@@ -62,6 +62,102 @@ public class ClienteDAO {
       return clientes;
 }  
 
-    
-    
+// Método para obtener un solo cliente por ID (crucial para la edición)
+public Cliente obtenerClientePorId(int idCliente) {
+    Cliente cliente = null;
+    String sql = "SELECT ID_Cliente, DNI_Documento, NombreCompleto, Telefono, Email, Preferencias FROM cliente WHERE ID_Cliente = ?";
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idCliente);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) { // Si encuentra un registro
+                cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("ID_Cliente"));
+                cliente.setDni(rs.getString("DNI_Documento"));
+                cliente.setNombreCompleto(rs.getString("NombreCompleto"));
+                cliente.setTelefono(rs.getString("Telefono"));
+                cliente.setEmail(rs.getString("Email"));
+                cliente.setPreferencias(rs.getString("Preferencias"));
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al obtener cliente por ID: " + e.getMessage());
+        e.printStackTrace(); // Es bueno tener un stack trace para depuración
+    }
+    return cliente;
+}    
+ 
+// Método para actualizar un cliente existente
+public boolean actualizarCliente(Cliente cliente) {
+    String sql = "UPDATE cliente SET DNI_Documento=?, NombreCompleto=?, Telefono=?, Email=?, Preferencias=? WHERE ID_Cliente=?";
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, cliente.getDni());
+        stmt.setString(2, cliente.getNombreCompleto());
+        stmt.setString(3, cliente.getTelefono());
+        stmt.setString(4, cliente.getEmail());
+        stmt.setString(5, cliente.getPreferencias());
+        stmt.setInt(6, cliente.getIdCliente()); // El ID es fundamental para WHERE
+
+        int filasAfectadas = stmt.executeUpdate();
+        return filasAfectadas > 0;
+    } catch (SQLException e) {
+        System.err.println("Error al actualizar cliente: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
+
+// Método para eliminar un cliente por su ID
+public boolean eliminarCliente(int idCliente) {
+    String sql = "DELETE FROM cliente WHERE ID_Cliente=?";
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idCliente);
+
+        int filasAfectadas = stmt.executeUpdate();
+        return filasAfectadas > 0;
+    } catch (SQLException e) {
+        System.err.println("Error al eliminar cliente: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
+
+// metodo para para la búsqueda
+
+public List<Cliente> buscarClientes(String textoBusqueda) {
+    List<Cliente> clientes = new ArrayList<>();
+    String sql = "SELECT ID_Cliente, DNI_Documento, NombreCompleto, Telefono, Email, Preferencias FROM cliente " +
+                 "WHERE DNI_Documento LIKE ? OR NombreCompleto LIKE ? OR Telefono LIKE ? OR Email LIKE ?"; // Puedes añadir más campos a la búsqueda
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, "%" + textoBusqueda + "%");
+        stmt.setString(2, "%" + textoBusqueda + "%");
+        stmt.setString(3, "%" + textoBusqueda + "%");
+        stmt.setString(4, "%" + textoBusqueda + "%");
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("ID_Cliente"));
+                cliente.setDni(rs.getString("DNI_Documento"));
+                cliente.setNombreCompleto(rs.getString("NombreCompleto"));
+                cliente.setTelefono(rs.getString("Telefono"));
+                cliente.setEmail(rs.getString("Email"));
+                cliente.setPreferencias(rs.getString("Preferencias"));
+                clientes.add(cliente);
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al buscar clientes: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return clientes;
+}
+
+
 }

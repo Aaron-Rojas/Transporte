@@ -1,35 +1,35 @@
 
 package Vistas.VIEWS;
 
+import Conexión.Conexión;
 import Controlador.NavegacionController;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
 import dao.ClienteDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class CreacionCliente extends javax.swing.JFrame {
 
     private ClienteDAO clienteDAO;
     private GestionClientes padreGestionClientes;
-            
+    private Cliente clienteAEditar;
+    
+    
     public CreacionCliente(GestionClientes padre) {
     initComponents();
     
     this.padreGestionClientes = padre;
     this.clienteDAO = new ClienteDAO();
     this.setLocationRelativeTo(null);
-    /*
-    NavegacionController.configurarBotones(
-    btnHome,       // Botón Home
-    btnClientes,   // Botón Clientes
-    btnReservas,   // Botón Reservas
-    btnProveedores,// Botón Proveedores
-    btnReportes,   // Botón Reportes
-    btnConfiguracion, // Botón Configuración
-    this          // Referencia al frame actual (this)
-    );
-*/
+    jLabel3.setText("Crear Cliente");
+    btn_crearCliente.setText("Crear Cliente");
     }
+    
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,9 +56,9 @@ public class CreacionCliente extends javax.swing.JFrame {
         txt_nombre = new javax.swing.JTextField();
         txt_preferencias = new javax.swing.JTextField();
         txt_dni = new javax.swing.JTextField();
-        btn_crearCliente = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
+        btn_crearCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -242,6 +242,15 @@ public class CreacionCliente extends javax.swing.JFrame {
         jPanel1.add(txt_dni);
         txt_dni.setBounds(570, 230, 240, 30);
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel8.setText("E-mail:");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(250, 280, 59, 27);
+
+        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        jPanel1.add(txt_email);
+        txt_email.setBounds(250, 330, 240, 30);
+
         btn_crearCliente.setBackground(new java.awt.Color(255, 171, 33));
         btn_crearCliente.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         btn_crearCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,16 +261,7 @@ public class CreacionCliente extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_crearCliente);
-        btn_crearCliente.setBounds(710, 420, 150, 30);
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel8.setText("E-mail:");
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(250, 280, 59, 27);
-
-        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(txt_email);
-        txt_email.setBounds(250, 330, 240, 30);
+        btn_crearCliente.setBounds(690, 410, 170, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -281,7 +281,22 @@ public class CreacionCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public CreacionCliente(GestionClientes padre, Cliente cliente) {
+        this(padre); // Llama al primer constructor para inicializar componentes, DAO, etc.
+        this.clienteAEditar = cliente; // Asigna el cliente que se va a editar
+        
+        // Rellenar los campos con los datos del cliente
+        txt_dni.setText(cliente.getDni());
+        txt_nombre.setText(cliente.getNombreCompleto());
+        txt_telefono.setText(cliente.getTelefono());
+        txt_email.setText(cliente.getEmail());
+        txt_preferencias.setText(cliente.getPreferencias());
 
+        // Cambiar el texto del botón y el título para indicar EDICIÓN
+        jLabel3.setText("Editar Cliente");
+        btn_crearCliente.setText("Guardar Cambios");
+    }
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
@@ -307,36 +322,158 @@ public class CreacionCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btn_crearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearClienteActionPerformed
-    // 1. Obtener datos del formulario
-    String dni = txt_dni.getText();
-    String nombreCompleto = txt_nombre.getText();
-    String telefono = txt_telefono.getText();
-    String email = txt_email.getText();
-    String preferencias = txt_preferencias.getText();
-    
-    //Validaciones básicas
-    if (dni.isEmpty() || nombreCompleto.isEmpty() || telefono.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete los campos obligatorios (DNI, Nombre, Teléfono).", "Error de validación", JOptionPane.WARNING_MESSAGE);
-        return; // Detiene la ejecución si faltan datos
-    }
-    //Inicializamos el objeto clientes, con los datos del formulario    
-    Cliente nuevoCliente = new Cliente (0, dni, nombreCompleto, telefono, email, preferencias);
-    //llamamos al DAO para guardar el cliente
-    boolean exito = clienteDAO.guardarCliente(nuevoCliente);
-        if (exito) {
-            JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); //Cierra el formulario
-            //refrescar la tabla 
-             if (padreGestionClientes != null) {
-                padreGestionClientes.cargarClientesEnTabla();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al guardar el cliente. Verifique la base de datos.", "Error de Guardado", JOptionPane.ERROR_MESSAGE);
+        // TODO add your handling code here:
+        // 1. Obtener datos del formulario
+        String dni = txt_dni.getText();
+        String nombreCompleto = txt_nombre.getText();
+        String telefono = txt_telefono.getText();
+        String email = txt_email.getText();
+        String preferencias = txt_preferencias.getText();
+
+        // 2. Validaciones básicas
+        if (dni.isEmpty() || nombreCompleto.isEmpty() || telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete los campos obligatorios (DNI, Nombre, Teléfono).", "Error de validación", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-           
+
+        boolean exitoOperacion;
+
+        // 3. Lógica para CREAR o ACTUALIZAR <-- Lógica diferenciadora
+        if (clienteAEditar == null) { // Si clienteAEditar es null, estamos en modo CREACIÓN
+            Cliente nuevoCliente = new Cliente(0, dni, nombreCompleto, telefono, email, preferencias); // El ID es 0 o un valor placeholder para un nuevo cliente
+            exitoOperacion = clienteDAO.guardarCliente(nuevoCliente);
+            if (exitoOperacion) {
+                JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar el cliente. Verifique la base de datos.", "Error de Guardado", JOptionPane.ERROR_MESSAGE);
+            }
+        } else { // Si clienteAEditar NO es null, estamos en modo EDICIÓN
+            // Actualizar el objeto clienteAEditar con los datos del formulario
+            // El ID_Cliente ya está en clienteAEditar desde que se pasó al constructor
+            clienteAEditar.setDni(dni);
+            clienteAEditar.setNombreCompleto(nombreCompleto);
+            clienteAEditar.setTelefono(telefono);
+            clienteAEditar.setEmail(email);
+            clienteAEditar.setPreferencias(preferencias);
+
+            exitoOperacion = clienteDAO.actualizarCliente(clienteAEditar); // Llama al método de actualización del DAO
+            if (exitoOperacion) {
+                JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el cliente. Verifique la base de datos.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        // 4. Si la operación fue exitosa, cerrar el formulario y refrescar la tabla padre
+        if (exitoOperacion) {
+            this.dispose(); // Cierra el formulario actual
+            if (padreGestionClientes != null) {
+                padreGestionClientes.cargarClientesEnTabla(); // Refresca la tabla en GestionClientes
+            }
+        }
+    }
+
+// Método para obtener un solo cliente por ID (crucial para la edición)
+public Cliente obtenerClientePorId(int idCliente) {
+    Cliente cliente = null;
+    String sql = "SELECT ID_Cliente, DNI_Documento, NombreCompleto, Telefono, Email, Preferencias FROM cliente WHERE ID_Cliente = ?";
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idCliente);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) { // Si encuentra un registro
+                cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("ID_Cliente"));
+                cliente.setDni(rs.getString("DNI_Documento"));
+                cliente.setNombreCompleto(rs.getString("NombreCompleto"));
+                cliente.setTelefono(rs.getString("Telefono"));
+                cliente.setEmail(rs.getString("Email"));
+                cliente.setPreferencias(rs.getString("Preferencias"));
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al obtener cliente por ID: " + e.getMessage());
+        e.printStackTrace(); // Es bueno tener un stack trace para depuración
+    }
+    return cliente;
+}    
+    
+
+// Método para actualizar un cliente existente
+public boolean actualizarCliente(Cliente cliente) {
+    String sql = "UPDATE cliente SET DNI_Documento=?, NombreCompleto=?, Telefono=?, Email=?, Preferencias=? WHERE ID_Cliente=?";
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, cliente.getDni());
+        stmt.setString(2, cliente.getNombreCompleto());
+        stmt.setString(3, cliente.getTelefono());
+        stmt.setString(4, cliente.getEmail());
+        stmt.setString(5, cliente.getPreferencias());
+        stmt.setInt(6, cliente.getIdCliente()); // El ID es fundamental para WHERE
+
+        int filasAfectadas = stmt.executeUpdate();
+        return filasAfectadas > 0;
+    } catch (SQLException e) {
+        System.err.println("Error al actualizar cliente: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
+
+
+// Método para eliminar un cliente por su ID
+public boolean eliminarCliente(int idCliente) {
+    String sql = "DELETE FROM cliente WHERE ID_Cliente=?";
+    try (Connection conn = Conexión.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idCliente);
+
+        int filasAfectadas = stmt.executeUpdate();
+        return filasAfectadas > 0;
+    } catch (SQLException e) {
+        System.err.println("Error al eliminar cliente: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
+
+
+
+  // Variables declaration - do not modify                     
+    private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnConfiguracion;
+    private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnProveedores;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnReservas;
+    private javax.swing.JButton btn_crearCliente;
+    private javax.swing.JButton btn_guradarCliente;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txt_dni;
+    private javax.swing.JTextField txt_email;
+    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_preferencias;
+    private javax.swing.JTextField txt_telefono;
+    // End of variables declaration                   
+
+
     }//GEN-LAST:event_btn_crearClienteActionPerformed
 
-
+/*
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
@@ -364,3 +501,4 @@ public class CreacionCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 }
+*/
