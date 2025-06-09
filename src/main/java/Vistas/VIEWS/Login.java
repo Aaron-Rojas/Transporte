@@ -1,10 +1,17 @@
 
 package Vistas.VIEWS;
 
+import Modelo.Usuario;
+import dao.UsuarioDAO;
+import javax.swing.JOptionPane;
+
 public class Login extends javax.swing.JFrame {
+    private UsuarioDAO usuarioDAO; 
 
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        usuarioDAO = new UsuarioDAO();        
     }
 
     @SuppressWarnings("unchecked")
@@ -16,11 +23,11 @@ public class Login extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtContrasena = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtNombreUsuario = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
 
@@ -48,22 +55,26 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jPasswordField1.setBackground(new java.awt.Color(235, 235, 235));
-        jPasswordField1.setText("jPasswordField1");
+        txtContrasena.setBackground(new java.awt.Color(235, 235, 235));
+        txtContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContrasenaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Usuario:");
 
         jLabel4.setText("Contraseña:");
 
-        jTextField3.setBackground(new java.awt.Color(235, 235, 235));
+        txtNombreUsuario.setBackground(new java.awt.Color(235, 235, 235));
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setBackground(new java.awt.Color(51, 51, 51));
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setText("Ingresar");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -79,12 +90,12 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))))
+                            .addComponent(txtNombreUsuario)
+                            .addComponent(txtContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))))
                 .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -93,13 +104,13 @@ public class Login extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnLogin)
                 .addContainerGap())
         );
 
@@ -134,25 +145,47 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-        
-        // Abre el frame PRINCIPAL
-        Principal principal = new Principal();
-        principal.setVisible(true);
-        
-        // Opcional: Centrar el frame en la pantalla
-        principal.setLocationRelativeTo(null);
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String nombreUsuarioIngresado = txtNombreUsuario.getText(); 
+        String contrasenaIngresada = new String(txtContrasena.getPassword());
 
+        // **PASO 1: Validar que los campos no estén vacíos**
+        if (nombreUsuarioIngresado == null || nombreUsuarioIngresado.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre de usuario.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+
+        if (contrasenaIngresada == null || contrasenaIngresada.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese la contraseña.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+
+        // **PASO 2: Llamar al DAO para validar credenciales**
+        Usuario usuarioLogeado = usuarioDAO.validarCredenciales(nombreUsuarioIngresado, contrasenaIngresada);
+
+        // **PASO 3: Manejar el resultado de la validación**
+        if (usuarioLogeado != null) {
+            // **AJUSTE AQUÍ: Si el Rol no se carga en el DAO, quita la parte del Rol del mensaje**
+            JOptionPane.showMessageDialog(this, "¡Bienvenido, " + usuarioLogeado.getNombreCompleto() + "!", "Login Exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Abre la ventana principal
+            Principal principal = new Principal();
+            principal.setVisible(true);
+            principal.setLocationRelativeTo(null); // Centrar el frame
+            this.dispose(); // Cierra la ventana de Login
+
+        } else {
+            // Credenciales incorrectas
+            JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error de Login", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_txtContrasenaActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -181,17 +214,17 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JPasswordField txtContrasena;
+    private javax.swing.JTextField txtNombreUsuario;
     // End of variables declaration//GEN-END:variables
 }
