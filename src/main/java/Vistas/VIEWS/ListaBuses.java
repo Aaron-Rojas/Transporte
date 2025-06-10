@@ -5,24 +5,37 @@
 package Vistas.VIEWS;
 
 import Controlador.NavegacionController;
+import Modelo.Bus;
+import Vistas.VIEWS.FormularioBuses;
+import dao.BusDAO;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ListaBuses extends javax.swing.JFrame {
 
 public ListaBuses() {
     initComponents();  // Primero: inicializa componentes (generado por NetBeans)
+    cargarBuses();
+    }
 
-    // Luego: añade tu lógica personalizada
-    btnAnadir.setEnabled(false);
-    btnEditar.setEnabled(false);
-    btnAceptar.setEnabled(false);
+  public void cargarBuses() {
+    BusDAO dao = new BusDAO();
+    List<Bus> lista = dao.obtenerTodosLosBuses();
+    
+    // Columnas que se mostrarán
+    String[] columnas = {"ID", "Placa", "Estado"};
+    DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+    tablaBuses.setModel(modelo);
 
-    tablaBuses.getSelectionModel().addListSelectionListener(e -> {
-        boolean filaSeleccionada = tablaBuses.getSelectedRow() != -1;
-        btnAnadir.setEnabled(filaSeleccionada);
-        btnEditar.setEnabled(filaSeleccionada);
-        btnAceptar.setEnabled(filaSeleccionada);
-    });
+    for (Bus bus : lista) {
+        Object[] fila = new Object[3];
+        fila[0] = bus.getIdBus();
+        fila[1] = bus.getPlaca();
+        fila[2] = bus.getEstado();
+        modelo.addRow(fila);
+    }
+    
 
     NavegacionController.configurarBotones(
         btnHome, 
@@ -49,6 +62,7 @@ public ListaBuses() {
         jLabel2 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        btnAceptar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaBuses = new javax.swing.JTable();
@@ -59,9 +73,9 @@ public ListaBuses() {
         btnReservas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
-        btnAnadir = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnAgregarBus = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,15 +131,31 @@ public ListaBuses() {
 
         jPanel3.setBackground(new java.awt.Color(8, 8, 100));
 
+        btnAceptar.setBackground(new java.awt.Color(179, 23, 23));
+        btnAceptar.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(709, Short.MAX_VALUE)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(btnAceptar)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -138,19 +168,19 @@ public ListaBuses() {
 
         tablaBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nro Bus", "Nro Asientos", "Hora Salida", "Estado", "Seleccionar"
+                "ID Bus", "Estado", "Placa"
             }
         ));
         jScrollPane1.setViewportView(tablaBuses);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(240, 200, 570, 210);
+        jScrollPane1.setBounds(240, 200, 570, 190);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Lista de Buses:");
@@ -229,35 +259,41 @@ public ListaBuses() {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
 
-        btnAnadir.setText("Añadir");
-        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(8, 153, 192));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnadirActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAnadir);
-        btnAnadir.setBounds(250, 430, 72, 23);
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(640, 410, 150, 30);
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarBus.setBackground(new java.awt.Color(8, 153, 192));
+        btnAgregarBus.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnAgregarBus.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarBus.setText("Agregar Bus");
+        btnAgregarBus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnAgregarBusActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEditar);
-        btnEditar.setBounds(460, 430, 72, 23);
+        jPanel1.add(btnAgregarBus);
+        btnAgregarBus.setBounds(260, 410, 150, 32);
 
-        btnAceptar.setBackground(new java.awt.Color(179, 23, 23));
-        btnAceptar.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setBackground(new java.awt.Color(8, 153, 192));
+        btnModificar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(660, 420, 124, 29);
+        jPanel1.add(btnModificar);
+        btnModificar.setBounds(450, 410, 150, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -307,15 +343,103 @@ public ListaBuses() {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
 
-    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         int filaSeleccionada = tablaBuses.getSelectedRow();
 
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAnadirActionPerformed
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona un bus para eliminar.");
+            return;
+        }
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este bus?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
+            int idBus = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString()); // ID_Bus
+
+            BusDAO dao = new BusDAO();
+            boolean eliminado = dao.eliminarBus(idBus);
+
+            if (eliminado) {
+                JOptionPane.showMessageDialog(this, "Bus eliminado correctamente.");
+                cargarBuses(); // Recarga la tabla
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el bus.");
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAgregarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBusActionPerformed
+        new FormularioBus().setVisible(true);
+        this.dispose(); // opcional
+    }//GEN-LAST:event_btnAgregarBusActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+         int filaSeleccionada = tablaBuses.getSelectedRow();
+
+    // Verificar si se seleccionó una fila
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una fila para editar.");
+        return;
+    }
+
+    DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
+
+    // Validar que las celdas de idBus, placa y estado no estén vacías
+    for (int i = 0; i <= 2; i++) {
+        if (modelo.getValueAt(filaSeleccionada, i) == null || modelo.getValueAt(filaSeleccionada, i).toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se puede editar. Una o más columnas están vacías.");
+            return;
+        }
+    }
+
+    try {
+        // Obtener los datos actuales
+        int idBus = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString()); // ID_Bus
+        String placaActual = modelo.getValueAt(filaSeleccionada, 1).toString(); // Placa
+        String estadoActual = modelo.getValueAt(filaSeleccionada, 2).toString(); // Estado
+
+        // Pedir los nuevos valores al usuario
+        String nuevaPlaca = JOptionPane.showInputDialog(this, "Editar Placa:", placaActual);
+        String nuevoEstado = JOptionPane.showInputDialog(this, "Editar Estado:", estadoActual);
+
+        // Validar que los valores no estén vacíos
+        if (nuevaPlaca == null || nuevoEstado == null || nuevaPlaca.trim().isEmpty() || nuevoEstado.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos.");
+            return;
+        }
+
+        // Crear objeto Bus actualizado
+        Bus busActualizado = new Bus();
+        busActualizado.setIdBus(idBus);
+        busActualizado.setPlaca(nuevaPlaca.trim());
+        busActualizado.setEstado(nuevoEstado.trim());
+
+        // Crear instancia de DAO
+        BusDAO dao = new BusDAO();
+
+        // Verificar que la nueva placa no esté siendo utilizada por otro bus (excepción del mismo bus)
+        if (dao.existePlaca(nuevaPlaca.trim(), idBus)) {
+            JOptionPane.showMessageDialog(this, "Ya existe un bus con esa placa.");
+            return;
+        }
+
+        // Realizar la actualización en la base de datos
+        boolean actualizado = dao.actualizarBus(busActualizado);
+
+        // Informar si la actualización fue exitosa o no
+        if (actualizado) {
+            JOptionPane.showMessageDialog(this, "Bus actualizado correctamente.");
+            cargarBuses(); // Recarga la tabla de buses
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el bus.");
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al intentar editar el bus: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -361,11 +485,12 @@ public ListaBuses() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnAnadir;
+    private javax.swing.JButton btnAgregarBus;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;

@@ -46,14 +46,10 @@ public class FormularioBus extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         btnGuardarBus = new javax.swing.JButton();
         btnConfiguracion = new javax.swing.JButton();
@@ -62,6 +58,7 @@ public class FormularioBus extends javax.swing.JFrame {
         btnReservas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        btnGuardarBus1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,9 +137,7 @@ public class FormularioBus extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         jLabel4.setText("Estado:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(260, 270, 120, 18);
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(660, 230, 140, 22);
+        jLabel4.setBounds(260, 320, 120, 18);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         jLabel5.setText("Nro de Bus:");
@@ -151,39 +146,27 @@ public class FormularioBus extends javax.swing.JFrame {
         jPanel1.add(jTextField2);
         jTextField2.setBounds(380, 190, 140, 22);
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jLabel6.setText("Nro de asientos:");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(260, 230, 120, 18);
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(380, 230, 140, 20);
-
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         jLabel7.setText("Nro de placa:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(560, 190, 120, 18);
+        jLabel7.setBounds(260, 250, 120, 18);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(660, 190, 140, 22);
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jLabel8.setText("Hora Salida:");
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(560, 230, 120, 18);
+        jTextField4.setBounds(380, 250, 140, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(380, 270, 140, 22);
+        jComboBox1.setBounds(380, 320, 140, 22);
 
         btnGuardarBus.setBackground(new java.awt.Color(102, 153, 255));
         btnGuardarBus.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnGuardarBus.setText("Guardar Bus");
+        btnGuardarBus.setText("cancelar");
         btnGuardarBus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarBusActionPerformed(evt);
             }
         });
         jPanel1.add(btnGuardarBus);
-        btnGuardarBus.setBounds(630, 370, 180, 30);
+        btnGuardarBus.setBounds(320, 370, 180, 30);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -257,20 +240,32 @@ public class FormularioBus extends javax.swing.JFrame {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
 
+        btnGuardarBus1.setBackground(new java.awt.Color(102, 153, 255));
+        btnGuardarBus1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGuardarBus1.setText("Guardar Bus");
+        btnGuardarBus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarBus1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardarBus1);
+        btnGuardarBus1.setBounds(630, 370, 180, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -305,6 +300,10 @@ public class FormularioBus extends javax.swing.JFrame {
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnGuardarBus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarBus1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarBus1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,6 +351,7 @@ public class FormularioBus extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnGuardarBus;
+    private javax.swing.JButton btnGuardarBus1;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
@@ -363,15 +363,11 @@ public class FormularioBus extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
