@@ -6,15 +6,8 @@ package Vistas.VIEWS;
 import Controlador.NavegacionController;
 import Vistas.VIEWS.CrearReserva;
 
-/**
- *
- * @author LAB-USR-LCENTRO
- */
 public class GestionItinerario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
     public GestionItinerario() {
         initComponents();
         NavegacionController.configurarBotones(
@@ -26,6 +19,7 @@ public class GestionItinerario extends javax.swing.JFrame {
             btnConfiguracion, 
             this
         );
+         this.setLocationRelativeTo(null);
     }
 
     /**
@@ -54,6 +48,7 @@ public class GestionItinerario extends javax.swing.JFrame {
         btnReservas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        bntDestino = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -227,6 +222,15 @@ public class GestionItinerario extends javax.swing.JFrame {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
 
+        bntDestino.setText("Destinos");
+        bntDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntDestinoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bntDestino);
+        bntDestino.setBounds(690, 150, 130, 40);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -287,6 +291,12 @@ if (comboBox.getSelectedIndex() > 0) {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
 
+    private void bntDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntDestinoActionPerformed
+        GestionDestino destinos = new GestionDestino();
+        destinos.setVisible(true);
+        
+    }//GEN-LAST:event_bntDestinoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -338,6 +348,7 @@ if (comboBox.getSelectedIndex() > 0) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntDestino;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;

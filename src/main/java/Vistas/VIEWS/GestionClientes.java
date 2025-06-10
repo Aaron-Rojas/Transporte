@@ -401,6 +401,7 @@ public class GestionClientes extends javax.swing.JFrame {
         //Abrir el formulario de CrearCliente
         CreacionCliente cl = new CreacionCliente(this);
         cl.setVisible(true);
+        cargarClientesEnTabla();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed

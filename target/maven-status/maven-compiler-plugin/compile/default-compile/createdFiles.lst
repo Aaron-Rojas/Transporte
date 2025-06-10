@@ -33,6 +33,7 @@ Vistas\VIEWS\CrearReserva$5.class
 Vistas\VIEWREPORTE\ReporteCliente$2.class
 Vistas\VIEWS\FormularioBus$3.class
 Vistas\VIEWS\ItinerarioDeViajesPorBuses.class
+Vistas\VIEWS\FormularioProveedor$9.class
 Vistas\VIEWS\ListaBuses$4.class
 Vistas\VIEWS\CreacionCliente$5.class
 Vistas\VIEWS\Reportes$6.class
@@ -59,6 +60,7 @@ Vistas\VIEWS\ItinerarioDeAlojamiento.class
 Vistas\VIEWREPORTE\ReporteViajes$5.class
 Vistas\VIEWCONFIGURACION\Parametros$1.class
 Vistas\VIEWS\GestionItinerario$2.class
+Vistas\VIEWS\GestionDestino$5.class
 Vistas\VIEWS\GestionClientes$9.class
 Vistas\VIEWS\GestionItinerario.class
 Vistas\VIEWS\ItinerarioDeViajesPorBuses$3.class
@@ -76,10 +78,13 @@ Vistas\VIEWS\FormularioBus$8.class
 Vistas\VIEWS\FormularioBus$5.class
 Vistas\VIEWREPORTE\ReporteHoteles$5.class
 Vistas\VIEWS\Principal$1.class
+Vistas\VIEWS\GestionItinerario$10.class
 Vistas\VIEWS\GestionItinerario$3.class
 dao\ClienteDAO.class
 Vistas\VIEWREPORTE\ReporteViajes$6.class
 Vistas\VIEWS\FormularioActividades$3.class
+Vistas\VIEWS\FormularioProveedor$8.class
+Vistas\VIEWS\FormularioDestino$3$1.class
 Vistas\VIEWS\ItinerarioDeActividad$3.class
 Vistas\VIEWCONFIGURACION\Seguridad$1.class
 Vistas\VIEWREPORTE\ReporteReserva$3.class
@@ -116,8 +121,10 @@ Vistas\VIEWS\ConfirmacionReserva.class
 Vistas\VIEWS\Reportes$2.class
 Vistas\VIEWS\CrearReserva$2.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$2.class
+Vistas\VIEWS\GestionDestino$1.class
 Vistas\VIEWS\Panel123$6.class
 Vistas\VIEWREPORTE\ReporteViajes.class
+Vistas\VIEWS\GestionDestino.class
 Vistas\VIEWS\ListaBuses$1.class
 Vistas\VIEWS\Configuración$11.class
 Vistas\VIEWS\Principal$3.class
@@ -132,9 +139,11 @@ Vistas\VIEWREPORTE\ReporteHoteles.class
 Vistas\VIEWS\GestionItinerario$6.class
 Vistas\VIEWS\Reportes$3.class
 Vistas\VIEWREPORTE\ReportePagos$2.class
+Vistas\VIEWS\GestionDestino$2.class
 Vistas\VIEWREPORTE\ReporteViajes$9.class
 Vistas\VIEWS\FormularioProveedor$7.class
 Vistas\VIEWS\CrearReserva$1.class
+dao\DestinoDAO.class
 Vistas\VIEWS\ItinerarioDeActividad$4.class
 Vistas\VIEWS\Panel123$5.class
 Conexión\Conexión.class
@@ -146,6 +155,7 @@ Vistas\VIEWCONFIGURACION\Parametros$3.class
 Vistas\VIEWS\ResultadoBusqueda.class
 Vistas\VIEWS\ConfirmacionReserva$4.class
 Vistas\VIEWREPORTE\ReporteReserva.class
+Vistas\VIEWS\GestionDestino$3.class
 Vistas\VIEWS\GestionProveedores$10.class
 Modelo\Rol.class
 Vistas\VIEWS\ItinerarioDeViajesPorBuses$1.class
@@ -175,6 +185,7 @@ Vistas\VIEWS\Configuración$12.class
 Vistas\VIEWCONFIGURACION\Parametros$9.class
 Vistas\VIEWS\Reportes.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$1.class
+Vistas\VIEWS\FormularioDestino$2.class
 Vistas\VIEWCONFIGURACION\Seguridad$5.class
 Vistas\VIEWS\FormularioBus$1.class
 Vistas\VIEWREPORTE\ReporteViajes$7.class
@@ -182,6 +193,7 @@ Vistas\VIEWS\FormularioActividades$7.class
 Vistas\VIEWS\Reportes$12.class
 Vistas\VIEWREPORTE\ReporteCliente$9.class
 Vistas\VIEWS\ItinerarioDeActividad$2.class
+Vistas\VIEWS\FormularioDestino.class
 Vistas\VIEWS\Configuración$5.class
 Vistas\VIEWS\Panel123$2.class
 Vistas\VIEWCONFIGURACION\Parametros$8.class
@@ -195,7 +207,9 @@ Vistas\VIEWS\ItinerarioDeActividad$6.class
 Vistas\VIEWS\ItinerarioDeAlojamiento$6.class
 Vistas\VIEWS\Reportes$13.class
 Vistas\VIEWREPORTE\ReporteHoteles$7.class
+Vistas\VIEWS\GestionDestino$4.class
 Vistas\VIEWCONFIGURACION\Parametros$2.class
+Vistas\VIEWS\FormularioDestino$1.class
 Vistas\VIEWS\GestionProveedores$11.class
 Vistas\VIEWCONFIGURACION\Seguridad$4.class
 Vistas\VIEWREPORTE\ReporteCliente$3.class
@@ -248,6 +262,7 @@ Vistas\VIEWS\FormularioProveedor$2.class
 Vistas\VIEWCONFIGURACION\Parametros$13.class
 Vistas\VIEWREPORTE\ReporteCliente$5.class
 dao\ProveedorDAO.class
+Modelo\Destino.class
 Vistas\VIEWS\CrearReserva$9.class
 Vistas\VIEWS\GestionClientes$12.class
 Vistas\VIEWS\ListaBuses$5.class
@@ -273,6 +288,7 @@ Vistas\VIEWS\GestionProveedores$5.class
 Vistas\VIEWREPORTE\ReporteViajes$2.class
 Vistas\VIEWS\Login$3.class
 Vistas\VIEWS\ConfirmacionReserva$8.class
+Vistas\VIEWS\FormularioDestino$3.class
 Vistas\VIEWCONFIGURACION\Parametros$4.class
 Vistas\VIEWS\Reportes$10.class
 Vistas\VIEWREPORTE\ReporteReserva$8.class
