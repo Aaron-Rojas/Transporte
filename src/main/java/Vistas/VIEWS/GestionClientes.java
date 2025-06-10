@@ -26,7 +26,7 @@ public class GestionClientes extends javax.swing.JFrame {
             btnConfiguracion, 
             this
         );
-        
+    this.setLocationRelativeTo(null);
     tbClientes.setDefaultEditor(Object.class, null); //Quitar que la tabla sea editable
     clienteDAO = new ClienteDAO();
     configurarTablaClientes();

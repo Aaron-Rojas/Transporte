@@ -3,7 +3,7 @@ package Controlador;
 import Vistas.VIEWS.Configuración;
 import Vistas.VIEWS.GestionClientes;
 import Vistas.VIEWS.GestionItinerario;
-import Vistas.VIEWS.Panel123;
+import Vistas.VIEWS.GestionProveedores;
 import Vistas.VIEWS.Principal;
 import Vistas.VIEWS.Reportes;
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class NavegacionController {
             } else if (e.getSource() == btnReservas) {
                 new GestionItinerario().setVisible(true);
             } else if (e.getSource() == btnProveedores) {
-                new Panel123().setVisible(true);
+                new GestionProveedores().setVisible(true);
             } else if (e.getSource() == btnReportes) {
                 new Reportes().setVisible(true);
             } else if (e.getSource() == btnConfiguracion) {
