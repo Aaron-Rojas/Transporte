@@ -1,9 +1,12 @@
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ListaBuses.java
+C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\RolDAO.java
+C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Rol.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteViajes.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ItinerarioDeAlojamiento.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Reportes.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionClientes.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioActividades.java
+C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\UsuarioDAO.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Configuración.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ItinerarioDeViajesPorBuses.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\CrearReserva.java
@@ -21,6 +24,8 @@ C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWCONFIGURACION\Parametros.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ItinerarioDeActividad.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Principal.java
+C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Usuario.java
+C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Proveedor.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\DASH\Main.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ConfirmacionReserva.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWCONFIGURACION\GestioUsuarios.java
@@ -29,6 +34,7 @@ C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteHoteles.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Controlador\NavegacionController.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWCONFIGURACION\Seguridad.java
+C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\ProveedorDAO.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioProveedor.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\CreacionCliente.java
 C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteCliente.java
