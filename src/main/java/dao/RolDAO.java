@@ -37,26 +37,31 @@ public class RolDAO {
             return false;
         }
     }
-    //metodo para obtener las lissta de roles
+    
+    //metodo para obtener las lista de roles
     public List<Rol> obtenerTodosLosRoles() {
         List<Rol> roles = new ArrayList<>();
         String sql = "SELECT ID_Rol, NombreRol, Descripcion FROM Rol";
+        
         try (Connection conn = Conexión.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Rol rol = new Rol();
-                rol.setIdRol(rs.getInt("ID_Rol"));
-                rol.setNombreRol(rs.getString("NombreRol"));
-                rol.setDescripcion(rs.getString("Descripcion"));
-                roles.add(rol);
+                //Creamos variables para la data de sus columnas 
+                int idRol  = rs.getInt("ID_Rol");
+                String nombreRol = rs.getString("NombreRol");
+                String descripcion = rs.getString("Descripcion");
+                //Se añade a una clase Rol, usando la lista
+                roles.add(new Rol(idRol,nombreRol,descripcion));
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener roles: " + e.getMessage());
+            e.printStackTrace();
         }
         return roles;
-    }
+     }
+    
     //meotodo para el filtrado por ide
     public Rol obtenerRolPorId(int idRol) {
         Rol rol = null;

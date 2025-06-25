@@ -2,11 +2,18 @@
 package Vistas.VIEWS;
 
 import Controlador.NavegacionController;
+import Modelo.Usuario;
+import dao.UsuarioDAO;
 
 public class Principal extends javax.swing.JFrame {
 
-    public Principal() {
+    private Usuario usuarioActual;
+            
+    public Principal(Usuario usuarioLogeado) {
         initComponents();
+        
+       this.usuarioActual= usuarioLogeado ;
+      
         NavegacionController.configurarBotones(
     btnHome,       // Botón Home
     btnClientes,   // Botón Clientes
@@ -17,8 +24,20 @@ public class Principal extends javax.swing.JFrame {
     this    // Referencia al frame actual (this)
     );
         
+      this.setLocationRelativeTo(null);
+
+      
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("Sistema de User");
+        }
     }
 
+    public Usuario getUsuarioActual(){
+        return usuarioActual;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -323,7 +342,9 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+            Modelo.Rol rolDummyUser = new Modelo.Rol(3,"Usuario","Gestiona la app");
+            Usuario usuarioPrueba = new Usuario(99,"Usuario Prueba", "test@example.com","password123","activo",rolDummyUser.getIdRol(), rolDummyUser);
+            new Principal(usuarioPrueba).setVisible(true);
             }
         });
     }

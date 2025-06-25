@@ -7,16 +7,17 @@ package Vistas.VIEWCONFIGURACION;
 import Controlador.NavegacionController;
 import Vistas.VIEWS.Configuración;
 
-/**
- *
- * @author LAB-USR-LCENTRO
- */
+import Modelo.Usuario;
+import Modelo.Rol;
+import dao.UsuarioDAO;
+import dao.RolDAO;
+
+
 public class GestioUsuarios extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
-    public GestioUsuarios() {
+    private Usuario usuarioActual;
+    
+    public GestioUsuarios(Usuario usuarioLogeado) {
         initComponents();
         NavegacionController.configurarBotones(
             btnHome, 
@@ -27,8 +28,19 @@ public class GestioUsuarios extends javax.swing.JFrame {
             btnConfiguracion, 
             this
         );
+        this.usuarioActual = usuarioLogeado;
+        this.setLocationRelativeTo(null);
+        if (usuarioActual != null && usuarioActual.getRol().getNombreRol() !=null){
+            setTitle("Gestión de Usuarios"+": "+usuarioActual.getRol().getNombreRol()+": "+usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("Gestión de Usuarios");
+        }
+    
     }
 
+    public Usuario getUsuario(){
+        return usuarioActual ;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -381,7 +393,11 @@ public class GestioUsuarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GestioUsuarios().setVisible(true);
+                Modelo.Rol rolDummyAdmin = new Modelo.Rol(1,"admin","Rol de prueba");
+                Usuario usuarioDePrueba = new Usuario(100, "Admin Prueba", "admin@test.com","pass", "activo", rolDummyAdmin.getIdRol(), rolDummyAdmin);
+                
+                
+                new GestioUsuarios(usuarioDePrueba).setVisible(true);
             }
         });
     }

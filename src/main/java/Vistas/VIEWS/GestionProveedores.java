@@ -6,6 +6,9 @@ import Controlador.NavegacionController;
 
 import Modelo.Proveedor;
 import dao.ProveedorDAO;
+import Modelo.Usuario;
+import dao.UsuarioDAO;
+
 
 
 import javax.swing.JOptionPane;
@@ -17,8 +20,9 @@ public class GestionProveedores extends javax.swing.JFrame {
    
     private ProveedorDAO proveedorDAO;
     private DefaultTableModel tbMproveedor;
-    
-    public GestionProveedores() {
+    private Usuario usuarioActual;
+            
+    public GestionProveedores(Usuario usuarioLogeado) {
         initComponents();
         NavegacionController.configurarBotones(
             btnHome, 
@@ -33,8 +37,21 @@ public class GestionProveedores extends javax.swing.JFrame {
         proveedorDAO = new ProveedorDAO();
         setupTableModel();
         cargarProveedoresEnTabla();
-
+        
+        this.usuarioActual = usuarioLogeado ;
+     
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            setTitle("Gestión de Proveedores- " + usuarioActual.getRol().getNombreRol() + ": " + usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("JFrames dedicados a Proveedores");
+        }
+        
     }
+    
+       public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+       
 // Método para configurar el JTABLE
     private void setupTableModel() {
         // Define los nombres de las columnas que se mostrarán en el JTable
@@ -436,8 +453,13 @@ public class GestionProveedores extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+        Modelo.Rol rolDummyProvee = new Modelo.Rol(2, "proveedor", "Rol de prueba para provee");
+        Usuario usuarioDePrueba = new Usuario(
+                    100, "Provee Prueba", "provee@test.com", "prove", "activo",
+                    rolDummyProvee.getIdRol(), rolDummyProvee);
+                
             public void run() {
-                new GestionProveedores().setVisible(true);
+                new GestionProveedores(usuarioDePrueba).setVisible(true);
             }
         });
     }
