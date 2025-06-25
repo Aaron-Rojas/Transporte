@@ -35,6 +35,7 @@ public class UsuarioDAO {
         }
     }
 */
+    /*
     public Usuario validarCredenciales(String nombreCompleto, String contrasena) { 
         Usuario usuario = null;
         // La columna para el login es 'NombreCompleto' en tu BD
@@ -53,7 +54,7 @@ public class UsuarioDAO {
                     usuario.setIdUsuario(rs.getInt("ID_Usuario"));
                     usuario.setNombreCompleto(rs.getString("NombreCompleto")); // <-- Mapeando a NombreCompleto
                     usuario.setCorreo(rs.getString("Correo"));
-                    usuario.setContrasena(rs.getString("Contraseña"));
+                    usuario.setContraseña(rs.getString("Contraseña"));
                     usuario.setEstado(rs.getString("Estado"));
                     usuario.setIdRol(rs.getInt("ID_Rol"));
 
@@ -64,7 +65,7 @@ public class UsuarioDAO {
         }
         return usuario;
     }
-
+*/
     public boolean guardarUsuario(Usuario usuario) {
         // Ajusta el INSERT para usar 'NombreCompleto'
         String sql = "INSERT INTO Usuario (NombreCompleto, Correo, Contrasena, Estado, ID_Rol) VALUES (?, ?, ?, ?, ?)";
@@ -109,7 +110,7 @@ public class UsuarioDAO {
                 usuario.setIdUsuario(rs.getInt("ID_Usuario"));
                 usuario.setNombreCompleto(rs.getString("NombreCompleto")); // <-- Mapeando a NombreCompleto
                 usuario.setCorreo(rs.getString("Correo"));
-                usuario.setContrasena(rs.getString("Contrasena"));
+                usuario.setContraseña(rs.getString("Contrasena"));
                 usuario.setEstado(rs.getString("Estado"));
                 usuario.setIdRol(rs.getInt("ID_Rol"));
 
@@ -143,7 +144,7 @@ public class UsuarioDAO {
                     usuario.setIdUsuario(rs.getInt("ID_Usuario"));
                     usuario.setNombreCompleto(rs.getString("NombreCompleto")); // <-- Mapeando a NombreCompleto
                     usuario.setCorreo(rs.getString("Correo"));
-                    usuario.setContrasena(rs.getString("Contrasena"));
+                    usuario.setContraseña(rs.getString("Contrasena"));
                     usuario.setEstado(rs.getString("Estado"));
                     usuario.setIdRol(rs.getInt("ID_Rol"));
 
@@ -165,12 +166,12 @@ public class UsuarioDAO {
         String sql = "UPDATE Usuario SET NombreCompleto=?, Correo=?, Contrasena=?, Estado=?, ID_Rol=? WHERE ID_Usuario=?";
 
         String contrasenaAUsar;
-        if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
+        if (usuario.getContraseña() != null && !usuario.getContraseña().isEmpty()) {
    //         contrasenaAUsar = hashContrasena(usuario.getContrasena());
         } else {
             Usuario usuarioExistente = obtenerUsuarioPorId(usuario.getIdUsuario());
             if (usuarioExistente != null) {
-                contrasenaAUsar = usuarioExistente.getContrasena();
+                contrasenaAUsar = usuarioExistente.getContraseña();
             } else {
                 System.err.println("Error: No se encontró el usuario para actualizar la contraseña existente.");
                 return false;
@@ -208,5 +209,68 @@ public class UsuarioDAO {
             System.err.println("Error al eliminar usuario: " + e.getMessage());
             return false;
         }
+    }
+    
+    
+   public boolean agregarUsuario(Usuario usuario){
+       String sql = "INSERT INTO usuario (NombreCompleto ,Correo, Contraseña, Estado, ID_Rol) values (?,?,?,?,?)";
+       try (Connection conn = Conexión.conectar()){
+           PreparedStatement pstmt = conn.prepareStatement(sql);
+           pstmt.setString(1,usuario.getNombreCompleto());
+           pstmt.setString(2, usuario.getCorreo());
+           pstmt.setString(3, usuario.getContraseña());
+           pstmt.setString(4, usuario.getEstado());
+           pstmt.setInt(5,usuario.getIdRol());
+           int rowsAffected = pstmt.executeUpdate();
+           return rowsAffected > 0;
+       }catch(SQLException e){
+            // Manejo de errores más específico, ej. si el username o email ya existen (UNIQUE)
+            if (e.getSQLState().startsWith("23")) { // SQLState para violación de restricción de integridad (ej. UNIQUE)
+                System.err.println("Error: El nombre de usuario o correo electrónico ya existen.");
+            } else {
+                System.err.println("Error SQL al agregar usuario: " + e.getMessage());
+            }
+            e.printStackTrace();
+            return false;   
+       }   
+   }
+   
+       // Método para validar el login y obtener el usuario (incluyendo su rol)
+    public Usuario validarLogin(String nombreCompleto, String contraseña) {
+        String sql = "SELECT u.ID_Usuario, u.NombreCompleto, u.Correo, u.Contraseña, u.ID_Rol, u.Estado, r.NombreRol, r.Descripcion " +
+                     "FROM Usuario u JOIN Rol r ON u.ID_Rol = r.ID_Rol " +
+                     "WHERE u.NombreCompleto = ? AND u.Contraseña = ? AND u.Estado = 'activo'"; // Solo usuarios activos
+
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombreCompleto);
+            pstmt.setString(2, contraseña); // Recuerda: Validar con el hash de la contraseña
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // Si se encuentra un usuario, lo retornamos
+                    int idRol = rs.getInt("ID_Rol");
+                    String nombreRol =rs.getString("NombreRol");
+                    String descripcion = rs.getString("Descripcion");
+                    
+                    Rol rol = new Rol(idRol,nombreRol,descripcion); //Crear el objeto Rol
+                    
+               
+                   Modelo.Usuario usuario = new Modelo.Usuario(
+                    rs.getInt("ID_Usuario"),
+                    rs.getString("NombreCompleto"), // Asegúrate de usar "NombreCompleto" como en la DB
+                    rs.getString("Correo"),
+                    rs.getString("Contraseña"),
+                    rs.getString("Estado"),
+                    idRol,        
+                    rol
+                );
+                return usuario;
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error SQL al validar login: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return null; // Credenciales inválidas o error
     }
 }

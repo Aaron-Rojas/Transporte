@@ -23,13 +23,13 @@ public class NavegacionController {
             
             // Abre el nuevo frame según el botón presionado
             if (e.getSource() == btnHome) {
-                new Principal().setVisible(true);
+//                new Principal().setVisible(true);
             } else if (e.getSource() == btnClientes) {
-                new GestionClientes().setVisible(true);
+  //              new GestionClientes().setVisible(true);
             } else if (e.getSource() == btnReservas) {
                 new GestionItinerario().setVisible(true);
             } else if (e.getSource() == btnProveedores) {
-                new GestionProveedores().setVisible(true);
+    //            new GestionProveedores().setVisible(true);
             } else if (e.getSource() == btnReportes) {
                 new Reportes().setVisible(true);
             } else if (e.getSource() == btnConfiguracion) {

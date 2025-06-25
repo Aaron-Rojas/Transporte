@@ -355,9 +355,12 @@ Configuración configuración = new Configuración();
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+    /*
         GestioUsuarios gestioUsuarios = new GestioUsuarios();
     gestioUsuarios.setVisible(true); // mostrar frame ReporteCliente
     this.dispose();
+      */
+    
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton18ActionPerformed
 
