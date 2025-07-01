@@ -1,0 +1,40 @@
+# Archivo .gitignore para proyectos Maven con NetBeans y compatibilidad con otros IDEs
+
+# Directorios de compilación y salida de Maven
+/target/
+
+# Archivos de configuración de NetBeans
+# El directorio 'nbproject/private/' contiene configuraciones de usuario y temporales.
+# El resto de 'nbproject/' sí debe ser versionado.
+nbproject/private/
+*.log
+
+# Archivos y directorios de configuración de otros IDEs populares
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Archivos de sistema operativo y temporales
+.DS_Store      # macOS
+Thumbs.db      # Windows
+*.tmp
+*~             # Archivos de respaldo de algunos editores (e.g., Emacs)
+*.swp          # Archivos de intercambio de Vim
+*.swo          # Archivos de intercambio de Vim
+
+# Archivos generados automáticamente que pueden aparecer en el directorio raíz
+# (Ej: archivos de log que no son parte del control de versiones)
+# Puedes añadir líneas aquí si ves archivos no deseados en tu 'git status'
+# .env             # Si usas variables de entorno en un archivo .env
+# *.jar            # Si los JARs compilados no se generan en target/
+# *.war            # Si los WARs compilados no se generan en target/
