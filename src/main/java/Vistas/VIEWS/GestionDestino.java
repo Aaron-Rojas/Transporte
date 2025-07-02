@@ -1,80 +1,104 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package Vistas.VIEWS;
 
 import Modelo.Destino;
 import dao.DestinoDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableModel; // Import DefaultTableModel
 
+/**
+ *
+ * @author User
+ */
 public class GestionDestino extends javax.swing.JFrame {
-    
-    private DestinoDAO destinoDAO;
-    private DefaultTableModel modeloTablaDestinos;
+
+     private DestinoDAO destinoDAO; // Declare your DAO
+    private DefaultTableModel modeloTablaDestinos; // Declare the table model
     
     public GestionDestino() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        destinoDAO = new DestinoDAO();
-        
-        modeloTablaDestinos = new DefaultTableModel() {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-         }
-        }; 
-    
-    modeloTablaDestinos.addColumn("ID");
-    modeloTablaDestinos.addColumn("Nombre Destino");
-    modeloTablaDestinos.addColumn("Descripción");
-    tbdestino.setModel(modeloTablaDestinos);
+        this.setLocationRelativeTo(null); // Center the frame on the screen
+        destinoDAO = new DestinoDAO(); // Initialize the DAO
+        configurarTabla(); // Set up the table model
+        cargarDestinosEnTabla(); // Load data when the frame starts
+    }
 
-    cargarDestinosEnTabla();
+     private void configurarTabla() {
+        modeloTablaDestinos = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make cells non-editable
+            }
         };
-    
-        private void cargarDestinosEnTabla() {
-        modeloTablaDestinos.setRowCount(0); // Limpiar la tabla antes de cargar
+        modeloTablaDestinos.addColumn("ID");
+        modeloTablaDestinos.addColumn("Nombre Destino");
+        modeloTablaDestinos.addColumn("Descripción");
+         modeloTablaDestinos.addColumn("Estado");
+
+        tbdestino.setModel(modeloTablaDestinos);
+    }
+
+    // Method to load destinations into the table
+    private void cargarDestinosEnTabla() {
+        modeloTablaDestinos.setRowCount(0); // Clear existing data
+
         List<Destino> destinos = destinoDAO.obtenerTodosLosDestinos();
-        for (Destino destino : destinos) {
-            modeloTablaDestinos.addRow(new Object[]{
-                destino.getIdDestino(),
-                destino.getNombreDestino(),
-                destino.getDescripcion()
-            });
+        if (destinos != null) {
+            for (Destino d : destinos) {
+                Object[] row = new Object[]{
+                    d.getIdDestino(),
+                    d.getNombreDestino(),
+                    d.getDescripcion(),
+                    d.getEstado()
+                };
+                modeloTablaDestinos.addRow(row);
+            }
         }
     }
-        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel1 = new javax.swing.JLabel();
-        scrollPane1 = new java.awt.ScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbdestino = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
         btnCrear = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Gestion de Destinos");
+        jPanel1.setBackground(new java.awt.Color(51, 153, 255));
 
         tbdestino.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID_Destino", "Nombre Destino", "Descripción"
+                "ID_Destino", "Nombre Destino", "Descripción", "Estado"
             }
         ));
         jScrollPane2.setViewportView(tbdestino);
 
-        scrollPane1.add(jScrollPane2);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Gestion de Destinos");
+
+        btnVolver.setText("VOLVER");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -90,57 +114,76 @@ public class GestionDestino extends javax.swing.JFrame {
             }
         });
 
-        btnVolver.setText("<-");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(218, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109)
+                .addComponent(btnVolver)
+                .addGap(63, 63, 63))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(152, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(236, 236, 236)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVolver)
-                .addGap(28, 28, 28))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVolver))
-                .addGap(42, 42, 42)
-                .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(330, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         FormularioDestino formulario = new FormularioDestino(this, true);
-        formulario.setModoEdicion(false, null);
+        formulario.setModoEdicion(true, null);
         formulario.setVisible(true);
-        cargarDestinosEnTabla(); 
+        cargarDestinosEnTabla();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -150,34 +193,54 @@ public class GestionDestino extends javax.swing.JFrame {
             return;
         }
 
-        int idDestino = (int) modeloTablaDestinos.getValueAt(selectedRow, 0); // Asumiendo ID en columna 0
-        String nombreDestino = (String) modeloTablaDestinos.getValueAt(selectedRow, 1); // Asumiendo Nombre en columna 1
+        int idDestino = (int) modeloTablaDestinos.getValueAt(selectedRow, 0);
+        String nombreDestino = (String) modeloTablaDestinos.getValueAt(selectedRow, 1);
+        String estadoDestino = (String) modeloTablaDestinos.getValueAt(selectedRow, 3); // <--- Get Estado for confirmation
 
         int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que desea eliminar el destino: " + nombreDestino + " (ID: " + idDestino + ")?",
-                "Confirmar Eliminación",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
+            this,
+            "¿Está seguro de que desea eliminar el destino: " + nombreDestino + " (ID: " + idDestino + ", Estado: " + estadoDestino + ")?", // <--- Added Estado
+            "Confirmar Eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirm == JOptionPane.YES_OPTION) {
             boolean exito = destinoDAO.eliminarDestino(idDestino);
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Destino eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cargarDestinosEnTabla(); // Recargar la tabla inmediatamente
+                cargarDestinosEnTabla();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al eliminar el destino. Consulte la consola para más detalles.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int selectedRow = tbdestino.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un destino de la tabla para modificar.", "Ningún Destino Seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    
-        public static void main(String args[]) {
+        int idDestino = (int) modeloTablaDestinos.getValueAt(selectedRow, 0);
+
+        Destino destinoAModificar = destinoDAO.obtenerDestinoPorId(idDestino);
+
+        if (destinoAModificar != null) {
+            FormularioDestino formulario = new FormularioDestino(this, true);
+            formulario.setModoEdicion(false, destinoAModificar);
+            formulario.setVisible(true);
+            cargarDestinosEnTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo cargar el destino para modificación.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -200,8 +263,25 @@ public class GestionDestino extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GestionDestino().setVisible(true);
@@ -209,15 +289,14 @@ public class GestionDestino extends javax.swing.JFrame {
         });
     }
 
-        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private java.awt.ScrollPane scrollPane1;
     private javax.swing.JTable tbdestino;
     // End of variables declaration//GEN-END:variables
 }

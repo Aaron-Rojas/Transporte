@@ -8,15 +8,18 @@ import java.util.List;
 
 public class BusDAO {
 
-    // Guardar nuevo bus (solo placa y estado)
+    // Guardar nuevo bus (con ID proporcionado)
     public boolean guardarBus(Bus bus) {
-        String sql = "INSERT INTO bus (Placa, EstadoBus) VALUES (?, ?)";
+        // We now include id_Bus in the INSERT statement
+        String sql = "INSERT INTO bus (id_Bus, Placa, Capacidad, EstadoBus) VALUES (?, ?, ?, ?)"; 
 
         try (Connection con = Conexión.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, bus.getPlaca());
-            ps.setString(2, bus.getEstado());
+            ps.setInt(1, bus.getIdBus());     // Set ID manually
+            ps.setString(2, bus.getPlaca());
+            ps.setInt(3, bus.getCapacidad()); 
+            ps.setString(4, bus.getEstado()); 
 
             return ps.executeUpdate() > 0;
 
@@ -26,10 +29,10 @@ public class BusDAO {
         }
     }
 
-    // Obtener todos los buses (solo id, placa y estado)
+    // Obtener todos los buses (id, placa, capacidad y estado) - No change needed
     public List<Bus> obtenerTodosLosBuses() {
         List<Bus> buses = new ArrayList<>();
-        String sql = "SELECT id_Bus, Placa, EstadoBus FROM bus";
+        String sql = "SELECT id_Bus, Placa, Capacidad, EstadoBus FROM bus"; 
 
         try (Connection conn = Conexión.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -39,6 +42,7 @@ public class BusDAO {
                 Bus bus = new Bus();
                 bus.setIdBus(rs.getInt("id_Bus"));
                 bus.setPlaca(rs.getString("Placa"));
+                bus.setCapacidad(rs.getInt("Capacidad"));
                 bus.setEstado(rs.getString("EstadoBus"));
                 buses.add(bus);
             }
@@ -50,16 +54,17 @@ public class BusDAO {
         return buses;
     }
 
-    // Actualizar bus (placa y estado)
+    // Actualizar bus (placa, capacidad y estado) - No change needed, it already uses WHERE id_Bus = ?
     public boolean actualizarBus(Bus bus) {
-        String sql = "UPDATE bus SET Placa = ?, EstadoBus = ? WHERE id_Bus = ?";
+        String sql = "UPDATE bus SET Placa = ?, Capacidad = ?, EstadoBus = ? WHERE id_Bus = ?"; 
 
         try (Connection conn = Conexión.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, bus.getPlaca());
-            ps.setString(2, bus.getEstado());
-            ps.setInt(3, bus.getIdBus());
+            ps.setInt(2, bus.getCapacidad()); 
+            ps.setString(3, bus.getEstado()); 
+            ps.setInt(4, bus.getIdBus()); 
 
             return ps.executeUpdate() > 0;
 
@@ -69,7 +74,7 @@ public class BusDAO {
         }
     }
 
-    // Eliminar bus por ID
+    // Eliminar bus por ID - No change needed
     public boolean eliminarBus(int idBus) {
         String sql = "DELETE FROM bus WHERE id_Bus = ?";
 
@@ -85,7 +90,7 @@ public class BusDAO {
         }
     }
 
-    // Verificar si una placa ya existe (opcional)
+    // Verify if a plate exists (optional) - No change needed
     public boolean existePlaca(String placa, int idBusActual) {
         String sql = "SELECT COUNT(*) FROM bus WHERE Placa = ? AND id_Bus <> ?";
 
@@ -104,6 +109,22 @@ public class BusDAO {
             System.out.println("Error al validar placa: " + e.getMessage());
         }
 
+        return false;
+    }
+    
+    // NEW: Check if a bus ID already exists
+    public boolean existeIdBus(int idBus) {
+        String sql = "SELECT COUNT(*) FROM bus WHERE id_Bus = ?";
+        try (Connection con = Conexión.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idBus);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar existencia de ID de bus: " + e.getMessage());
+        }
         return false;
     }
 }

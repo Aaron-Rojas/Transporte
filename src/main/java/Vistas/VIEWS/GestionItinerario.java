@@ -4,6 +4,7 @@
  */
 package Vistas.VIEWS;
 import Controlador.NavegacionController;
+import Modelo.Bus;
 import Vistas.VIEWS.CrearReserva;
 
 public class GestionItinerario extends javax.swing.JFrame {
@@ -49,6 +50,7 @@ public class GestionItinerario extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         bntDestino = new javax.swing.JButton();
+        btnBus = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -229,7 +231,16 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bntDestino);
-        bntDestino.setBounds(690, 150, 130, 40);
+        bntDestino.setBounds(690, 160, 130, 40);
+
+        btnBus.setText("Lista Buses");
+        btnBus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBus);
+        btnBus.setBounds(690, 220, 130, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,6 +308,13 @@ if (comboBox.getSelectedIndex() > 0) {
         
     }//GEN-LAST:event_bntDestinoActionPerformed
 
+    private void btnBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusActionPerformed
+         ListaBuses listaBusesFrame = new ListaBuses();
+        
+        // Make the ListaBuses frame visible
+        listaBusesFrame.setVisible(true);
+    }//GEN-LAST:event_btnBusActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -350,6 +368,7 @@ if (comboBox.getSelectedIndex() > 0) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntDestino;
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnBus;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnHome;
