@@ -4,49 +4,93 @@
  */
 package Vistas.VIEWS;
 
-import Controlador.NavegacionController;
 import Modelo.Bus;
-import Vistas.VIEWS.FormularioBuses;
 import dao.BusDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Controlador.NavegacionController;
+
 
 public class ListaBuses extends javax.swing.JFrame {
 
 public ListaBuses() {
     initComponents();  // Primero: inicializa componentes (generado por NetBeans)
     cargarBuses();
+    configurarNavegacion();
     }
 
-  public void cargarBuses() {
-    BusDAO dao = new BusDAO();
-    List<Bus> lista = dao.obtenerTodosLosBuses();
-    
-    // Columnas que se mostrarán
-    String[] columnas = {"ID", "Placa", "Estado"};
-    DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-    tablaBuses.setModel(modelo);
+  private void configurarNavegacion() {
+        NavegacionController.configurarBotones(
+            btnHome, 
+            btnClientes, 
+            btnReservas, 
+            btnProveedores, 
+            btnReportes, 
+            btnConfiguracion, 
+            this
+        );
+    }
 
-    for (Bus bus : lista) {
-        Object[] fila = new Object[3];
-        fila[0] = bus.getIdBus();
-        fila[1] = bus.getPlaca();
-        fila[2] = bus.getEstado();
-        modelo.addRow(fila);
+     private void cargarBuses() {
+        DefaultTableModel model = new DefaultTableModel();
+        // Define column names including "Capacidad"
+        model.setColumnIdentifiers(new Object[]{"ID", "Placa", "Capacidad", "Estado"}); 
+        
+        BusDAO busDAO = new BusDAO();
+        List<Bus> buses = busDAO.obtenerTodosLosBuses();
+        
+        for (Bus bus : buses) {
+            model.addRow(new Object[]{
+                bus.getIdBus(), 
+                bus.getPlaca(), 
+                bus.getCapacidad(), // Add capacidad
+                bus.getEstado()
+            });
+        }
+        tablaBuses.setModel(model); // Assuming your table is named jTableBuses
+    }
+
+    // Add this method to handle editing a bus (e.g., when a row is double-clicked or "Edit" button clicked)
+    private void editarBusSeleccionado() {
+        int selectedRow = tablaBuses.getSelectedRow();
+        if (selectedRow >= 0) {
+            DefaultTableModel model = (DefaultTableModel) tablaBuses.getModel();
+            int idBus = (int) model.getValueAt(selectedRow, 0);
+            String placa = (String) model.getValueAt(selectedRow, 1);
+            int capacidad = (int) model.getValueAt(selectedRow, 2); // Get capacidad
+            String estado = (String) model.getValueAt(selectedRow, 3);
+
+            FormularioBus formulario = new FormularioBus();
+            formulario.setDatosBus(idBus, placa, capacidad, estado);
+            formulario.setVisible(true);
+            this.dispose(); // Close the current list window
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un bus para editar.", "Ningún bus seleccionado", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
-
-    NavegacionController.configurarBotones(
-        btnHome, 
-        btnClientes, 
-        btnReservas, 
-        btnProveedores, 
-        btnReportes, 
-        btnConfiguracion, 
-        this
-    );
-}
+    // Add this method to handle deleting a bus
+    private void eliminarBusSeleccionado() {
+        int selectedRow = tablaBuses.getSelectedRow();
+        if (selectedRow >= 0) {
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar este bus?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                DefaultTableModel model = (DefaultTableModel) tablaBuses.getModel();
+                int idBus = (int) model.getValueAt(selectedRow, 0);
+                
+                BusDAO busDAO = new BusDAO();
+                if (busDAO.eliminarBus(idBus)) {
+                    JOptionPane.showMessageDialog(this, "Bus eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    cargarBuses(); // Refresh the table
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo eliminar el bus.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un bus para eliminar.", "Ningún bus seleccionado", JOptionPane.WARNING_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +107,6 @@ public ListaBuses() {
         jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnAceptar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaBuses = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -161,20 +204,15 @@ public ListaBuses() {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 460, 890, 90);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel3.setText("Para (destino), con fecha(dd/mm/aaaa):");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(240, 160, 390, 30);
-
         tablaBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID Bus", "Estado", "Placa"
+                "ID Bus", "Placa", "Estado", "Capacidad"
             }
         ));
         jScrollPane1.setViewportView(tablaBuses);
@@ -185,7 +223,7 @@ public ListaBuses() {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Lista de Buses:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(240, 130, 160, 30);
+        jLabel4.setBounds(240, 150, 160, 30);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -344,101 +382,86 @@ public ListaBuses() {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         int filaSeleccionada = tablaBuses.getSelectedRow();
+        int filaSeleccionada = tablaBuses.getSelectedRow();
 
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona un bus para eliminar.");
+            JOptionPane.showMessageDialog(this, 
+                "Por favor seleccione un bus para eliminar", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este bus?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        int confirmacion = JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro que desea eliminar este bus?", 
+            "Confirmar eliminación", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
-            int idBus = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString()); // ID_Bus
+            try {
+                DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
+                int idBus = (int) modelo.getValueAt(filaSeleccionada, 0);
 
-            BusDAO dao = new BusDAO();
-            boolean eliminado = dao.eliminarBus(idBus);
-
-            if (eliminado) {
-                JOptionPane.showMessageDialog(this, "Bus eliminado correctamente.");
-                cargarBuses(); // Recarga la tabla
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al eliminar el bus.");
+                BusDAO dao = new BusDAO();
+                if (dao.eliminarBus(idBus)) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Bus eliminado correctamente", 
+                        "Éxito", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                    cargarBuses();
+                } else {
+                    JOptionPane.showMessageDialog(this, 
+                        "No se pudo eliminar el bus", 
+                        "Error", 
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al eliminar bus: " + e.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBusActionPerformed
-        new FormularioBus().setVisible(true);
-        this.dispose(); // opcional
+       FormularioBus formulario = new FormularioBus();
+    formulario.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_btnAgregarBusActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
          int filaSeleccionada = tablaBuses.getSelectedRow();
 
-    // Verificar si se seleccionó una fila
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione una fila para editar.");
-        return;
-    }
-
-    DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
-
-    // Validar que las celdas de idBus, placa y estado no estén vacías
-    for (int i = 0; i <= 2; i++) {
-        if (modelo.getValueAt(filaSeleccionada, i) == null || modelo.getValueAt(filaSeleccionada, i).toString().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se puede editar. Una o más columnas están vacías.");
-            return;
-        }
-    }
-
-    try {
-        // Obtener los datos actuales
-        int idBus = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString()); // ID_Bus
-        String placaActual = modelo.getValueAt(filaSeleccionada, 1).toString(); // Placa
-        String estadoActual = modelo.getValueAt(filaSeleccionada, 2).toString(); // Estado
-
-        // Pedir los nuevos valores al usuario
-        String nuevaPlaca = JOptionPane.showInputDialog(this, "Editar Placa:", placaActual);
-        String nuevoEstado = JOptionPane.showInputDialog(this, "Editar Estado:", estadoActual);
-
-        // Validar que los valores no estén vacíos
-        if (nuevaPlaca == null || nuevoEstado == null || nuevaPlaca.trim().isEmpty() || nuevoEstado.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos.");
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor seleccione un bus para editar", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Crear objeto Bus actualizado
-        Bus busActualizado = new Bus();
-        busActualizado.setIdBus(idBus);
-        busActualizado.setPlaca(nuevaPlaca.trim());
-        busActualizado.setEstado(nuevoEstado.trim());
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
+            
+            int idBus = (int) modelo.getValueAt(filaSeleccionada, 0);
+            String placa = modelo.getValueAt(filaSeleccionada, 1).toString();
+            int capacidad = (int) modelo.getValueAt(filaSeleccionada, 2);
+            String estado = modelo.getValueAt(filaSeleccionada, 3).toString();
 
-        // Crear instancia de DAO
-        BusDAO dao = new BusDAO();
-
-        // Verificar que la nueva placa no esté siendo utilizada por otro bus (excepción del mismo bus)
-        if (dao.existePlaca(nuevaPlaca.trim(), idBus)) {
-            JOptionPane.showMessageDialog(this, "Ya existe un bus con esa placa.");
-            return;
+            FormularioBus formulario = new FormularioBus();
+            formulario.setDatosBus(idBus, placa, capacidad, estado);
+            formulario.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al preparar edición: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
         }
-
-        // Realizar la actualización en la base de datos
-        boolean actualizado = dao.actualizarBus(busActualizado);
-
-        // Informar si la actualización fue exitosa o no
-        if (actualizado) {
-            JOptionPane.showMessageDialog(this, "Bus actualizado correctamente.");
-            cargarBuses(); // Recarga la tabla de buses
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el bus.");
-        }
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al intentar editar el bus: " + e.getMessage());
-        e.printStackTrace();
-    }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
@@ -474,6 +497,30 @@ public ListaBuses() {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -497,7 +544,6 @@ public ListaBuses() {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

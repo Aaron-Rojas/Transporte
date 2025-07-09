@@ -148,7 +148,7 @@ public class ReporteHoteles extends javax.swing.JFrame {
         jPanel3.setBounds(0, 460, 890, 90);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel3.setText("Lista de Clientes");
+        jLabel3.setText("Lista de Hoteles");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(230, 140, 470, 40);
 

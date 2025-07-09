@@ -7,6 +7,7 @@ package Vistas.VIEWS;
 import Vistas.VIEWS.ConfirmacionReserva;
 import Controlador.NavegacionController;
 import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +20,7 @@ public class CrearReserva extends javax.swing.JFrame {
      */
     public CrearReserva() {
         initComponents();
-        setVisible(true); 
+         
         
                 NavegacionController.configurarBotones(
     btnHome,       // Botón Home
@@ -61,14 +62,14 @@ public class CrearReserva extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtAsiento = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         btnCalcularMonto = new javax.swing.JButton();
-        btnElegirBus = new javax.swing.JButton();
+        btnAsiento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -244,11 +245,11 @@ public class CrearReserva extends javax.swing.JFrame {
         jLabel7.setText("Fecha de viaje:");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(570, 170, 110, 20);
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(370, 260, 160, 30);
+        jPanel1.add(txtAsiento);
+        txtAsiento.setBounds(330, 360, 160, 30);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jLabel8.setText("Bus:");
+        jLabel8.setText("Asiento:");
         jPanel1.add(jLabel8);
         jLabel8.setBounds(250, 320, 90, 20);
 
@@ -280,14 +281,14 @@ public class CrearReserva extends javax.swing.JFrame {
         jPanel1.add(btnCalcularMonto);
         btnCalcularMonto.setBounds(680, 400, 169, 42);
 
-        btnElegirBus.setText("ELEGIR BUS");
-        btnElegirBus.addActionListener(new java.awt.event.ActionListener() {
+        btnAsiento.setText("Asiento");
+        btnAsiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnElegirBusActionPerformed(evt);
+                btnAsientoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnElegirBus);
-        btnElegirBus.setBounds(380, 330, 140, 23);
+        jPanel1.add(btnAsiento);
+        btnAsiento.setBounds(330, 320, 100, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -339,12 +340,24 @@ confirmacion.setVisible(true);
                 dispose(); // Cierra CrearReserva
     }//GEN-LAST:event_btnCalcularMontoActionPerformed
 
-    private void btnElegirBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirBusActionPerformed
-ListaBuses listaBuses = new ListaBuses();
-listaBuses.setVisible(true);
-                dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnElegirBusActionPerformed
+    private void btnAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsientoActionPerformed
+      asientos ventanaAsientos = new asientos();
+    ventanaAsientos.setVisible(true);
+    
+    // Esperar a que se cierre la ventana de asientos
+    ventanaAsientos.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            int numeroAsiento = asientos.getAsientoSeleccionado();
+            if (numeroAsiento > 0) {
+                txtAsiento.setText(String.valueOf(numeroAsiento));
+                // Opcional: limpiar la selección después de usarla
+                asientos.limpiarSeleccion();
+            }
+        }
+    });
+    
+    }//GEN-LAST:event_btnAsientoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,6 +400,22 @@ listaBuses.setVisible(true);
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -397,10 +426,10 @@ listaBuses.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAsiento;
     private javax.swing.JButton btnCalcularMonto;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
-    private javax.swing.JButton btnElegirBus;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
@@ -423,8 +452,8 @@ listaBuses.setVisible(true);
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField txtAsiento;
     // End of variables declaration//GEN-END:variables
 
     private void abrirFrame(String calcularMonto) {
