@@ -5,12 +5,15 @@ public class Bus {
     private String placa;
     private String estado;
 
+    private int capacidad; // Make sure this is present from previous correction
+
     public Bus() {
     }
 
-    public Bus(int idBus, String placa, String estado) {
+    public Bus(int idBus, String placa, int capacidad, String estado) {
         this.idBus = idBus;
         this.placa = placa;
+        this.capacidad = capacidad;
         this.estado = estado;
     }
 
@@ -37,5 +40,12 @@ public class Bus {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 }

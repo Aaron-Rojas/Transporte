@@ -44,15 +44,13 @@ public class FormularioBuses extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         btnConfiguracion = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
         btnReservas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,27 +133,6 @@ public class FormularioBuses extends javax.swing.JFrame {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 460, 890, 90);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
-        jLabel3.setText("Buses:");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 130, 350, 70);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "N°BUS", "N°ASIENTOS", "HORA DE SALIDA", "ESTADO", "SELEECIONAR"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(270, 210, 510, 220);
-
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
@@ -228,6 +205,11 @@ public class FormularioBuses extends javax.swing.JFrame {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Formulario de Buses");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(250, 130, 220, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -247,29 +229,29 @@ public class FormularioBuses extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfiguracionActionPerformed
-
-    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReportesActionPerformed
-
-    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProveedoresActionPerformed
-
-    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReservasActionPerformed
+    }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnClientesActionPerformed
 
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnHomeActionPerformed
+    }//GEN-LAST:event_btnReservasActionPerformed
+
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProveedoresActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -336,7 +318,5 @@ public class FormularioBuses extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

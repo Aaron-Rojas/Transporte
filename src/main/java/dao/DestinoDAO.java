@@ -1,8 +1,7 @@
-
 package dao;
 
 import Modelo.Destino;
-import Conexión.Conexión; 
+import Conexión.Conexión;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,71 +14,72 @@ public class DestinoDAO {
 
     // Método para agregar un nuevo destino
     public boolean agregarDestino(Destino destino) {
-        String sql = "INSERT INTO destino (NombreDestino, Descripcion) VALUES (?, ?)";
+        String sql = "INSERT INTO destino (NombreDestino, Descripcion, Estado) VALUES (?, ?, ?)"; // <--- Added Estado
         try (Connection conn = Conexión.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, destino.getNombreDestino());
             pstmt.setString(2, destino.getDescripcion());
+            pstmt.setString(3, destino.getEstado()); // <--- Set Estado
             int rowsAffected = pstmt.executeUpdate();
-            System.out.println("DEBUG DAO: Filas afectadas al agregar: " + rowsAffected); // Mensaje de depuración
+            System.out.println("DEBUG DAO: Filas afectadas al agregar: " + rowsAffected);
             return rowsAffected > 0;
         } catch (SQLException e) {
             System.err.println("Error SQL al añadir destino: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de la excepción
+            e.printStackTrace();
             return false;
         } catch (Exception e) {
             System.err.println("Error inesperado al añadir destino: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de cualquier otra excepción
+            e.printStackTrace();
             return false;
         }
     }
 
     // Método para actualizar un destino existente
     public boolean actualizarDestino(Destino destino) {
-        String sql = "UPDATE destino SET NombreDestino = ?, Descripcion = ? WHERE ID_Destino = ?";
+        String sql = "UPDATE destino SET NombreDestino = ?, Descripcion = ?, Estado = ? WHERE ID_Destino = ?"; // <--- Added Estado
         try (Connection conn = Conexión.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, destino.getNombreDestino());
             pstmt.setString(2, destino.getDescripcion());
-            pstmt.setInt(3, destino.getIdDestino());
+            pstmt.setString(3, destino.getEstado()); // <--- Set Estado
+            pstmt.setInt(4, destino.getIdDestino());
             int rowsAffected = pstmt.executeUpdate();
-            System.out.println("DEBUG DAO: Filas afectadas al actualizar: " + rowsAffected); // Mensaje de depuración
+            System.out.println("DEBUG DAO: Filas afectadas al actualizar: " + rowsAffected);
             return rowsAffected > 0;
         } catch (SQLException e) {
             System.err.println("Error SQL al actualizar destino: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de la excepción
+            e.printStackTrace();
             return false;
         } catch (Exception e) {
             System.err.println("Error inesperado al actualizar destino: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de cualquier otra excepción
+            e.printStackTrace();
             return false;
         }
     }
 
-    // Método para eliminar un destino por su ID
+    // Método para eliminar un destino por su ID (no cambia, no usa estado)
     public boolean eliminarDestino(int idDestino) {
         String sql = "DELETE FROM destino WHERE ID_Destino = ?";
         try (Connection conn = Conexión.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idDestino);
             int rowsAffected = pstmt.executeUpdate();
-            System.out.println("DEBUG DAO: Filas afectadas al eliminar: " + rowsAffected); // Mensaje de depuración
+            System.out.println("DEBUG DAO: Filas afectadas al eliminar: " + rowsAffected);
             return rowsAffected > 0;
         } catch (SQLException e) {
             System.err.println("Error SQL al eliminar destino: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de la excepción
+            e.printStackTrace();
             return false;
         } catch (Exception e) {
             System.err.println("Error inesperado al eliminar destino: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de cualquier otra excepción
+            e.printStackTrace();
             return false;
         }
     }
 
-    
     // Método para obtener un destino por su ID
     public Destino obtenerDestinoPorId(int idDestino) {
-        String sql = "SELECT ID_Destino, NombreDestino, Descripcion FROM destino WHERE ID_Destino = ?";
+        String sql = "SELECT ID_Destino, NombreDestino, Descripcion, Estado FROM destino WHERE ID_Destino = ?"; // <--- Added Estado
         try (Connection conn = Conexión.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idDestino);
@@ -88,7 +88,8 @@ public class DestinoDAO {
                     return new Destino(
                             rs.getInt("ID_Destino"),
                             rs.getString("NombreDestino"),
-                            rs.getString("Descripcion")
+                            rs.getString("Descripcion"),
+                            rs.getString("Estado") // <--- Get Estado
                     );
                 }
             }
@@ -98,11 +99,11 @@ public class DestinoDAO {
         }
         return null;
     }
-       
-     // Método para obtener todos los destinos
+
+    // Método para obtener todos los destinos
     public List<Destino> obtenerTodosLosDestinos() {
         List<Destino> destinos = new ArrayList<>();
-        String sql = "SELECT ID_Destino, NombreDestino, Descripcion FROM destino";
+        String sql = "SELECT ID_Destino, NombreDestino, Descripcion, Estado FROM destino"; // <--- Added Estado
         try (Connection conn = Conexión.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -110,17 +111,18 @@ public class DestinoDAO {
                 destinos.add(new Destino(
                         rs.getInt("ID_Destino"),
                         rs.getString("NombreDestino"),
-                        rs.getString("Descripcion")
+                        rs.getString("Descripcion"),
+                        rs.getString("Estado") // <--- Get Estado
                 ));
             }
         } catch (SQLException e) {
             System.err.println("Error SQL al obtener todos los destinos: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de la excepción
+            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error inesperado al obtener todos los destinos: " + e.getMessage());
-            e.printStackTrace(); // Imprime la traza completa de cualquier otra excepción
+            e.printStackTrace();
         }
         return destinos;
     }
-} 
+}
     
