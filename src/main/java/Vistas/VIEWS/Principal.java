@@ -13,7 +13,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         
        this.usuarioActual= usuarioLogeado ;
-      
+    /*  
         NavegacionController.configurarBotones(
     btnHome,       // Botón Home
     btnClientes,   // Botón Clientes
@@ -22,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
     btnReportes,   // Botón Reportes
     btnConfiguracion, // Botón Configuración
     this    // Referencia al frame actual (this)
-    );
+    );*/
         
       this.setLocationRelativeTo(null);
 
@@ -295,6 +295,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
+        GestionClientes FrameCliente = new GestionClientes ();
+        FrameCliente.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
