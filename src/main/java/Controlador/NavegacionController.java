@@ -27,11 +27,11 @@ public class NavegacionController {
             } else if (e.getSource() == btnClientes) {
   //              new GestionClientes().setVisible(true);
             } else if (e.getSource() == btnReservas) {
-                new GestionItinerario().setVisible(true);
+  //             new GestionItinerario().setVisible(true);
             } else if (e.getSource() == btnProveedores) {
     //            new GestionProveedores().setVisible(true);
             } else if (e.getSource() == btnReportes) {
-                new Reportes().setVisible(true);
+ //               new Reportes().setVisible(true);
             } else if (e.getSource() == btnConfiguracion) {
                 System.out.println("Intentando abrir ConfiguracionFrame"); // Mensaje de depuración
     Configuración configFrame = new Configuración();

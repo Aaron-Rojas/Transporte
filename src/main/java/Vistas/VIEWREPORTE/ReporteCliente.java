@@ -5,7 +5,9 @@
 package Vistas.VIEWREPORTE;
 
 import Controlador.NavegacionController;
+import Modelo.Usuario;
 import Vistas.VIEWS.Reportes;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,11 +15,12 @@ import Vistas.VIEWS.Reportes;
  */
 public class ReporteCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
-    public ReporteCliente() {
+    private Usuario usuarioActual;
+    
+    public ReporteCliente(Usuario usuarioLogeado) {
+        this.usuarioActual= usuarioLogeado;
         initComponents();
+        /*
         NavegacionController.configurarBotones(
             btnHome, 
             btnClientes, 
@@ -27,6 +30,15 @@ public class ReporteCliente extends javax.swing.JFrame {
             btnConfiguracion, 
             this
         );
+        */
+        
+         
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("Sistema de User");
+        }
     }
 
     /**
@@ -303,10 +315,28 @@ public class ReporteCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-Reportes reportes = new Reportes();
-    reportes.setVisible(true); // mostrar frame Reportes
-    this.dispose(); 
         // TODO add your handling code here:
+
+                       
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                Reportes GI = new  Reportes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reportes.");
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
+            }
+            }else{
+             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+                  
+            }
+        
+         
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
@@ -333,47 +363,7 @@ Reportes reportes = new Reportes();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReporteCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReporteCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReporteCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReporteCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReporteCliente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;

@@ -6,6 +6,7 @@ package Vistas.VIEWREPORTE;
 
 import Vistas.VIEWS.Reportes;
 import Controlador.NavegacionController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,9 +14,7 @@ import Controlador.NavegacionController;
  */
 public class ReporteActividades extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+   private Modelo usuarioLogeado;
     public ReporteActividades() {
         initComponents();
         NavegacionController.configurarBotones(
@@ -292,9 +291,26 @@ public class ReporteActividades extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-Reportes reportes = new Reportes();
-    reportes.setVisible(true); // mostrar frame Reportes
-    this.dispose(); 
+               
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                Reportes GI = new  Reportes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reportes.");
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
+            }
+            }else{
+             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+                  
+            }
+        
+         
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
 
