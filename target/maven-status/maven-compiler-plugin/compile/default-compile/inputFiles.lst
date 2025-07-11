@@ -1,60 +1,60 @@
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioViajeProgramado.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\ItinerarioViajeDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteViajes.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ItinerarioDeAlojamiento.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionViajeProgramado.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Hotel.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\UsuarioDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Configuración.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ItinerarioDeViajesPorBuses.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionHotel.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\DestinoDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Destino.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionItinerario.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioBus.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ResultadoBusqueda.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionProveedores.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Login.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioHotel.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Cliente.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteReserva.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\asientos.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteActividades.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWCONFIGURACION\Parametros.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioDestino.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Bus.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Principal.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Proveedor.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ConfirmacionReserva.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\ClienteDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Panel123.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\HotelDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\ViajeProgramado.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteHoteles.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\ProveedorDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioProveedor.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReporteCliente.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ListaBuses.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionViajeItinerario.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\RolDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Rol.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\ItinerarioViaje.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\Reportes.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionClientes.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioActividades.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioViajeItinerario.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\BusDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\CrearReserva.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\FormularioBuses.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWREPORTE\ReportePagos.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Conexión\Conexión.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\ItinerarioDeActividad.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Usuario.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\DASH\Main.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\GestionDestino.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWCONFIGURACION\GestioUsuarios.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Modelo\Asiento.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Controlador\NavegacionController.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWCONFIGURACION\Seguridad.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\dao\ViajeProgramadoDAO.java
-C:\Users\User\OneDrive\Documentos\Ciclo 6\Integrador\INTEGRADOR555\src\main\java\Vistas\VIEWS\CreacionCliente.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\RolDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionViajeProgramado.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Rol.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionItinerario.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWREPORTE\ReporteHoteles.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\ConfirmacionReserva.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\Reportes.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWREPORTE\ReporteActividades.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\Configuración.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\ViajeProgramadoDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\ItinerarioViajeDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\CrearReserva.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Proveedor.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\HotelDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioHotel.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\UsuarioDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWCONFIGURACION\Seguridad.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWREPORTE\ReporteCliente.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionHotel.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWREPORTE\ReporteReserva.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\asientos.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\CreacionCliente.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\ClienteDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWREPORTE\ReporteViajes.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\ProveedorDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioBuses.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Controlador\NavegacionController.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\ListaBuses.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioActividades.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Cliente.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWREPORTE\ReportePagos.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionDestino.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioViajeItinerario.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Hotel.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\Login.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWCONFIGURACION\GestioUsuarios.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionViajeItinerario.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Usuario.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWCONFIGURACION\Parametros.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\ItinerarioViaje.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionProveedores.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\Principal.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioBus.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioDestino.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Bus.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\GestionClientes.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\DestinoDAO.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Asiento.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\DASH\Main.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\ViajeProgramado.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\ResultadoBusqueda.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\ItinerarioDeViajesPorBuses.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\ItinerarioDeAlojamiento.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioViajeProgramado.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\Panel123.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\ItinerarioDeActividad.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Modelo\Destino.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Conexión\Conexión.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\Vistas\VIEWS\FormularioProveedor.java
+C:\Users\lv248\Documents\NetBeansProjects\Transporte-main\Transporte-main\src\main\java\dao\BusDAO.java

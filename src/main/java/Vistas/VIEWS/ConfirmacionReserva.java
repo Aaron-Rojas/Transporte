@@ -285,12 +285,15 @@ public class ConfirmacionReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnRegresarACrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarACrearActionPerformed
-        CrearReserva nuevaVentana = new CrearReserva();
-        nuevaVentana.setVisible(true); // Mostrar la nueva ventana
-        this.dispose();        
+//        CrearReserva nuevaVentana = new CrearReserva();
+//        nuevaVentana.setVisible(true); // Mostrar la nueva ventana
+//        this.dispose();        
+//AARON ME DIJO QUE LO IGNORARA
     }//GEN-LAST:event_btnRegresarACrearActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
