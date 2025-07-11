@@ -277,9 +277,11 @@ public class GestionItinerario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CrearReserva crearReserva = new CrearReserva(); // Abrimos el nuevo frame
-        crearReserva.setVisible(true);
-        dispose(); // Cerramos el actual
+//        CrearReserva crearReserva = new CrearReserva(); // Abrimos el nuevo frame
+//        crearReserva.setVisible(true);
+//        dispose(); // Cerramos el actual
+
+//AARON ME DIJO QUE LO IGNORARA
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxActionPerformed

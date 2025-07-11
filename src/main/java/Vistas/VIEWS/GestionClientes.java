@@ -33,9 +33,19 @@ public class GestionClientes extends javax.swing.JFrame {
             this
         );
         */
+        
+        
     this.setLocationRelativeTo(null);
     tbClientes.setDefaultEditor(Object.class, null); //Quitar que la tabla sea editable
     clienteDAO = new ClienteDAO();
+    
+    
+     if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("Sistema de User");
+        }
     configurarTablaClientes();
     cargarClientesEnTabla();
     }
@@ -456,7 +466,10 @@ public class GestionClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        // TODO add your handling code here:
+
+
+
+        
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
