@@ -9,8 +9,11 @@ import Vistas.VIEWS.Configuración;
 
 import Modelo.Usuario;
 import Modelo.Rol;
+import Vistas.VIEWS.GestionClientes;
+import Vistas.VIEWS.GestionItinerario;
 import dao.UsuarioDAO;
 import dao.RolDAO;
+import javax.swing.JOptionPane;
 
 
 public class GestioUsuarios extends javax.swing.JFrame {
@@ -18,7 +21,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
     private Usuario usuarioActual;
     
     public GestioUsuarios(Usuario usuarioLogeado) {
+        
+        this.usuarioActual = usuarioLogeado;
         initComponents();
+        /*
         NavegacionController.configurarBotones(
             btnHome, 
             btnClientes, 
@@ -28,7 +34,7 @@ public class GestioUsuarios extends javax.swing.JFrame {
             btnConfiguracion, 
             this
         );
-        this.usuarioActual = usuarioLogeado;
+        */
         this.setLocationRelativeTo(null);
         if (usuarioActual != null && usuarioActual.getRol().getNombreRol() !=null){
             setTitle("Gestión de Usuarios"+": "+usuarioActual.getRol().getNombreRol()+": "+usuarioActual.getNombreCompleto());
@@ -335,10 +341,61 @@ public class GestioUsuarios extends javax.swing.JFrame {
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
         // TODO add your handling code here:
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionItinerario GI = new  GestionItinerario (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestión de Itinerario.");
+                return;
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionItinerario GI = new  GestionItinerario (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión de Itinerario.");
+                return; 
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Itinerariopor rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnReservasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestión de Clientes.");
+                return;
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión de Clientes.");
+                return;
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+                    
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -356,52 +413,7 @@ public class GestioUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestioUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestioUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestioUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestioUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Modelo.Rol rolDummyAdmin = new Modelo.Rol(1,"admin","Rol de prueba");
-                Usuario usuarioDePrueba = new Usuario(100, "Admin Prueba", "admin@test.com","pass", "activo", rolDummyAdmin.getIdRol(), rolDummyAdmin);
-                
-                
-                new GestioUsuarios(usuarioDePrueba).setVisible(true);
-            }
-        });
-    }
-
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;

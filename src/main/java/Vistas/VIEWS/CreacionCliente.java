@@ -2,40 +2,93 @@
 package Vistas.VIEWS;
 
 import Conexión.Conexión;
-import Controlador.NavegacionController;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
 import dao.ClienteDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 
-public class CreacionCliente extends javax.swing.JFrame {
+public class CreacionCliente extends javax.swing.JDialog {
 
     private ClienteDAO clienteDAO;
     private GestionClientes padreGestionClientes;
     private Cliente clienteAEditar;
     
     
-    public CreacionCliente(GestionClientes padre) {
+    public CreacionCliente(JFrame padre, GestionClientes gestionClientesPadre) {
+    super(padre,true);
     initComponents();
     
-    this.padreGestionClientes = padre;
-    this.clienteDAO = new ClienteDAO();
-    this.setLocationRelativeTo(null);
+    this.padreGestionClientes = gestionClientesPadre;
+    this.clienteDAO= new ClienteDAO();
+    this.setLocationRelativeTo(padre);
     jLabel3.setText("Crear Cliente");
     btn_crearCliente.setText("Crear Cliente");
+    addToggleButtonActionListener();
+
     }
     
+    public CreacionCliente(JFrame padre, GestionClientes gestionClientesPadre, Cliente cliente) {
+        this(padre,gestionClientesPadre); // Llama al primer constructor para inicializar componentes, DAO, etc.
+        this.clienteAEditar = cliente; // Asigna el cliente que se va a editar
+        
+        // Rellenar los campos con los datos del cliente
+        txt_dni.setText(cliente.getDni());
+        txt_nombre.setText(cliente.getNombreCompleto());
+        txt_telefono.setText(cliente.getTelefono());
+        txt_email.setText(cliente.getEmail());
+        txt_preferencias.setText(cliente.getPreferencias());
 
+        // Cambiar el texto del botón y el título para indicar EDICIÓN
+        jLabel3.setText("Editar Cliente");
+        btn_crearCliente.setText("Guardar Cambios");
+         
+    }
 
+    private void updateToggleButtonText(boolean isActive) {
+        if (isActive) {
+            ToggleButtonActivo.setText("Activo");
+        } else {
+            ToggleButtonActivo.setText("Inactivo");
+        }
+        
+    }
+
+    private void addToggleButtonActionListener() {
+        if (ToggleButtonActivo != null) {
+            ToggleButtonActivo.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    boolean estaActivo = ToggleButtonActivo.isSelected();
+                    // Update the text immediately when the state changes
+                    updateToggleButtonText(estaActivo);
+
+                    if (clienteAEditar != null) {
+                        clienteAEditar.setActivo(estaActivo);
+                        // If you want to update the DB immediately on toggle
+                        clienteDAO.actualizarCliente(clienteAEditar);
+                        JOptionPane.showMessageDialog(null, "Estado del cliente actualizado a: " + (estaActivo ? "Activo" : "Inactivo"));
+                    } else {
+                        // Handle case for new client if you want immediate DB update
+                        // (Though usually, new clients are saved via the "Crear Cliente" button)
+                        // For a new client, this state will be used when btn_crearCliente is clicked.
+                    }
+                }
+            });
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        ToggleButtonActivo = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -59,11 +112,21 @@ public class CreacionCliente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
         btn_crearCliente = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
+
+        ToggleButtonActivo.setText("Activo");
+        ToggleButtonActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ToggleButtonActivoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ToggleButtonActivo);
+        ToggleButtonActivo.setBounds(560, 410, 130, 23);
 
         jPanel2.setBackground(new java.awt.Color(8, 8, 100));
 
@@ -217,9 +280,9 @@ public class CreacionCliente extends javax.swing.JFrame {
         jLabel5.setBounds(570, 180, 140, 40);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel6.setText("Preferencia:");
+        jLabel6.setText("Estado:");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(250, 400, 120, 27);
+        jLabel6.setBounds(490, 400, 120, 27);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel7.setText("Telefono:");
@@ -236,7 +299,7 @@ public class CreacionCliente extends javax.swing.JFrame {
 
         txt_preferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
         jPanel1.add(txt_preferencias);
-        txt_preferencias.setBounds(370, 400, 280, 30);
+        txt_preferencias.setBounds(320, 400, 150, 30);
 
         txt_dni.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
         jPanel1.add(txt_dni);
@@ -261,7 +324,12 @@ public class CreacionCliente extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_crearCliente);
-        btn_crearCliente.setBounds(690, 410, 170, 40);
+        btn_crearCliente.setBounds(710, 410, 170, 40);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel9.setText("Preferencia:");
+        jPanel1.add(jLabel9);
+        jLabel9.setBounds(210, 400, 120, 27);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -282,21 +350,7 @@ public class CreacionCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public CreacionCliente(GestionClientes padre, Cliente cliente) {
-        this(padre); // Llama al primer constructor para inicializar componentes, DAO, etc.
-        this.clienteAEditar = cliente; // Asigna el cliente que se va a editar
-        
-        // Rellenar los campos con los datos del cliente
-        txt_dni.setText(cliente.getDni());
-        txt_nombre.setText(cliente.getNombreCompleto());
-        txt_telefono.setText(cliente.getTelefono());
-        txt_email.setText(cliente.getEmail());
-        txt_preferencias.setText(cliente.getPreferencias());
 
-        // Cambiar el texto del botón y el título para indicar EDICIÓN
-        jLabel3.setText("Editar Cliente");
-        btn_crearCliente.setText("Guardar Cambios");
-    }
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
@@ -340,7 +394,7 @@ public class CreacionCliente extends javax.swing.JFrame {
 
         // 3. Lógica para CREAR o ACTUALIZAR <-- Lógica diferenciadora
         if (clienteAEditar == null) { // Si clienteAEditar es null, estamos en modo CREACIÓN
-            Cliente nuevoCliente = new Cliente(0, dni, nombreCompleto, telefono, email, preferencias); // El ID es 0 o un valor placeholder para un nuevo cliente
+            Cliente nuevoCliente = new Cliente(dni, nombreCompleto, telefono, email, preferencias); // El ID es 0 o un valor placeholder para un nuevo cliente
             exitoOperacion = clienteDAO.guardarCliente(nuevoCliente);
             if (exitoOperacion) {
                 JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -442,7 +496,7 @@ public boolean eliminarCliente(int idCliente) {
 
 
 
-  // Variables declaration - do not modify                     
+  /* Variables declaration - do not modify                     
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnHome;
@@ -470,11 +524,29 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration                   
 
-
     }//GEN-LAST:event_btn_crearClienteActionPerformed
+*/
+    private void ToggleButtonActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToggleButtonActivoActionPerformed
+        boolean estaActivo = ToggleButtonActivo.isSelected();
+        // Update the button text immediately when the state changes
+        updateToggleButtonText(estaActivo); // Call the helper method
 
-/*
+        if (clienteAEditar != null) {
+            clienteAEditar.setActivo(estaActivo);
+            // Actualizar el estado del cliente en la base de datos
+            clienteDAO.actualizarCliente(clienteAEditar); // O el método correspondiente
+            JOptionPane.showMessageDialog(null, "Estado del cliente actualizado a: " + (estaActivo ? "Activo" : "Inactivo"));
+        } else {
+            // If it's a new client, you might just store the state
+            // in a temporary client object or a variable until the "Crear Cliente" button is pressed.
+            // For example: this.nuevoClienteActivoEstado = estaActivo;
+            JOptionPane.showMessageDialog(null, "El estado de 'Activo' para el nuevo cliente es: " + (estaActivo ? "Activo" : "Inactivo"));
+        }
+    }//GEN-LAST:event_ToggleButtonActivoActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ToggleButtonActivo;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnHome;
@@ -491,6 +563,7 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -501,4 +574,3 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 }
-*/
