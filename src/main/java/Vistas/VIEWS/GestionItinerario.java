@@ -1,4 +1,3 @@
-
 package Vistas.VIEWS;
 import Controlador.NavegacionController;
 import Modelo.Bus;
@@ -14,12 +13,13 @@ public class GestionItinerario extends javax.swing.JFrame {
 
     private Usuario usuarioActual; 
     private Cliente clienteSeleccionado;
+    private ClienteDAO clienteDAO;
     
     public GestionItinerario(Usuario usuarioLogeado) {
         this.usuarioActual = usuarioLogeado;
+        initComponents();
         cargarClientesEnComboBox();
 
-        initComponents();
  /*       NavegacionController.configurarBotones(
             btnHome, 
             btnClientes, 
@@ -31,6 +31,7 @@ public class GestionItinerario extends javax.swing.JFrame {
         );
   */      
          this.setLocationRelativeTo(null);
+         this.clienteDAO = new ClienteDAO();
     
          if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
@@ -167,7 +168,7 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbClientes);
-        cmbClientes.setBounds(320, 260, 72, 22);
+        cmbClientes.setBounds(260, 260, 190, 22);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -281,9 +282,10 @@ public class GestionItinerario extends javax.swing.JFrame {
 
     private void cargarClientesEnComboBox() {
         DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
+        model.addElement(null);
+        
         ClienteDAO clienteDAO = new ClienteDAO(); // Instancia tu DAO
-        List<Cliente> clientes = clienteDAO.obtenerTodosLosClientes(); 
-
+        List<Cliente> clientes = clienteDAO.obtenerClientesActivos();
         if (clientes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se encontraron clientes en la BD", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -304,18 +306,22 @@ public class GestionItinerario extends javax.swing.JFrame {
 
     private void cmbClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClientesActionPerformed
         // TODO add your handling code here:
-                
-//        clienteSeleccionado = (Cliente) cmbClientes.getSelectedItem();
-//        if (clienteSeleccionado != null) {
-//            System.out.println("Cliente seleccionado: " + clienteSeleccionado.getNombre() + " (ID: " + clienteSeleccionado.getId());
-//            // Puedes habilitar botones de "Seleccionar Bus", "Seleccionar Hotel", etc.
-//            // btnSeleccionarBus.setEnabled(true);
-//            // btnSeleccionarHotel.setEnabled(true);
-//        } else {
-//            // Si selecciona la opción nula o no selecciona nada
-//            // btnSeleccionarBus.setEnabled(false);
-//            // btnSeleccionarHotel.setEnabled(false);
-//        }
+        clienteSeleccionado = (Cliente) cmbClientes.getSelectedItem();
+        if (clienteSeleccionado != null) {
+        int confirmacion = JOptionPane.showConfirmDialog(
+    null,
+    "Selección para Iniciar un Itinerario a: " + clienteSeleccionado.getNombreCompleto(), // Tu mensaje
+    "Confirmación", 
+    JOptionPane.YES_NO_OPTION );
+
+        // Aquí puedes añadir tu lógica para manejar la respuesta del usuario
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            System.out.println("Usuario confirmó iniciar itinerario." + clienteSeleccionado.getNombreCompleto());
+        } else {
+            System.out.println("Usuario canceló el inicio del itinerario. "+ clienteSeleccionado.getNombreCompleto());
+        }   
+        
+        }
     }//GEN-LAST:event_cmbClientesActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed

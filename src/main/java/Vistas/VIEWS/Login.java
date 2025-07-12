@@ -345,7 +345,7 @@ public class Login extends javax.swing.JFrame {
                                         nombreCompleto,      // nombreCompleto (String)
                                         correo,              // correo (String)
                                        password,    // contraseña (String)
-                                       "activo",       // estado (String)
+                                       true,       // estado (String)
                                        rolSeleccionado.getIdRol(),       // idRol (int)
                                        rolSeleccionado                   // rol (Rol) <-- Añadir este argumento
 );        
