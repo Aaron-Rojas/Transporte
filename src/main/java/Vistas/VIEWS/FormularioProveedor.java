@@ -4,17 +4,22 @@ import Modelo.Proveedor;
 import dao.ProveedorDAO;
 
 import javax.swing.JOptionPane;
-import java.awt.Frame;
 
+import java.awt.Frame; // Importa Frame si lo usas como parent
+import Modelo.Usuario;
 import Controlador.NavegacionController;
 
-public class FormularioProveedor extends javax.swing.JFrame {
+public class FormularioProveedor extends javax.swing.JDialog {
     
     private ProveedorDAO proveedorDAO;
     private Proveedor proveedorEditando;
     private boolean esNuevo;
+    private GestionProveedores ventanaPadre; 
+    
+
     
     public FormularioProveedor(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
 /*
         NavegacionController.configurarBotones(
@@ -28,13 +33,25 @@ public class FormularioProveedor extends javax.swing.JFrame {
         );
         */
 
-       this.setLocationRelativeTo(parent); 
+        // Asignar la ventana padre si necesitas llamar métodos de ella (ej. para refrescar la tabla)
+        if (parent instanceof GestionProveedores) {
+            this.ventanaPadre = (GestionProveedores) parent;
+        }
+
+        this.setLocationRelativeTo(parent);
         proveedorDAO = new ProveedorDAO();
     
     }
+        public FormularioProveedor(java.awt.Frame parent, boolean modal, Usuario usuarioLogeado) {
+        // Constructor para compatibilidad si aún lo necesitas, pero el usuario no se usa internamente
+        this(parent, modal); // Llama al constructor que no usa el Usuario
+        // this.usuarioActual = usuarioLogeado; // Esta línea ya no sería necesaria
+        // Sin embargo, si decides que el JDialog NUNCA necesitará el Usuario,
+        // simplemente elimina este constructor y usa solo el de arriba.
+    }
 
         //metodo para habilitar el formulario
-        public void setModoEdicion(boolean esEdicion, Proveedor proveedor) {
+    public void setModoEdicion(boolean esEdicion, Proveedor proveedor) {
         this.esNuevo = !esEdicion;
         this.proveedorEditando = proveedor;
 
@@ -44,16 +61,20 @@ public class FormularioProveedor extends javax.swing.JFrame {
         } else {
             this.setTitle("Modificar Proveedor");
             // Cargar los datos del proveedor en los campos de texto
-            // Asumiendo que tienes txtNombreProveedor y txtContacto
             txtNombreProveedor.setText(proveedor.getNombreProveedor());
             txtContacto.setText(proveedor.getContacto());
+            // Si tienes un campo para el ID, cárgalo también si es necesario
+            // por ejemplo, para mostrarlo pero no permitir editarlo.
+            // txtIdProveedor.setText(String.valueOf(proveedor.getIdProveedor()));
         }
     }
         
     
     private void limpiarCampos() {
+        
         txtNombreProveedor.setText("");
         txtContacto.setText("");
+        txtEstado.setText("");
     }    
         
     @SuppressWarnings("unchecked")
@@ -67,17 +88,12 @@ public class FormularioProveedor extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnGuardarProveedor = new javax.swing.JButton();
         txtContacto = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         txtNombreProveedor = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnConfiguracion = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
@@ -86,10 +102,9 @@ public class FormularioProveedor extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel10 = new javax.swing.JLabel();
+        txtEstado = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
@@ -163,11 +178,6 @@ public class FormularioProveedor extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(250, 130, 220, 30);
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Ubicación:");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(560, 220, 90, 20);
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1);
         jComboBox1.setBounds(380, 173, 190, 30);
@@ -177,20 +187,10 @@ public class FormularioProveedor extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(250, 180, 130, 20);
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Servicio:");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(560, 270, 130, 20);
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setText("ID:");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(610, 170, 40, 20);
-
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setText("Contacto:");
+        jLabel9.setText("Estado:");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(250, 270, 130, 20);
+        jLabel9.setBounds(250, 310, 130, 20);
 
         btnGuardarProveedor.setBackground(new java.awt.Color(102, 153, 255));
         btnGuardarProveedor.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -204,12 +204,14 @@ public class FormularioProveedor extends javax.swing.JFrame {
         btnGuardarProveedor.setBounds(630, 370, 180, 30);
         jPanel1.add(txtContacto);
         txtContacto.setBounds(330, 270, 170, 20);
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(660, 270, 170, 20);
+
+        txtNombreProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreProveedorActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtNombreProveedor);
         txtNombreProveedor.setBounds(330, 220, 170, 20);
-        jPanel1.add(jTextField4);
-        jTextField4.setBounds(660, 170, 170, 20);
 
         btnCancelar.setBackground(new java.awt.Color(102, 153, 255));
         btnCancelar.setText("Cancelar");
@@ -219,7 +221,7 @@ public class FormularioProveedor extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCancelar);
-        btnCancelar.setBounds(280, 380, 130, 23);
+        btnCancelar.setBounds(280, 380, 130, 24);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -297,8 +299,6 @@ public class FormularioProveedor extends javax.swing.JFrame {
         jLabel8.setText("Nombre:");
         jPanel1.add(jLabel8);
         jLabel8.setBounds(250, 220, 70, 20);
-        jPanel1.add(jTextField5);
-        jTextField5.setBounds(660, 220, 170, 20);
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -308,6 +308,19 @@ public class FormularioProveedor extends javax.swing.JFrame {
         });
         jPanel1.add(btnLimpiar);
         btnLimpiar.setBounds(460, 410, 90, 30);
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setText("Contacto:");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(250, 273, 130, 17);
+
+        txtEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEstadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtEstado);
+        txtEstado.setBounds(380, 310, 150, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -331,32 +344,43 @@ public class FormularioProveedor extends javax.swing.JFrame {
 
     private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
 
-    String nombre = txtNombreProveedor.getText().trim();
-    String contacto = txtContacto.getText().trim();
-    
-    if (nombre.isEmpty() || contacto.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    boolean exito = false;
-    
-   if (esNuevo) {
-        // Lógica para añadir nuevo proveedor (debería funcionar si el botón añadir funciona)
-        Proveedor nuevoProveedor = new Proveedor(nombre, contacto);
-        exito = proveedorDAO.guardarProveedor(nuevoProveedor);
+                                                    
+        // **Este método ya está adaptado para guardar o editar.**
+        // La lógica if (esNuevo) {} else {} lo maneja.
+
+        String nombre = txtNombreProveedor.getText().trim();
+        String contacto = txtContacto.getText().trim();
+        
+        if (nombre.isEmpty() || contacto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        boolean exito = false;
+        
+        if (esNuevo) {
+            // Lógica para añadir nuevo proveedor
+            Proveedor nuevoProveedor = new Proveedor(nombre, contacto, "activo"); // Asignar "activo" por defecto
+            exito = proveedorDAO.guardarProveedor(nuevoProveedor);
         } else {
-        // Lógica para actualizar proveedor existente
-        proveedorEditando.setNombreProveedor(nombre);
-        proveedorEditando.setContacto(contacto);
-        exito = proveedorDAO.actualizarProveedor(proveedorEditando);
-    }
-   if (exito) {
-        JOptionPane.showMessageDialog(this, "Operación exitosa.", "Éxito", JOptionPane.INFORMATION_MESSAGE); // Mensaje más genérico
-        this.dispose(); // Cierra el formulario
-    } else {
-        JOptionPane.showMessageDialog(this, "Error al realizar la operación con el proveedor.", "Error", JOptionPane.ERROR_MESSAGE); // Mensaje más genérico
-    }
+            // Lógica para actualizar proveedor existente
+            proveedorEditando.setNombreProveedor(nombre);
+            proveedorEditando.setContacto(contacto);
+            exito = proveedorDAO.actualizarProveedor(proveedorEditando);
+        }
+        
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Operación exitosa.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose(); // Cierra el formulario
+            
+            // **IMPORTANTE: Refrescar la tabla en la ventana principal (GestionProveedores)**
+            if (ventanaPadre != null) {
+                ventanaPadre.cargarProveedoresActivosEnTabla(); 
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al realizar la operación con el proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+                                                    
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
@@ -393,6 +417,14 @@ public class FormularioProveedor extends javax.swing.JFrame {
             this.dispose(); 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEstadoActionPerformed
+
+    private void txtNombreProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreProveedorActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -408,21 +440,17 @@ public class FormularioProveedor extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField txtContacto;
+    private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtNombreProveedor;
     // End of variables declaration//GEN-END:variables
 }
