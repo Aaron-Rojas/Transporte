@@ -8,7 +8,6 @@ import Modelo.Proveedor;
 import dao.ProveedorDAO;
 import Modelo.Usuario;
 import dao.UsuarioDAO;
-import Modelo.Rol;
 
 
 
@@ -24,29 +23,27 @@ public class GestionProveedores extends javax.swing.JFrame {
     private Usuario usuarioActual;
             
     public GestionProveedores(Usuario usuarioLogeado) {
-        this.usuarioActual=usuarioLogeado;
         initComponents();
-        
-//        NavegacionController.configurarBotones(
-//            btnHome, 
-//            btnClientes, 
-//            btnReservas, 
-//            btnProveedores, 
-//            btnReportes, 
-//            btnConfiguracion, 
-//            this
-//        );
+        NavegacionController.configurarBotones(
+            btnHome, 
+            btnClientes, 
+            btnReservas, 
+            btnProveedores, 
+            btnReportes, 
+            btnConfiguracion, 
+            this
+        );
         this.setLocationRelativeTo(null);
         proveedorDAO = new ProveedorDAO();
         setupTableModel();
-        cargarProveedoresActivosEnTabla();
+        cargarProveedoresEnTabla();
         
-        
+        this.usuarioActual = usuarioLogeado ;
      
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             setTitle("Gestión de Proveedores- " + usuarioActual.getRol().getNombreRol() + ": " + usuarioActual.getNombreCompleto());
         }else{
-            setTitle("Gestión de Proveedores");
+            setTitle("JFrames dedicados a Proveedores");
         }
         
     }
@@ -58,48 +55,30 @@ public class GestionProveedores extends javax.swing.JFrame {
 // Método para configurar el JTABLE
     private void setupTableModel() {
         // Define los nombres de las columnas que se mostrarán en el JTable
-        // Incluimos el estado para la eliminación lógica
-        String[] columnNames = {"ID", "Nombre del Proveedor", "Contacto", "Estado"};
+        String[] columnNames = {"ID", "Nombre del Proveedor", "Contacto"};
         tbMproveedor = new DefaultTableModel(columnNames, 0) {
             // Opcional: Hace que las celdas no sean editables directamente en la tabla
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return false; 
             }
         };
-        tbproveedor.setModel(tbMproveedor); 
-    }// Asigna el modelo a tu JTable
-        
+        tbproveedor.setModel(tbMproveedor); // Asigna el modelo a tu JTable
+    }
      // Método para cargar los proveedores desde la BD y mostrarlos en el JTable
-    public void cargarProveedoresActivosEnTabla() {
+    public void cargarProveedoresEnTabla() {
      tbMproveedor.setRowCount(0); // Limpia todas las filas existentes en la tabla
 
-        // Obtiene la lista de proveedores activos del DAO
-        List<Proveedor> proveedores = proveedorDAO.obtenerProveedoresActivos();
+        List<Proveedor> proveedores = proveedorDAO.obtenerTodosLosProveedores(); // Obtiene la lista de proveedores del DAO
 
         // Itera sobre la lista de proveedores y añade cada uno como una fila en el tableModel
         for (Proveedor proveedor : proveedores) {
             Object[] rowData = {
                 proveedor.getIdProveedor(),
                 proveedor.getNombreProveedor(),
-                proveedor.getContacto(),
-                proveedor.getEstado() // Mostrar el estado
+                proveedor.getContacto()
             };
             tbMproveedor.addRow(rowData); // Añade la fila al modelo de la tabla
-        }    
-    }
-    
-        public void cargarTodosLosProveedoresEnTabla() {
-        tbMproveedor.setRowCount(0); // Limpia todas las filas existentes en la tabla
-        List<Proveedor> proveedores = proveedorDAO.obtenerTodosLosProveedores(); // Obtiene todos los proveedores
-        for (Proveedor proveedor : proveedores) {
-            Object[] rowData = {
-                proveedor.getIdProveedor(),
-                proveedor.getNombreProveedor(),
-                proveedor.getContacto(),
-                proveedor.getEstado()
-            };
-            tbMproveedor.addRow(rowData);
         }
     }
     @SuppressWarnings("unchecked")
@@ -349,36 +328,44 @@ public class GestionProveedores extends javax.swing.JFrame {
     // 1. Obtener la fila seleccionada
     int selectedRow = tbproveedor.getSelectedRow();
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla para desactivar.", "Ningún Proveedor Seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
+    // Verificar si hay una fila seleccionada
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla para eliminar.", "Ningún Proveedor Seleccionado", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // 2. Obtener el ID del proveedor de la fila seleccionada (asumiendo que el ID está en la columna 0)
+    int idProveedor = (int) tbproveedor.getValueAt(selectedRow, 0);
+    String nombreProveedor = (String) tbproveedor.getValueAt(selectedRow, 1); // Opcional: para un mensaje de confirmación más amigable
+
+    // 3. Confirmar con el usuario antes de eliminar
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de que desea eliminar al proveedor: " + nombreProveedor + " (ID: " + idProveedor + ")?",
+            "Confirmar Eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+    );
+
+    // Si el usuario confirma la eliminación (presiona "Sí")
+    if (confirm == JOptionPane.YES_OPTION) {
+        // 4. Llamar al DAO para eliminar el proveedor
+        boolean exito = proveedorDAO.eliminarProveedor(idProveedor);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Proveedor eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            // 5. Recargar la tabla para que los cambios sean visibles
+            cargarProveedoresEnTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el proveedor. Verifique la consola para más detalles.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
-        int idProveedor = (int) tbproveedor.getValueAt(selectedRow, 0);
-        String nombreProveedor = (String) tbproveedor.getValueAt(selectedRow, 1);
-
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que desea DESACTIVAR al proveedor: " + nombreProveedor + " (ID: " + idProveedor + ")?\n" +
-                "Esto cambiará su estado a 'desactivo' y ya no aparecerá en la lista principal.",
-                "Confirmar Desactivación Lógica",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            boolean exito = proveedorDAO.eliminarLogicamenteProveedor(idProveedor); // Asumimos que este método existe en ProveedorDAO
-            if (exito) {
-                JOptionPane.showMessageDialog(this, "Proveedor desactivado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cargarProveedoresActivosEnTabla(); // Recargar la tabla para reflejar el cambio (solo activos)
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al desactivar el proveedor. Verifique la consola para más detalles.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void btnModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProveedorActionPerformed
-   int selectedRow = tbproveedor.getSelectedRow();
+
+        int selectedRow = tbproveedor.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla para modificar.", "Ningún Proveedor Seleccionado", JOptionPane.WARNING_MESSAGE);
@@ -386,28 +373,23 @@ public class GestionProveedores extends javax.swing.JFrame {
         }
 
         int idProveedor = (int) tbproveedor.getValueAt(selectedRow, 0);
-        Proveedor proveedorAEditar = proveedorDAO.obtenerProveedorPorId(idProveedor); // Obtener el objeto Proveedor completo
-
+        Proveedor proveedorAEditar = proveedorDAO.obtenerProveedorPorId(idProveedor);
         if (proveedorAEditar != null) {
-            // Se pasa el usuarioActual al constructor de FormularioProveedor
-            FormularioProveedor formulario = new FormularioProveedor(this, true); 
-
+            FormularioProveedor formulario = new FormularioProveedor(this, true);
+            
             formulario.setModoEdicion(true, proveedorAEditar);
             formulario.setVisible(true);
-            //cargarProveedoresActivosEnTabla(); // Recargar la tabla después de la modificación
+            cargarProveedoresEnTabla();
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo cargar la información del proveedor seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarProveedorActionPerformed
 
     private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
-    // Se pasa el usuarioActual al constructor de FormularioProveedor
-        FormularioProveedor formulario = new FormularioProveedor(this, true, this.usuarioActual);
-        formulario.setModoEdicion(false, null); // Modo de adición
-        formulario.setVisible(true);
-        //cargarProveedoresActivosEnTabla(); 
-        
-        
+        FormularioProveedor formulario = new FormularioProveedor(this,true);
+        formulario.setModoEdicion(false, null);
+        formulario.setVisible(true); // Mostrar la nueva ventana
+        cargarProveedoresEnTabla();
         
     }//GEN-LAST:event_btnAgregarProveedorActionPerformed
 
@@ -435,7 +417,52 @@ public class GestionProveedores extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
 
-    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GestionProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GestionProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GestionProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GestionProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+        Modelo.Rol rolDummyProvee = new Modelo.Rol(2, "proveedor", "Rol de prueba para provee");
+        Usuario usuarioDePrueba = new Usuario(
+                    100, "Provee Prueba", "provee@test.com", "prove", "activo",
+                    rolDummyProvee.getIdRol(), rolDummyProvee);
+                
+            public void run() {
+                new GestionProveedores(usuarioDePrueba).setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProveedor;

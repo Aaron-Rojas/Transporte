@@ -37,4 +37,4 @@ Thumbs.db      # Windows
 # Puedes añadir líneas aquí si ves archivos no deseados en tu 'git status'
 # .env             # Si usas variables de entorno en un archivo .env
 # *.jar            # Si los JARs compilados no se generan en target/
-# *.war            # Si los WARs compilados no se generan en target/target/
+# *.war            # Si los WARs compilados no se generan en target/

@@ -14,7 +14,7 @@ import Modelo.Usuario;
  */
 public class ReporteActividades extends javax.swing.JFrame {
 
-    private Usuario  usuarioActual;
+   private Usuario  usuarioActual;
     public ReporteActividades(Usuario usuarioLogeado ) {    
         this.usuarioActual=usuarioLogeado;
         initComponents();
@@ -351,6 +351,7 @@ public class ReporteActividades extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
