@@ -61,11 +61,8 @@ public class Proveedor {
 
     @Override
     public String toString() {
-        return "Proveedor{" +
-               "idProveedor=" + idProveedor +
-               ", nombreProveedor='" + nombreProveedor + '\'' +
-               ", contacto='" + contacto + '\'' +
-               ", estado='" + estado + '\'' + // Incluir estado en toString
-               '}';
+        return nombreProveedor; // solo el nombre del proveedor
     }
+
+
 }

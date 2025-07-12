@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DestinoDAO {
+    
+    public List<Destino> listarDestinos() {
+    return obtenerTodosLosDestinos();
+}
+
 
     // Método para agregar un nuevo destino
     public boolean agregarDestino(Destino destino) {

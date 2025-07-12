@@ -59,14 +59,11 @@ public class Destino {
     }
 
     @Override
-    public String toString() {
-        return "Destino{" +
-               "idDestino=" + idDestino +
-               ", nombreDestino='" + nombreDestino + '\'' +
-               ", descripcion='" + descripcion + '\'' +
-               ", estado='" + estado + '\'' + // <--- Added to toString
-               '}';
-    }
+   public String toString() {
+       return nombreDestino; // solo el nombre visible en el combo
+   }
+
+
 }
 
 
