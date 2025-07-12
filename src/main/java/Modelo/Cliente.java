@@ -92,7 +92,12 @@ public class Cliente {
         this.Estado = Estado;
     }
     
-    
+    @Override
+    public String toString() {
+        // Esto es lo que se mostrará en el JComboBox
+        // Puedes personalizarlo para mostrar más información si lo deseas
+        return nombreCompleto + " Cliente seleccionado (DNI: " + dni + ")";
+    }
        
 }    
 
