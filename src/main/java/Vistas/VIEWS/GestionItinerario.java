@@ -1,21 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vistas.VIEWS;
 import Controlador.NavegacionController;
 import Modelo.Bus;
+import Modelo.Cliente;
 import Modelo.Usuario;
 import Vistas.VIEWS.CrearReserva;
+import dao.ClienteDAO;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class GestionItinerario extends javax.swing.JFrame {
 
     private Usuario usuarioActual; 
+    private Cliente clienteSeleccionado;
     
     public GestionItinerario(Usuario usuarioLogeado) {
         this.usuarioActual = usuarioLogeado;
-        
+        cargarClientesEnComboBox();
+
         initComponents();
  /*       NavegacionController.configurarBotones(
             btnHome, 
@@ -35,7 +38,6 @@ public class GestionItinerario extends javax.swing.JFrame {
         }else{
             setTitle("Sistema de User");
         }
-    
     }
 
     /**
@@ -57,7 +59,7 @@ public class GestionItinerario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
-        comboBox = new javax.swing.JComboBox<>();
+        cmbClientes = new javax.swing.JComboBox<Cliente>();
         btnConfiguracion = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
@@ -158,14 +160,14 @@ public class GestionItinerario extends javax.swing.JFrame {
         jPanel1.add(btnAceptar);
         btnAceptar.setBounds(730, 400, 130, 40);
 
-        comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboBox.addActionListener(new java.awt.event.ActionListener() {
+        cmbClientes.setModel(new javax.swing.DefaultComboBoxModel<Cliente>());
+        cmbClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxActionPerformed(evt);
+                cmbClientesActionPerformed(evt);
             }
         });
-        jPanel1.add(comboBox);
-        comboBox.setBounds(320, 260, 72, 22);
+        jPanel1.add(cmbClientes);
+        cmbClientes.setBounds(320, 260, 72, 22);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -276,6 +278,22 @@ public class GestionItinerario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    private void cargarClientesEnComboBox() {
+        DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
+        ClienteDAO clienteDAO = new ClienteDAO(); // Instancia tu DAO
+        List<Cliente> clientes = clienteDAO.obtenerTodosLosClientes(); 
+
+        if (clientes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron clientes en la BD", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            for (Cliente cliente : clientes) {
+                model.addElement(cliente);
+            }
+            cmbClientes.setModel(model);
+        }
+    }
+    
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 //        CrearReserva crearReserva = new CrearReserva(); // Abrimos el nuevo frame
 //        crearReserva.setVisible(true);
@@ -284,16 +302,21 @@ public class GestionItinerario extends javax.swing.JFrame {
 //AARON ME DIJO QUE LO IGNORARA
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxActionPerformed
-if (comboBox.getSelectedIndex() > 0) {
-                btnAceptar.setEnabled(true);
-            } else {
-                btnAceptar.setEnabled(false);
-            }
-        
-
+    private void cmbClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClientesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboBoxActionPerformed
+                
+//        clienteSeleccionado = (Cliente) cmbClientes.getSelectedItem();
+//        if (clienteSeleccionado != null) {
+//            System.out.println("Cliente seleccionado: " + clienteSeleccionado.getNombre() + " (ID: " + clienteSeleccionado.getId());
+//            // Puedes habilitar botones de "Seleccionar Bus", "Seleccionar Hotel", etc.
+//            // btnSeleccionarBus.setEnabled(true);
+//            // btnSeleccionarHotel.setEnabled(true);
+//        } else {
+//            // Si selecciona la opción nula o no selecciona nada
+//            // btnSeleccionarBus.setEnabled(false);
+//            // btnSeleccionarHotel.setEnabled(false);
+//        }
+    }//GEN-LAST:event_cmbClientesActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
@@ -421,7 +444,7 @@ if (comboBox.getSelectedIndex() > 0) {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> comboBox;
+    private javax.swing.JComboBox<Cliente> cmbClientes;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -10,20 +10,29 @@ public class Cliente {
     private String telefono;
     private String email;
     private String preferencias;
-
+    private boolean Estado;
 
     //constructor Vacio, para el DAO
     public Cliente() {
     }
 
     //constructor 
-    public Cliente(int idCliente, String dni, String nombreCompleto, String telefono, String email, String preferencias) {
-        this.idCliente = idCliente;
+    public Cliente(String dni, String nombreCompleto, String telefono, String email, String preferencias, boolean activo) {
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
         this.email = email;
         this.preferencias = preferencias;
+        this.Estado= Estado;
+    }
+    
+    public Cliente(String dni, String nombreCompleto, String telefono, String email, String preferencias) {
+        this.dni = dni;
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
+        this.email = email;
+        this.preferencias = preferencias;
+        this.Estado = true; // Por defecto, un nuevo cliente está activo
     }
 
     //getter and setter
@@ -74,6 +83,15 @@ public class Cliente {
     public void setPreferencias(String preferencias) {
         this.preferencias = preferencias;
     }
+
+    public boolean isActivo() {
+        return Estado;
+    }
+
+    public void setActivo(boolean Estado) {
+        this.Estado = Estado;
+    }
+    
     
        
 }    

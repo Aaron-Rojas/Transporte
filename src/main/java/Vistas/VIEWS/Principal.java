@@ -10,10 +10,10 @@ public class Principal extends javax.swing.JFrame {
 
     private Usuario usuarioActual;
             
-    public Principal(Usuario usuarioLogeado) {
-        initComponents();
-        
+    public Principal(Usuario usuarioLogeado) {  
        this.usuarioActual= usuarioLogeado ;
+       initComponents();
+        
     /*  
         NavegacionController.configurarBotones(
     btnHome,       // Botón Home
@@ -334,14 +334,13 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println("Admin redirigiendo a Gestión Clientes.");
 
             }
-//            if ("usuario".equalsIgnoreCase(nombreRol)) {
-//                GestionClientes GI = new  GestionClientes (usuarioActual);
-//                GI.setVisible(true);
-//                GI.setLocationRelativeTo(null);
-//                this.dispose();                 
-//                System.out.println("User redirigiendo a Gestión Clientes .");
-////            
-            else{
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");           
+            }else{
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
             }
@@ -392,13 +391,13 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println("Admin redirigiendo a Proveedores.");
 
             }
-//            if ("usuario".equalsIgnoreCase(nombreRol)) {
-//                GestionClientes GI = new  GestionClientes (usuarioActual);
-//                GI.setVisible(true);
-//                GI.setLocationRelativeTo(null);
-//                this.dispose();                 
-//                System.out.println("User redirigiendo a Gestión Clientes .");
-////            
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");
+            }
             else{
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
