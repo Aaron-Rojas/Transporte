@@ -14,7 +14,7 @@ import Modelo.Usuario;
  */
 public class ReporteActividades extends javax.swing.JFrame {
 
-   private Usuario  usuarioActual;
+    private Usuario  usuarioActual;
     public ReporteActividades(Usuario usuarioLogeado ) {    
         this.usuarioActual=usuarioLogeado;
         initComponents();

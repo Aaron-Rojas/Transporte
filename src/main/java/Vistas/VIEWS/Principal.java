@@ -10,10 +10,10 @@ public class Principal extends javax.swing.JFrame {
 
     private Usuario usuarioActual;
             
-    public Principal(Usuario usuarioLogeado) {
-        initComponents();
-        
+    public Principal(Usuario usuarioLogeado) {  
        this.usuarioActual= usuarioLogeado ;
+       initComponents();
+        
     /*  
         NavegacionController.configurarBotones(
     btnHome,       // Botón Home
@@ -324,14 +324,13 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println("Admin redirigiendo a Gestión Clientes.");
 
             }
-//            if ("usuario".equalsIgnoreCase(nombreRol)) {
-//                GestionClientes GI = new  GestionClientes (usuarioActual);
-//                GI.setVisible(true);
-//                GI.setLocationRelativeTo(null);
-//                this.dispose();                 
-//                System.out.println("User redirigiendo a Gestión Clientes .");
-////            
-            else{
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");           
+            }else{
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
             }
@@ -382,13 +381,13 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println("Admin redirigiendo a Proveedores.");
 
             }
-//            if ("usuario".equalsIgnoreCase(nombreRol)) {
-//                GestionClientes GI = new  GestionClientes (usuarioActual);
-//                GI.setVisible(true);
-//                GI.setLocationRelativeTo(null);
-//                this.dispose();                 
-//                System.out.println("User redirigiendo a Gestión Clientes .");
-////            
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");
+            }
             else{
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
@@ -427,53 +426,8 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnReportesActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            Modelo.Rol rolDummyUser = new Modelo.Rol(3,"Usuario","Gestiona la app");
-            Usuario usuarioPrueba = new Usuario(99,"Usuario Prueba", "test@example.com","password123","activo",rolDummyUser.getIdRol(), rolDummyUser);
-            new Principal(usuarioPrueba).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;

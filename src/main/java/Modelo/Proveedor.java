@@ -1,25 +1,28 @@
-package Modelo;
+package Modelo; // Tu paquete existente
 
 public class Proveedor {
     private int idProveedor;
     private String nombreProveedor;
     private String contacto;
+    private boolean Estado; // Nuevo atributo para el estado
 
     // Constructor vacío
     public Proveedor() {
     }
-
-    // Constructor con todos los campos
-    public Proveedor(int idProveedor, String nombreProveedor, String contacto) {
+    
+    // Constructor con todos los campos (incluyendo el nuevo estado)
+    public Proveedor(int idProveedor, String nombreProveedor, String contacto, boolean estado) {
         this.idProveedor = idProveedor;
         this.nombreProveedor = nombreProveedor;
         this.contacto = contacto;
+        this.Estado = estado;
     }
 
-    // Constructor sin ID (útil para crear nuevos proveedores)
+    // Constructor sin ID (útil para crear nuevos proveedores), ahora con estado
     public Proveedor(String nombreProveedor, String contacto) {
         this.nombreProveedor = nombreProveedor;
         this.contacto = contacto;
+        this.Estado = true;
     }
 
     // Getters y Setters
@@ -47,12 +50,22 @@ public class Proveedor {
         this.contacto = contacto;
     }
 
+    // Nuevo Getter y Setter para el estado
+    public boolean IsActivo() {
+        return Estado;
+    }
+
+    public void setActivo(boolean Estado) {
+        this.Estado = Estado;
+    }
+
     @Override
     public String toString() {
         return "Proveedor{" +
                "idProveedor=" + idProveedor +
                ", nombreProveedor='" + nombreProveedor + '\'' +
                ", contacto='" + contacto + '\'' +
+               ", estado='" + Estado + '\'' + // Incluir estado en toString
                '}';
     }
 }
