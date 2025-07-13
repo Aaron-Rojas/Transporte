@@ -4,7 +4,6 @@ package Vistas.VIEWS;
 import Conexión.Conexión;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
-import Vistas.VIEWS.GestionClientes;
 import dao.ClienteDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -89,7 +88,6 @@ public class CreacionCliente extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-
         ToggleButtonActivo = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
@@ -114,88 +112,12 @@ public class CreacionCliente extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
         btn_crearCliente = new javax.swing.JButton();
-
-        jPanel2 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        btnConfiguracion = new javax.swing.JButton();
-        btnHome = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
-        btnReservas = new javax.swing.JButton();
-        btnProveedores = new javax.swing.JButton();
-        btnReportes = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
-
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
-        jLabel3.setText("Crear clientes");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 130, 260, 40);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel4.setText("Nombres:");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(250, 190, 120, 30);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel5.setText("DNI/Pasaporte");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(570, 180, 140, 40);
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel6.setText("Preferencia:");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(250, 400, 120, 27);
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel7.setText("Telefono:");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(570, 280, 80, 27);
-
-        txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(txt_telefono);
-        txt_telefono.setBounds(570, 330, 240, 30);
-
-        txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(txt_nombre);
-        txt_nombre.setBounds(250, 230, 240, 30);
-
-        txt_preferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(txt_preferencias);
-        txt_preferencias.setBounds(370, 400, 280, 30);
-
-        txt_dni.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(txt_dni);
-        txt_dni.setBounds(570, 230, 240, 30);
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel8.setText("E-mail:");
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(250, 280, 59, 27);
-
-        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
-        jPanel1.add(txt_email);
-        txt_email.setBounds(250, 330, 240, 30);
-
-        btn_crearCliente.setBackground(new java.awt.Color(255, 171, 33));
-        btn_crearCliente.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        btn_crearCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btn_crearCliente.setText("Crear cliente");
-        btn_crearCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_crearClienteActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_crearCliente);
-        btn_crearCliente.setBounds(690, 410, 170, 40);
-
-        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 
         ToggleButtonActivo.setText("Activo");
         ToggleButtonActivo.addActionListener(new java.awt.event.ActionListener() {
@@ -208,128 +130,139 @@ public class CreacionCliente extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(8, 8, 100));
 
-
         jButton7.setBackground(new java.awt.Color(179, 23, 23));
         jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-lock-30.png"))); // NOI18N
         jButton7.setText("Cerrar sesión");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setBackground(new java.awt.Color(8, 8, 100));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-bus-58.png"))); // NOI18N
-        jLabel1.setText("  Expreso los Chankas");
+        jLabel1.setText("Expreso");
+
+        jLabel2.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Los Chankas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
-                .addComponent(jButton7)
-                .addGap(18, 18, 18))
+                .addGap(232, 232, 232)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(318, 318, 318)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 890, 90);
+        jPanel2.setBounds(0, 0, 890, 120);
 
-        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
-        btnConfiguracion.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(8, 8, 100));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 890, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 90, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 460, 890, 90);
+
+        btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
+        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
-        btnConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-config-23 (1).png"))); // NOI18N
-        btnConfiguracion.setText(" CONFIGURACIÓN");
+        btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfiguracionActionPerformed(evt);
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 340, 210, 50);
+        btnConfiguracion.setBounds(0, 370, 200, 50);
 
-        btnHome.setBackground(new java.awt.Color(0, 46, 121));
-        btnHome.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnHome.setBackground(new java.awt.Color(8, 8, 100));
+        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-house-23.png"))); // NOI18N
-        btnHome.setText(" HOME");
+        btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomeActionPerformed(evt);
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 90, 210, 50);
+        btnHome.setBounds(0, 120, 200, 50);
 
-        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
-        btnClientes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnClientes.setBackground(new java.awt.Color(8, 8, 100));
+        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-customers-23.png"))); // NOI18N
-        btnClientes.setText(" CLIENTES");
+        btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClientesActionPerformed(evt);
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 140, 210, 50);
+        btnClientes.setBounds(0, 170, 200, 50);
 
-        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
-        btnReservas.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReservas.setBackground(new java.awt.Color(8, 8, 100));
+        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
-        btnReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-calendar-23.png"))); // NOI18N
-        btnReservas.setText(" RESERVAS");
+        btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReservasActionPerformed(evt);
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 190, 210, 50);
+        btnReservas.setBounds(0, 220, 200, 50);
 
-        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
-        btnProveedores.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnProveedores.setBackground(new java.awt.Color(8, 8, 100));
+        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
-        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-supplier-23.png"))); // NOI18N
-        btnProveedores.setText(" PROVEEDORES");
+        btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProveedoresActionPerformed(evt);
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 240, 210, 50);
+        btnProveedores.setBounds(0, 270, 200, 50);
 
-        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
-        btnReportes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReportes.setBackground(new java.awt.Color(8, 8, 100));
+        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-report-23 (1).png"))); // NOI18N
-        btnReportes.setText(" REPORTES");
+        btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReportesActionPerformed(evt);
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 290, 210, 50);
-
-        jTextField1.setBackground(new java.awt.Color(0, 46, 121));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        btnReportes.setBounds(0, 320, 200, 50);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         jLabel3.setText("Crear clientes");
@@ -387,12 +320,9 @@ public class CreacionCliente extends javax.swing.JDialog {
         btn_crearCliente.setText("Crear cliente");
         btn_crearCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                btn_crearClienteActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(0, 90, 210, 460);
-
         jPanel1.add(btn_crearCliente);
         btn_crearCliente.setBounds(710, 410, 170, 40);
 
@@ -421,10 +351,6 @@ public class CreacionCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
 
-        // Cambiar el texto del botón y el título para indicar EDICIÓN
-        jLabel3.setText("Editar Cliente");
-        btn_crearCliente.setText("Guardar Cambios");
-    }
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
@@ -449,7 +375,6 @@ public class CreacionCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
- 
     private void btn_crearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearClienteActionPerformed
         // TODO add your handling code here:
         // 1. Obtener datos del formulario
@@ -620,39 +545,6 @@ public boolean eliminarCliente(int idCliente) {
     }//GEN-LAST:event_ToggleButtonActivoActionPerformed
 
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfiguracionActionPerformed
-
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-
-    }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnClientesActionPerformed
-
-    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReservasActionPerformed
-
-    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProveedoresActionPerformed
-
-    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReportesActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ToggleButtonActivo;
     private javax.swing.JButton btnClientes;
@@ -664,6 +556,7 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JButton btn_crearCliente;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -673,7 +566,7 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txt_dni;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_nombre;
