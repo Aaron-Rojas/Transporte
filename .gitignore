@@ -39,3 +39,21 @@ Thumbs.db      # Windows
 # *.jar            # Si los JARs compilados no se generan en target/
 # *.war            # Si los WARs compilados no se generan en target/target/
 target/
+
+# Ignorar la carpeta de compilación de Maven
+target/
+
+# Archivos generados por NetBeans
+nbproject/private/
+nbbuild/
+build/
+nb-configuration.xml
+
+# Ignorar archivos compilados y logs
+*.class
+*.log
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
