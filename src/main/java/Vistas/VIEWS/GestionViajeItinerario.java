@@ -1,75 +1,130 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vistas.VIEWS;
 
 import Conexión.Conexión;
-import Controlador.NavegacionController;
-import Modelo.ItinerarioViaje;
-import Modelo.Usuario;
-import dao.ItinerarioViajeDAO;
-import java.sql.Connection;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author LAB-USR-LCENTRO
- */
+
+import Modelo.Itinerario;
+import dao.ItinerarioDAO;
+import dao.ClienteDAO; 
+import dao.UsuarioDAO;
+
+import Modelo.Usuario;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.List;
+
+
+import java.sql.Connection;
+
 public class GestionViajeItinerario extends javax.swing.JFrame {
 
+   
     private Usuario usuarioActual;
+    private ItinerarioDAO itinerarioDAO;
+    private ClienteDAO clienteDAO; 
+    private UsuarioDAO usuarioDAO; 
+    private DefaultTableModel modeloTabla;
     
-     public GestionViajeItinerario(Usuario usuarioLogeado) {
-        initComponents();
+    public GestionViajeItinerario(Usuario usuarioLogeado) {
         this.usuarioActual=usuarioLogeado;
-        actualizarTabla(); // Cargar datos al iniciar  
     
+        initComponents();        
+        System.out.println("DEBUG: initComponents() ejecutado. Componentes inicializados.");
+  
+        this.setLocationRelativeTo(null);
+        
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
             setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
         }else{
             setTitle("Sistema de User");
         }
-       
+                
+        this.clienteDAO = new ClienteDAO(); 
+        this.usuarioDAO = new UsuarioDAO();        
+        this.itinerarioDAO = new ItinerarioDAO(clienteDAO, usuarioDAO); 
+        System.out.println("DEBUG: DAOs inicializados.");
+
+        configurarTablaItinerarios(); 
+        System.out.println("DEBUG: configurarTablaItinerarios() ejecutado. Modelo de tabla configurado.");
+
+        cargarItinerariosActivos();
+        System.out.println("DEBUG: cargarItinerariosActivos() ejecutado. Datos cargados (si hay).");
+
     }
      
-   public void actualizarTabla() {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Limpiar tabla
-    model.setColumnIdentifiers(new String[]{
-        "ID", "ID Itinerario", "ID Viaje", "Asiento", "Costo", "Estado"
-    });
-    
-    try (Connection conexion = Conexión.conectar()) {
-        ItinerarioViajeDAO dao = new ItinerarioViajeDAO(conexion);
-        List<ItinerarioViaje> itinerarios = dao.obtenerTodosItinerarios(); 
-        
-        for (ItinerarioViaje iv : itinerarios) {
-            model.addRow(new Object[]{
-                iv.getIdItinerarioViajeBus(),
-                iv.getIdItinerario(),
-                iv.getIdViajeProgramado(),
-                iv.getAsientoAsignado(),
-                iv.getCosto(),
-                iv.getEstado()
-            });
+    public void configurarTablaItinerarios() {
+        System.out.println("DEBUG: Entrando a configurarTablaItinerarios().");
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace que las celdas de la tabla no sean editables
+            }
+        };
+        // Define las columnas de tu tabla para ITINERARIOS
+        modeloTabla.addColumn("ID"); 
+        modeloTabla.addColumn("Cliente"); 
+        modeloTabla.addColumn("Usuario Creación"); 
+        modeloTabla.addColumn("Fecha Creación"); 
+        modeloTabla.addColumn("Fecha Inicio"); 
+        modeloTabla.addColumn("Fecha Fin"); 
+        modeloTabla.addColumn("Costo"); 
+        modeloTabla.addColumn("Estado");
+             
+        if (tbItinerario != null) {
+            tbItinerario.setModel(modeloTabla); // <<-- Esta es la línea crucial
+            tbItinerario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Solo permitir una fila seleccionada
+            tbItinerario.setDefaultEditor(Object.class, null); // Ahora sí podemos poner esto aquí
+            System.out.println("DEBUG: Modelo asignado a tbItinerario.");
+        } else {
+            System.out.println("ERROR: tbItinerario es null en configurarTablaItinerarios(). No se pudo asignar el modelo.");
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, 
-            "Error al cargar datos: " + e.getMessage(), 
-            "Error", JOptionPane.ERROR_MESSAGE);
+        System.out.println("DEBUG: Saliendo de configurarTablaItinerarios().");
     }
-}
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+    public void cargarItinerariosActivos() {
+
+        System.out.println("DEBUG: Entrando a cargarItinerariosActivos().");
+         
+        if (modeloTabla == null) {
+            System.out.println("ERROR: modeloTabla es null en cargarItinerariosActivos(). No se pueden añadir filas.");
+            return;
+        }
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos       
+        System.out.println("DEBUG: Filas del modelo limpiadas.");
+              
+        List<Itinerario> itinerarios = itinerarioDAO.obtenerTodosLosItinerariosActivos();
+        System.out.println("DEBUG: Se obtuvieron " + itinerarios.size() + " itinerarios de la BD.");
+       
+        if (itinerarios.isEmpty()) {
+            System.out.println("DEBUG: No hay itinerarios activos para mostrar.");
+        }
+
+        for (Itinerario it : itinerarios) {
+            // Para mostrar Cliente y Usuario, accedemos a sus nombres.
+            String nombreCliente = (it.getCliente() != null) ? it.getCliente().getNombreCompleto() : "N/A";
+            String nombreUsuario = (it.getUsuarioCreacion() != null) ? it.getUsuarioCreacion().getNombreCompleto() : "N/A";
+
+            modeloTabla.addRow(new Object[]{
+                it.getID_Itinerario(),
+                nombreCliente,
+                nombreUsuario,
+                it.getFechaCreacion(),
+                it.getFechaInicioViaje(),
+                it.getFechaFinViaje(),
+                it.getCosto(),
+                it.isEstado() ? "Activo" : "Inactivo" // Muestra "Activo" o "Inactivo"
+            });
+              
+            System.out.println("DEBUG: Fila añadida para itinerario ID: " + it.getID_Itinerario());
+        }
+        System.out.println("DEBUG: Saliendo de cargarItinerariosActivos().");
+
+    }
+
+   @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -88,7 +143,7 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
         btnHome = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbItinerario = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -252,19 +307,8 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(220, 140, 480, 50);
 
-        jTable1.setBackground(new java.awt.Color(204, 204, 204));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID ", "ID itinerario", "ID viaje programado", "Aisento Asignado", "Costo", "Estado"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        tbItinerario.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setViewportView(tbItinerario);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(220, 200, 650, 220);
@@ -337,7 +381,6 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
                 GestionItinerario GI = new  GestionItinerario (usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose(); 
                 System.out.println("Admin redirigiendo a Gestión de Itinerario.");
                 return;
             }
@@ -345,7 +388,6 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
                 GestionItinerario GI = new  GestionItinerario (usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose();                 
                 System.out.println("User redirigiendo a Gestión de Itinerario.");
                 return; 
             }else{
@@ -366,84 +408,87 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       try {
-        Connection conexion = Conexión.conectar();
-        ItinerarioViajeDAO dao = new ItinerarioViajeDAO(conexion);
-        
-        FormularioViajeItinerario form = new FormularioViajeItinerario(
-            this, dao, null
-        );
-        
-        form.setVisible(true);
-        // No cerrar la conexión aquí, se cerrará cuando se cierre el formulario
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, 
-            "Error al abrir formulario: " + e.getMessage(), 
-            "Error", JOptionPane.ERROR_MESSAGE);
-    }
+                
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                FormularioViajeItinerario GI = new  FormularioViajeItinerario (this,this,usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                System.out.println("Admin redirigiendo a Formulario de Itinerario.");
+                return;
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                FormularioViajeItinerario GI = new  FormularioViajeItinerario (this,this,usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null); 
+                System.out.println("User redirigiendo a Formulario de Itinerario.");
+                return;
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Itinerario por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-          int filaSeleccionada = jTable1.getSelectedRow();
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un itinerario", 
-                                    "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    try (Connection conexion = Conexión.conectar()) {
-        int id = (int) jTable1.getValueAt(filaSeleccionada, 0);
-        ItinerarioViajeDAO dao = new ItinerarioViajeDAO(conexion);
-        ItinerarioViaje itinerario = dao.obtenerItinerarioPorId(id);
-        
-        FormularioViajeItinerario form = new FormularioViajeItinerario(
-            this,
-            dao,
-            itinerario
-        );
-        
-        form.setVisible(true);
-        actualizarTabla();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al editar: " + e.getMessage(), 
-                                   "Error", JOptionPane.ERROR_MESSAGE);
-    }
+       
+        int filaSeleccionada = tbItinerario.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            // CORRECCIÓN 1: El ID de Itinerario está en la columna 0.
+            int idItinerario = (int) modeloTabla.getValueAt(filaSeleccionada, 0);            
+            Itinerario itinerarioParaEditar = itinerarioDAO.obtenerItinerarioPorId(idItinerario);
+
+            if (itinerarioParaEditar != null) {
+                // Pasa 'this' para el padre JFrame, 'this' para la instancia de GestionViajeItinerario (para refrescar),
+                // el usuarioLogeado actual, y el itinerario a editar.
+                FormularioViajeItinerario edicionItinerarioDialog = new FormularioViajeItinerario(
+                    this,                     // Padre JFrame
+                    this,
+            itinerarioParaEditar,                     // Instancia de GestionViajeItinerario para refrescar
+                    usuarioActual           // Usuario actualmente logeado
+                         // El objeto Itinerario a editar
+                );
+                edicionItinerarioDialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo cargar los datos del itinerario para editar. El itinerario podría no existir o hubo un error de acceso a datos.", "Error de Carga", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un itinerario de la tabla para editar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+       
+        cargarItinerariosActivos();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-                                  
-    int filaSeleccionada = jTable1.getSelectedRow();
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un itinerario", 
-                                    "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    int confirmacion = JOptionPane.showConfirmDialog(this, 
-        "¿Está seguro de eliminar este itinerario?", "Confirmar", 
-        JOptionPane.YES_NO_OPTION);
-    
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        try (Connection conexion = Conexión.conectar()) {
-            int id = (int) jTable1.getValueAt(filaSeleccionada, 0);
-            ItinerarioViajeDAO dao = new ItinerarioViajeDAO(conexion);
-            
-            if (dao.eliminarItinerario(id)) {
-                JOptionPane.showMessageDialog(this, "Itinerario eliminado", 
-                                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                actualizarTabla();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage(), 
-                                       "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+        int filaSeleccionada = tbItinerario.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            int idItinerario = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+            String nombreClienteAsociado = (String) modeloTabla.getValueAt(filaSeleccionada, 2);
 
-    /**
-     * @param args the command line arguments
-     */
-   
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea ELIMINAR LÓGICAMENTE a " + nombreClienteAsociado + " (ID: " + idItinerario + ")?",
+                    "Confirmar Eliminación Lógica", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                // Llama al nuevo método de eliminación lógica del DAO
+                boolean exito = itinerarioDAO.actualizarEstadoItinerario(idItinerario,false);
+                if (exito) {
+                    JOptionPane.showMessageDialog(this, "Cliente eliminado lógicamente exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                     // Refrescar la tabla para mostrar solo los activo
+                     cargarItinerariosActivos();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar lógicamente el cliente.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente de la tabla para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }  
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -464,6 +509,12 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbItinerario;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+
+
+
