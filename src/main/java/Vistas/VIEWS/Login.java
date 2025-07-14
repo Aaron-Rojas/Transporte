@@ -65,12 +65,12 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(8, 8, 100));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("REGISTRO");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(550, 10, 197, 32);
+        jLabel1.setBounds(550, 10, 197, 17);
 
         jTextField1.setBackground(new java.awt.Color(255, 182, 18));
         jPanel1.add(jTextField1);
@@ -161,6 +161,8 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(90, 30, 197, 32);
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel6.setText("Tipo de Rol: ");
 
         jLabel7.setText("Usuario:");
@@ -169,6 +171,9 @@ public class Login extends javax.swing.JFrame {
 
         jLabel9.setText("Contraseña:");
 
+        btnGuardarUsuario.setBackground(new java.awt.Color(0, 0, 0));
+        btnGuardarUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGuardarUsuario.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarUsuario.setText("Guardar");
         btnGuardarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
