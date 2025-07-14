@@ -91,6 +91,7 @@ Vistas\VIEWS\ListaBuses$1.class
 Vistas\VIEWS\GestionHotel$1.class
 Vistas\VIEWS\Configuración$11.class
 Vistas\VIEWREPORTE\ReporteReserva$1.class
+Vistas\VIEWS\FormularioBuses$8.class
 Vistas\VIEWS\Reportes$3.class
 Vistas\VIEWS\GestionDestino$2.class
 Vistas\VIEWS\FormularioProveedor$7.class
@@ -107,6 +108,7 @@ Vistas\VIEWS\FormularioHotel$9.class
 Vistas\VIEWS\FormularioViajeItinerario$5.class
 Controlador\NavegacionController.class
 Vistas\VIEWS\CreacionCliente$7.class
+Vistas\VIEWS\CreacionCliente$10.class
 Vistas\VIEWS\GestionHotel$6.class
 Vistas\VIEWREPORTE\ReporteCliente$4.class
 Vistas\VIEWS\FormularioBuses.class
@@ -120,7 +122,6 @@ Vistas\VIEWCONFIGURACION\Parametros$9.class
 Vistas\VIEWS\Reportes.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$1.class
 Vistas\VIEWS\FormularioBus$1.class
-Vistas\VIEWS\GestionHotel$12.class
 Vistas\VIEWS\FormularioActividades$7.class
 Vistas\VIEWREPORTE\ReporteCliente$9.class
 Vistas\VIEWS\ItinerarioDeActividad$2.class
@@ -134,6 +135,7 @@ Vistas\VIEWS\ItinerarioDeAlojamiento$6.class
 Vistas\VIEWREPORTE\ReporteHoteles$7.class
 Vistas\VIEWS\GestionDestino$4.class
 Vistas\VIEWCONFIGURACION\Parametros$2.class
+Vistas\VIEWS\GestionProveedores$11.class
 Vistas\VIEWREPORTE\ReporteCliente$3.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$10.class
 Vistas\VIEWS\FormularioBus$2.class
@@ -143,6 +145,7 @@ Vistas\VIEWS\GestionViajeItinerario$10.class
 Vistas\VIEWS\ItinerarioDeActividad$1.class
 Vistas\VIEWS\ItinerarioDeAlojamiento$7.class
 Vistas\VIEWS\FormularioHotel$8.class
+Vistas\VIEWS\Configuración$13.class
 Vistas\VIEWREPORTE\ReporteHoteles$6.class
 Vistas\VIEWS\GestionItinerario$9.class
 Vistas\VIEWREPORTE\ReporteReserva$5.class
@@ -165,12 +168,15 @@ Vistas\VIEWREPORTE\ReporteHoteles$8.class
 Vistas\VIEWREPORTE\ReporteActividades$6.class
 Vistas\VIEWS\GestionViajeProgramado.class
 Vistas\VIEWS\FormularioViajeItinerario$4.class
+Vistas\VIEWS\Principal$7.class
 Vistas\VIEWS\GestionDestino$11.class
+Vistas\VIEWS\ItinerarioDeAlojamiento$8.class
 Vistas\VIEWREPORTE\ReporteCliente$5.class
 dao\ProveedorDAO.class
 Modelo\Destino.class
 Vistas\VIEWS\CreacionCliente$8.class
 Vistas\VIEWREPORTE\ReportePagos$8.class
+Vistas\VIEWS\FormularioActividades$8.class
 Vistas\VIEWCONFIGURACION\Parametros$5.class
 Vistas\VIEWS\FormularioViajeItinerario$3.class
 Vistas\VIEWS\GestionHotel$7.class
@@ -200,6 +206,7 @@ Vistas\VIEWS\GestionHotel$10.class
 Vistas\VIEWS\GestionDestino$6.class
 Vistas\VIEWREPORTE\ReporteCliente$1.class
 Vistas\VIEWS\Configuración$3.class
+Vistas\VIEWS\CrearReserva$11.class
 Vistas\VIEWS\FormularioViajeItinerario$14.class
 Vistas\VIEWS\FormularioViajeProgramado$7.class
 Modelo\Proveedor.class
@@ -226,6 +233,7 @@ Vistas\VIEWS\asientos$2.class
 Vistas\VIEWS\GestionClientes$3.class
 Vistas\VIEWS\ResultadoBusqueda$2.class
 Vistas\VIEWS\GestionHotel$4.class
+Vistas\VIEWS\FormularioBus$11.class
 Vistas\VIEWS\FormularioHotel$7.class
 Vistas\VIEWS\FormularioProveedor$3.class
 Vistas\VIEWS\GestionItinerario$8.class
@@ -248,6 +256,7 @@ Vistas\VIEWS\FormularioBus$8.class
 Vistas\VIEWS\FormularioBus$5.class
 Vistas\VIEWS\FormularioHotel$2.class
 Vistas\VIEWREPORTE\ReporteHoteles$5.class
+Vistas\VIEWS\ConfirmacionReserva$10.class
 Vistas\VIEWS\GestionItinerario$3.class
 dao\ClienteDAO.class
 Vistas\VIEWREPORTE\ReporteViajes$6.class
@@ -331,12 +340,14 @@ Vistas\VIEWS\CreacionCliente$1.class
 Vistas\VIEWCONFIGURACION\Parametros.class
 Vistas\VIEWS\ItinerarioDeViajesPorBuses$2.class
 Vistas\VIEWS\ItinerarioDeActividad$6.class
+Vistas\VIEWS\Reportes$13.class
 Vistas\VIEWS\FormularioDestino$1.class
 Vistas\VIEWCONFIGURACION\Seguridad$4.class
 Vistas\VIEWS\GestionProveedores$7.class
 Vistas\VIEWS\Configuración$6.class
 Vistas\VIEWS\FormularioViajeProgramado$5.class
 Vistas\VIEWS\FormularioHotel$12.class
+Vistas\VIEWS\ListaBuses$12.class
 Vistas\VIEWS\FormularioBuses$4.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$6.class
 Vistas\VIEWS\ConfirmacionReserva$5.class
@@ -353,6 +364,7 @@ Vistas\VIEWS\Reportes$11.class
 Vistas\VIEWREPORTE\ReporteViajes$3.class
 Vistas\VIEWS\GestionClientes$8.class
 dao\BusDAO.class
+Vistas\VIEWS\ItinerarioDeActividad$8.class
 Vistas\VIEWS\ItinerarioDeViajesPorBuses$5.class
 Vistas\VIEWS\ListaBuses$8.class
 Vistas\VIEWS\Principal.class
@@ -364,10 +376,12 @@ Vistas\VIEWS\Reportes$7.class
 Vistas\VIEWS\FormularioBuses$3.class
 Vistas\VIEWCONFIGURACION\GestioUsuarios$8.class
 Vistas\VIEWS\FormularioProveedor$2.class
+Vistas\VIEWS\ItinerarioDeViajesPorBuses$8.class
 Vistas\VIEWCONFIGURACION\Parametros$13.class
 Vistas\VIEWS\FormularioViajeItinerario$10.class
 Vistas\VIEWS\FormularioViajeProgramado$10.class
 Vistas\VIEWS\CrearReserva$9.class
+Vistas\VIEWS\GestionClientes$12.class
 Vistas\VIEWS\ListaBuses$5.class
 Vistas\VIEWS\FormularioViajeItinerario$12.class
 Vistas\VIEWS\GestionClientes$7.class

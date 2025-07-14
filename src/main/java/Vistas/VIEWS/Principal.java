@@ -72,6 +72,11 @@ public class Principal extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(8, 8, 100));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -103,7 +108,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBounds(0, 0, 890, 80);
 
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
-        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +120,7 @@ public class Principal extends javax.swing.JFrame {
         btnConfiguracion.setBounds(0, 330, 200, 50);
 
         btnHome.setBackground(new java.awt.Color(0, 46, 121));
-        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +132,7 @@ public class Principal extends javax.swing.JFrame {
         btnHome.setBounds(0, 80, 200, 50);
 
         btnClientes.setBackground(new java.awt.Color(0, 46, 121));
-        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +144,7 @@ public class Principal extends javax.swing.JFrame {
         btnClientes.setBounds(0, 130, 200, 50);
 
         btnReservas.setBackground(new java.awt.Color(0, 46, 121));
-        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +156,7 @@ public class Principal extends javax.swing.JFrame {
         btnReservas.setBounds(0, 180, 200, 50);
 
         btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
-        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +168,7 @@ public class Principal extends javax.swing.JFrame {
         btnProveedores.setBounds(0, 230, 200, 50);
 
         btnReportes.setBackground(new java.awt.Color(0, 46, 121));
-        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -424,6 +429,16 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+    if (respuesta == JOptionPane.OK_OPTION) {
+        this.dispose(); // Cierra la ventana actual
+        new Login().setVisible(true); // Abre la ventana de login
+    }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
 
 
