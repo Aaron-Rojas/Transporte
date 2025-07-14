@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel; // Import DefaultTableModel
  */
 public class GestionDestino extends javax.swing.JFrame {
 
-     private DestinoDAO destinoDAO; // Declare your DAO
+    private DestinoDAO destinoDAO; // Declare your DAO
     private DefaultTableModel modeloTablaDestinos; // Declare the table model
     private ClienteDAO clienteDAO;
     private Usuario usuarioActual;
@@ -113,7 +113,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
         btnConfiguracion.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
-        btnConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-config-23 (1).png"))); // NOI18N
         btnConfiguracion.setText(" CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +125,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnHome.setBackground(new java.awt.Color(0, 46, 121));
         btnHome.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-house-23.png"))); // NOI18N
         btnHome.setText(" HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +137,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnClientes.setBackground(new java.awt.Color(0, 46, 121));
         btnClientes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-customers-23.png"))); // NOI18N
         btnClientes.setText(" CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,7 +149,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnReservas.setBackground(new java.awt.Color(0, 46, 121));
         btnReservas.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
-        btnReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-calendar-23.png"))); // NOI18N
         btnReservas.setText(" RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +161,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
         btnProveedores.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
-        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-supplier-23.png"))); // NOI18N
         btnProveedores.setText(" PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +173,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnReportes.setBackground(new java.awt.Color(0, 46, 121));
         btnReportes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-report-23 (1).png"))); // NOI18N
         btnReportes.setText(" REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +187,6 @@ public class GestionDestino extends javax.swing.JFrame {
         jButton7.setBackground(new java.awt.Color(179, 23, 23));
         jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-lock-30.png"))); // NOI18N
         jButton7.setText("Cerrar sesión");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +197,6 @@ public class GestionDestino extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(8, 8, 100));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-bus-58.png"))); // NOI18N
         jLabel2.setText("  Expreso los Chankas");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -243,7 +235,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnVolver.setBackground(new java.awt.Color(153, 153, 153));
         btnVolver.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
-        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-left-arrow-21.png"))); // NOI18N
         btnVolver.setText("VOLVER");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,7 +253,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnEliminar.setBackground(new java.awt.Color(179, 23, 23));
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-trash-can-21.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,7 +265,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnModificar.setBackground(new java.awt.Color(0, 123, 255));
         btnModificar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-edit-21 (1).png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,7 +277,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnCrear.setBackground(new java.awt.Color(40, 167, 69));
         btnCrear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-plus-sign-21.png"))); // NOI18N
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
