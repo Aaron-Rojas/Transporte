@@ -11,37 +11,26 @@ public class ViajeProgramado {
     private int idDestinoFinal;
     private LocalDateTime fechaHoraSalida;
     private LocalDateTime fechaHoraLlegadaEstimada;
-    private String estadoViaje;
+     private boolean estado;
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-    public ViajeProgramado() {}
-
-    // Getters y Setters con validaciones
-    public void setEstadoViaje(String estadoViaje) {
-        if (!estadoViaje.matches("programado|en viaje|completado|cancelado")) {
-            throw new IllegalArgumentException("Estado de viaje no válido");
-        }
-        this.estadoViaje = estadoViaje.toLowerCase();
-    }
-    
-    public void setFechaHoraSalida(String fechaHora) throws DateTimeParseException {
-        this.fechaHoraSalida = LocalDateTime.parse(fechaHora, DATE_TIME_FORMATTER);
+    public ViajeProgramado() {
+        this.estado = true; // Por defecto, nuevo viaje está activo
     }
 
-    public String getFechaHoraSalidaFormateada() {
-        return fechaHoraSalida.format(DATE_TIME_FORMATTER);
+    // Constructor para nuevo viaje
+   public ViajeProgramado(int idBus, int idOrigen, int idDestinoFinal,
+                          String fechaHoraSalida, String fechaHoraLlegadaEstimada, boolean estado) {
+        this.idBus = idBus;
+        this.idOrigen = idOrigen;
+        this.idDestinoFinal = idDestinoFinal;
+        setFechaHoraSalida(fechaHoraSalida);
+        setFechaHoraLlegadaEstimada(fechaHoraLlegadaEstimada);
+        this.estado = estado;
     }
 
-    public void setFechaHoraLlegadaEstimada(String fechaHora) throws DateTimeParseException {
-        this.fechaHoraLlegadaEstimada = LocalDateTime.parse(fechaHora, DATE_TIME_FORMATTER);
-    }
-
-    public String getFechaHoraLlegadaEstimadaFormateada() {
-        return fechaHoraLlegadaEstimada.format(DATE_TIME_FORMATTER);
-    }
-
-    // Resto de getters y setters
+    // Getters y Setters
     public int getIdViajeProgramado() {
         return idViajeProgramado;
     }
@@ -82,6 +71,14 @@ public class ViajeProgramado {
         this.fechaHoraSalida = fechaHoraSalida;
     }
 
+    public void setFechaHoraSalida(String fechaHora) throws DateTimeParseException {
+        this.fechaHoraSalida = LocalDateTime.parse(fechaHora, DATE_TIME_FORMATTER);
+    }
+
+    public String getFechaHoraSalidaFormateada() {
+        return fechaHoraSalida != null ? fechaHoraSalida.format(DATE_TIME_FORMATTER) : "";
+    }
+
     public LocalDateTime getFechaHoraLlegadaEstimada() {
         return fechaHoraLlegadaEstimada;
     }
@@ -90,7 +87,19 @@ public class ViajeProgramado {
         this.fechaHoraLlegadaEstimada = fechaHoraLlegadaEstimada;
     }
 
-    public String getEstadoViaje() {
-        return estadoViaje;
+    public void setFechaHoraLlegadaEstimada(String fechaHora) throws DateTimeParseException {
+        this.fechaHoraLlegadaEstimada = LocalDateTime.parse(fechaHora, DATE_TIME_FORMATTER);
+    }
+
+    public String getFechaHoraLlegadaEstimadaFormateada() {
+        return fechaHoraLlegadaEstimada != null ? fechaHoraLlegadaEstimada.format(DATE_TIME_FORMATTER) : "";
+    }
+
+    public boolean isActivo() {
+        return estado;
+    }
+
+    public void setActivo(boolean estadoActivo) {
+        this.estado = estado;
     }
 }
