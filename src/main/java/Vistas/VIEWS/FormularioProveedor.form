@@ -242,7 +242,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="630" y="370" width="180" height="30"/>
+              <AbsoluteConstraints x="580" y="370" width="230" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -450,13 +450,13 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtEstado">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEstadoActionPerformed"/>
-          </Events>
+        <Component class="javax.swing.JToggleButton" name="ToggleButtonActivo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Activo"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="380" y="310" width="150" height="20"/>
+              <AbsoluteConstraints x="370" y="310" width="112" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

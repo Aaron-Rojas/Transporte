@@ -9,7 +9,7 @@ import dao.ProveedorDAO;
 import Modelo.Usuario;
 import dao.UsuarioDAO;
 import Modelo.Rol;
-
+import Modelo.Proveedor;
 
 
 import javax.swing.JOptionPane;
@@ -22,6 +22,7 @@ public class GestionProveedores extends javax.swing.JFrame {
     private ProveedorDAO proveedorDAO;
     private DefaultTableModel tbMproveedor;
     private Usuario usuarioActual;
+    private Proveedor proveedorSeleccionado;
             
     public GestionProveedores(Usuario usuarioLogeado) {
         this.usuarioActual=usuarioLogeado;
@@ -38,9 +39,8 @@ public class GestionProveedores extends javax.swing.JFrame {
 //        );
         this.setLocationRelativeTo(null);
         proveedorDAO = new ProveedorDAO();
+        tbproveedor.setDefaultEditor(Object.class,null);
         setupTableModel();
-        cargarProveedoresActivosEnTabla();
-        
         
      
         if (usuarioActual != null && usuarioActual.getRol() != null) {
@@ -48,7 +48,7 @@ public class GestionProveedores extends javax.swing.JFrame {
         }else{
             setTitle("Gestión de Proveedores");
         }
-        
+        cargarProveedoresActivosEnTabla();
     }
     
        public Usuario getUsuarioActual() {
@@ -83,7 +83,7 @@ public class GestionProveedores extends javax.swing.JFrame {
                 proveedor.getIdProveedor(),
                 proveedor.getNombreProveedor(),
                 proveedor.getContacto(),
-                proveedor.getEstado() // Mostrar el estado
+                proveedor.IsActivo() ? "Activo" : "Inactivo" // Mostrar el estado
             };
             tbMproveedor.addRow(rowData); // Añade la fila al modelo de la tabla
         }    
@@ -97,7 +97,7 @@ public class GestionProveedores extends javax.swing.JFrame {
                 proveedor.getIdProveedor(),
                 proveedor.getNombreProveedor(),
                 proveedor.getContacto(),
-                proveedor.getEstado()
+                proveedor.IsActivo()
             };
             tbMproveedor.addRow(rowData);
         }
@@ -355,7 +355,7 @@ public class GestionProveedores extends javax.swing.JFrame {
         }
 
         int idProveedor = (int) tbproveedor.getValueAt(selectedRow, 0);
-        String nombreProveedor = (String) tbproveedor.getValueAt(selectedRow, 1);
+        String nombreProveedor = (String) tbproveedor.getValueAt(selectedRow, 2);
 
         int confirm = JOptionPane.showConfirmDialog(
                 this,
@@ -378,23 +378,19 @@ public class GestionProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void btnModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProveedorActionPerformed
-   int selectedRow = tbproveedor.getSelectedRow();
+        int selectedRow = tbproveedor.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla para modificar.", "Ningún Proveedor Seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
+            return;  
         }
-
         int idProveedor = (int) tbproveedor.getValueAt(selectedRow, 0);
         Proveedor proveedorAEditar = proveedorDAO.obtenerProveedorPorId(idProveedor); // Obtener el objeto Proveedor completo
 
         if (proveedorAEditar != null) {
             // Se pasa el usuarioActual al constructor de FormularioProveedor
-            FormularioProveedor formulario = new FormularioProveedor(this, true); 
-
-            formulario.setModoEdicion(true, proveedorAEditar);
+            FormularioProveedor formulario = new FormularioProveedor(this, this,proveedorAEditar); 
             formulario.setVisible(true);
-            //cargarProveedoresActivosEnTabla(); // Recargar la tabla después de la modificación
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo cargar la información del proveedor seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -402,10 +398,9 @@ public class GestionProveedores extends javax.swing.JFrame {
 
     private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
     // Se pasa el usuarioActual al constructor de FormularioProveedor
-        FormularioProveedor formulario = new FormularioProveedor(this, true, this.usuarioActual);
-        formulario.setModoEdicion(false, null); // Modo de adición
+        FormularioProveedor formulario = new FormularioProveedor(this, this);
         formulario.setVisible(true);
-        //cargarProveedoresActivosEnTabla(); 
+        cargarProveedoresActivosEnTabla(); 
         
         
         

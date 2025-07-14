@@ -5,77 +5,65 @@ import dao.ProveedorDAO;
 
 import javax.swing.JOptionPane;
 
-import java.awt.Frame; // Importa Frame si lo usas como parent
+import java.awt.Frame; 
 import Modelo.Usuario;
-import Controlador.NavegacionController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 
 public class FormularioProveedor extends javax.swing.JDialog {
     
     private ProveedorDAO proveedorDAO;
-    private Proveedor proveedorEditando;
-    private boolean esNuevo;
-    private GestionProveedores ventanaPadre; 
+    private GestionProveedores padreGestionProveedores; 
+    private Proveedor proveedorAEditar;
     
 
     
-    public FormularioProveedor(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public FormularioProveedor(JFrame padre, GestionProveedores gestionProveedoresPadre) {
+        super(padre, true);
         initComponents();
-/*
-        NavegacionController.configurarBotones(
-            btnHome, 
-            btnClientes, 
-            btnReservas, 
-            btnProveedores, 
-            btnReportes, 
-            btnConfiguracion, 
-            this
-        );
-        */
 
         // Asignar la ventana padre si necesitas llamar métodos de ella (ej. para refrescar la tabla)
-        if (parent instanceof GestionProveedores) {
-            this.ventanaPadre = (GestionProveedores) parent;
-        }
-
-        this.setLocationRelativeTo(parent);
-        proveedorDAO = new ProveedorDAO();
-    
+        this.padreGestionProveedores = gestionProveedoresPadre;
+        this.proveedorDAO = new ProveedorDAO();
+        this.setLocationRelativeTo(padre);
+        btnGuardarProveedor.setText("Crear Proveedor");
+        ToggleButtonActivo.setSelected(true); // Por defecto, el estado es inactivo (0)
+        updateToggleButtonText(true);
+        addToggleButtonActionListener();
     }
-        public FormularioProveedor(java.awt.Frame parent, boolean modal, Usuario usuarioLogeado) {
+        public FormularioProveedor(JFrame padre, GestionProveedores gestionProveedoresPadre, Proveedor proveedor) {
         // Constructor para compatibilidad si aún lo necesitas, pero el usuario no se usa internamente
-        this(parent, modal); // Llama al constructor que no usa el Usuario
-        // this.usuarioActual = usuarioLogeado; // Esta línea ya no sería necesaria
-        // Sin embargo, si decides que el JDialog NUNCA necesitará el Usuario,
-        // simplemente elimina este constructor y usa solo el de arriba.
+        this(padre, gestionProveedoresPadre); // Llama al constructor que no usa el Usuario
+        this.proveedorAEditar= proveedor;
+        btnGuardarProveedor.setText("Actualizar Proveedor");
+        txtNombreProveedor.setText(proveedor.getNombreProveedor());
+        txtContacto.setText(proveedor.getContacto());
+        updateToggleButtonText(proveedor.IsActivo());
+
     }
-
-        //metodo para habilitar el formulario
-    public void setModoEdicion(boolean esEdicion, Proveedor proveedor) {
-        this.esNuevo = !esEdicion;
-        this.proveedorEditando = proveedor;
-
-        if (esNuevo) {
-            this.setTitle("Añadir Nuevo Proveedor");
-            limpiarCampos();
+  
+    private void updateToggleButtonText(boolean isActive) {
+        if (isActive) {
+            ToggleButtonActivo.setText("Activo");
         } else {
-            this.setTitle("Modificar Proveedor");
-            // Cargar los datos del proveedor en los campos de texto
-            txtNombreProveedor.setText(proveedor.getNombreProveedor());
-            txtContacto.setText(proveedor.getContacto());
-            // Si tienes un campo para el ID, cárgalo también si es necesario
-            // por ejemplo, para mostrarlo pero no permitir editarlo.
-            // txtIdProveedor.setText(String.valueOf(proveedor.getIdProveedor()));
+            ToggleButtonActivo.setText("Inactivo");
         }
+        
     }
-        
+    private void addToggleButtonActionListener() {
+        if (ToggleButtonActivo != null) {
+            ToggleButtonActivo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    boolean estaActivo = ToggleButtonActivo.isSelected();
+                    updateToggleButtonText(estaActivo);
+
+              }
+        });
+    }
     
-    private void limpiarCampos() {
-        
-        txtNombreProveedor.setText("");
-        txtContacto.setText("");
-        txtEstado.setText("");
-    }    
+    }
         
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -104,7 +92,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        txtEstado = new javax.swing.JTextField();
+        ToggleButtonActivo = new javax.swing.JToggleButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
@@ -206,7 +194,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnGuardarProveedor);
-        btnGuardarProveedor.setBounds(630, 370, 180, 30);
+        btnGuardarProveedor.setBounds(580, 370, 230, 30);
         jPanel1.add(txtContacto);
         txtContacto.setBounds(330, 270, 170, 20);
 
@@ -226,7 +214,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnCancelar);
-        btnCancelar.setBounds(280, 380, 130, 24);
+        btnCancelar.setBounds(280, 380, 130, 23);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -317,15 +305,11 @@ public class FormularioProveedor extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Contacto:");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(250, 273, 130, 17);
+        jLabel10.setBounds(250, 273, 130, 19);
 
-        txtEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstadoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtEstado);
-        txtEstado.setBounds(380, 310, 150, 20);
+        ToggleButtonActivo.setText("Activo");
+        jPanel1.add(ToggleButtonActivo);
+        ToggleButtonActivo.setBounds(370, 310, 112, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -349,45 +333,49 @@ public class FormularioProveedor extends javax.swing.JDialog {
 
     private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
 
-                                                    
-        // **Este método ya está adaptado para guardar o editar.**
-        // La lógica if (esNuevo) {} else {} lo maneja.
-
         String nombre = txtNombreProveedor.getText().trim();
         String contacto = txtContacto.getText().trim();
-        
+        boolean estado = ToggleButtonActivo.isSelected();
+
         if (nombre.isEmpty() || contacto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        boolean exito = false;
+        boolean exitoOperacion = false ;
         
-        if (esNuevo) {
-            // Lógica para añadir nuevo proveedor
-            Proveedor nuevoProveedor = new Proveedor(nombre, contacto, "activo"); // Asignar "activo" por defecto
-            exito = proveedorDAO.guardarProveedor(nuevoProveedor);
-        } else {
-            // Lógica para actualizar proveedor existente
-            proveedorEditando.setNombreProveedor(nombre);
-            proveedorEditando.setContacto(contacto);
-            exito = proveedorDAO.actualizarProveedor(proveedorEditando);
-        }
-        
-        if (exito) {
-            JOptionPane.showMessageDialog(this, "Operación exitosa.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); // Cierra el formulario
+        if (proveedorAEditar == null) {
+            Proveedor nuevoProveedor = new Proveedor(nombre,contacto);
+            exitoOperacion = proveedorDAO.guardarProveedor(nuevoProveedor);
+            if (exitoOperacion) {
+            JOptionPane.showMessageDialog(this, "Proveedor guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             
-            // **IMPORTANTE: Refrescar la tabla en la ventana principal (GestionProveedores)**
-            if (ventanaPadre != null) {
-                ventanaPadre.cargarProveedoresActivosEnTabla(); 
+            }else{
+                JOptionPane.showMessageDialog(this, "Error al guardar el Proveedor. Verifique la base de datos.", "Error de Guardado", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al realizar la operación con el proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-                                                    
+            else{
+        proveedorAEditar.setNombreProveedor(nombre);
+        proveedorAEditar.setContacto(contacto);
+        proveedorAEditar.setActivo(estado);
+        
+        exitoOperacion = proveedorDAO.actualizarProveedor(proveedorAEditar);
+              if (exitoOperacion) {
+                JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el cliente. Verifique la base de datos.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
+            }
+              
+        }
+    // 4. Si la operación fue exitosa, cerrar el formulario y refrescar la tabla padre
+        if (exitoOperacion) {
+            this.dispose(); // Cierra este JDialog
+            if (padreGestionProveedores != null) {
+                padreGestionProveedores.cargarProveedoresActivosEnTabla(); // Método para refrescar en GestionProveedores
+            }
+        }                                               
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
-
+ 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
@@ -422,10 +410,6 @@ public class FormularioProveedor extends javax.swing.JDialog {
             this.dispose(); 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstadoActionPerformed
-
     private void txtNombreProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreProveedorActionPerformed
@@ -437,6 +421,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ToggleButtonActivo;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
@@ -459,7 +444,6 @@ public class FormularioProveedor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txtContacto;
-    private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtNombreProveedor;
     // End of variables declaration//GEN-END:variables
 }

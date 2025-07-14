@@ -3,18 +3,17 @@ package Modelo;
 public class Bus {
     private int idBus;
     private String placa;
-    private String estado;
-
-    private int capacidad; // Make sure this is present from previous correction
+    private int capacidad;
+    private String estadoBus; // Cambiado a estadoBus para coincidir con la BD
 
     public Bus() {
     }
 
-    public Bus(int idBus, String placa, int capacidad, String estado) {
+    public Bus(int idBus, String placa, int capacidad, String estadoBus) {
         this.idBus = idBus;
         this.placa = placa;
         this.capacidad = capacidad;
-        this.estado = estado;
+        this.estadoBus = estadoBus;
     }
 
     // Getters y Setters
@@ -34,18 +33,19 @@ public class Bus {
         this.placa = placa;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     public int getCapacidad() {
         return capacidad;
     }
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public String getEstadoBus() {
+        return estadoBus;
+    }
+
+    public void setEstadoBus(String estadoBus) {
+        this.estadoBus = estadoBus;
     }
 }

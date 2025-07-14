@@ -7,32 +7,40 @@ package Vistas.VIEWS;
 import Modelo.Bus;
 import dao.BusDAO;
 import Controlador.NavegacionController;
+import Modelo.Usuario;
 import Vistas.VIEWS.ListaBuses;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class FormularioBus extends javax.swing.JFrame {
+    
+private ListaBuses listaBuses;
+private Usuario usuarioActual;
+    private boolean esNuevoBus = true;
+    private int originalIdBus;
+    Usuario usuarioLogeado;
 
-     private boolean esNuevoBus = true;
-     private int originalIdBus; 
-     
-    public FormularioBus() {
+    
+    public FormularioBus(Usuario usuarioLogeado) {
+        this.listaBuses = listaBuses;
+        this.usuarioActual=usuarioLogeado;
         initComponents();
-        NavegacionController.configurarBotones(
-            btnHome, 
-            btnClientes, 
-            btnReservas, 
-            btnProveedores, 
-            btnReportes, 
-            btnConfiguracion, 
-            this
-        );
+        
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(
-        new String[] { "operativo", "mantenimiento", "inactivo" }));
+                new String[]{"operativo", "mantenimiento", "inactivo"}));
 
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("Sistema de User");
+        }
 // Inicializar para nuevo bus
-    inicializarParaNuevoBus();
+        inicializarParaNuevoBus();
     }
-private void inicializarParaNuevoBus() {
+
+    private void inicializarParaNuevoBus() {
         esNuevoBus = true;
         originalIdBus = 0;
         txtIdBus.setText(""); // Indicate auto-generation
@@ -44,8 +52,8 @@ private void inicializarParaNuevoBus() {
     }
 
     // Method to set data when editing an existing bus
-   public void setDatosBus(int idBus, String placa, int capacidad, String estado) {
-        esNuevoBus = false; 
+    public void setDatosBus(int idBus, String placa, int capacidad, String estado) {
+        esNuevoBus = false;
         originalIdBus = idBus; // Store the original ID
         txtIdBus.setText(String.valueOf(idBus));
         txtIdBus.setEnabled(true); // Keep ID field enabled for modification
@@ -58,7 +66,7 @@ private void inicializarParaNuevoBus() {
     // Method to get data from the form
     public Bus getDatosBus() throws NumberFormatException {
         Bus bus = new Bus();
-        
+
         // Get ID from the text field for both new and existing buses
         String idText = txtIdBus.getText().trim();
         if (idText.isEmpty()) {
@@ -67,30 +75,30 @@ private void inicializarParaNuevoBus() {
         try {
             bus.setIdBus(Integer.parseInt(idText));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, 
-                "El ID debe ser un número entero válido", 
-                "Error de formato", 
-                JOptionPane.ERROR_MESSAGE);
-            throw e; 
+            JOptionPane.showMessageDialog(this,
+                    "El ID debe ser un número entero válido",
+                    "Error de formato",
+                    JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
-        
+
         bus.setPlaca(txtPlaca.getText().trim());
-        
+
         try {
             bus.setCapacidad(Integer.parseInt(txtCapacidad.getText().trim()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, 
-                "La capacidad debe ser un número entero válido", 
-                "Error de formato", 
-                JOptionPane.ERROR_MESSAGE);
-            throw e; 
+            JOptionPane.showMessageDialog(this,
+                    "La capacidad debe ser un número entero válido",
+                    "Error de formato",
+                    JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
-        
-        bus.setEstado(cbEstado.getSelectedItem().toString().toLowerCase());
-        
+
+        bus.setEstadoBus(cbEstado.getSelectedItem().toString().toLowerCase());
+
         return bus;
     }
-  
+
     private boolean validarCampos() {
         String idText = txtIdBus.getText().trim();
         if (idText.isEmpty()) {
@@ -98,7 +106,7 @@ private void inicializarParaNuevoBus() {
             txtIdBus.requestFocus();
             return false;
         }
-        
+
         try {
             int id = Integer.parseInt(idText);
             if (id <= 0) {
@@ -111,14 +119,14 @@ private void inicializarParaNuevoBus() {
             txtIdBus.requestFocus();
             return false;
         }
-        
+
         String placa = txtPlaca.getText().trim();
         if (placa.isEmpty()) {
             mostrarError("La placa es obligatoria");
             txtPlaca.requestFocus();
             return false;
         }
-        if (!placa.matches("^[A-Za-z0-9-]{3,10}$")) { 
+        if (!placa.matches("^[A-Za-z0-9-]{3,10}$")) {
             mostrarError("Formato de placa inválido. Use letras, números y guiones (ej: ABC-123). Longitud entre 3 y 10 caracteres.");
             txtPlaca.requestFocus();
             return false;
@@ -154,14 +162,22 @@ private void inicializarParaNuevoBus() {
     }
 
     private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this, 
-            mensaje, 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+                mensaje,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
+    // Método para establecer la referencia
+    public void setListaBuses(ListaBuses listaBuses) {
+        this.listaBuses = listaBuses;
     }
 
- 
-
+    public FormularioBus(Usuario usuarioLogeado, ListaBuses listaBuses){
+        this(usuarioLogeado);
+        this.listaBuses = listaBuses;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -418,23 +434,23 @@ private void inicializarParaNuevoBus() {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  
+
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // Confirmar si realmente quiere cancelar
-    int confirmacion = JOptionPane.showConfirmDialog(
-        this, 
-        "¿Está seguro que desea cancelar? Los datos no guardados se perderán.", 
-        "Confirmar cancelación", 
-        JOptionPane.YES_NO_OPTION
-    );
-    
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        ListaBuses lista = new ListaBuses();
-        lista.setVisible(true);
-        this.dispose();
-    }
- 
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro que desea cancelar? Los datos no guardados se perderán.",
+                "Confirmar cancelación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+//    if (confirmacion == JOptionPane.YES_OPTION) {
+//        ListaBuses lista = new ListaBuses();
+//        lista.setVisible(true);
+//        this.dispose();
+//    }
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
@@ -462,90 +478,69 @@ private void inicializarParaNuevoBus() {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnGuardarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarBusActionPerformed
-      if (!validarCampos()) {
-            return;
+         if (!validarCampos()) {
+        return;
+    }
+
+    try {
+        Bus bus = getDatosBus();
+        BusDAO busDAO = new BusDAO();
+        boolean exito = false;
+        String mensaje = "";
+
+        if (esNuevoBus) {
+            if (busDAO.existeIdBus(bus.getIdBus())) {
+                JOptionPane.showMessageDialog(this,
+                        "El ID de bus '" + bus.getIdBus() + "' ya existe.",
+                        "Error de ID Duplicado",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (busDAO.existePlaca(bus.getPlaca(), 0)) {
+                JOptionPane.showMessageDialog(this,
+                        "La placa '" + bus.getPlaca() + "' ya está registrada.",
+                        "Error de Duplicidad",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            exito = busDAO.guardarBus(bus);
+            mensaje = "Bus guardado correctamente";
+        } else {
+            // Lógica para actualización existente
+            if (busDAO.existePlaca(bus.getPlaca(), bus.getIdBus())) {
+                JOptionPane.showMessageDialog(this,
+                        "La placa '" + bus.getPlaca() + "' ya está registrada en otro bus.",
+                        "Error de Duplicidad",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            exito = busDAO.actualizarBus(bus);
+            mensaje = "Bus actualizado correctamente";
         }
 
-        try {
-            Bus bus = getDatosBus(); // Get bus object with the manually entered ID
-            BusDAO busDAO = new BusDAO();
-            boolean exito = false;
-            String mensaje = "";
-
-            if (esNuevoBus) {
-                // For a new bus, check if ID already exists
-                if (busDAO.existeIdBus(bus.getIdBus())) {
-                    JOptionPane.showMessageDialog(this, 
-                        "El ID de bus '" + bus.getIdBus() + "' ya existe. Por favor, ingrese un ID diferente.", 
-                        "Error de ID Duplicado", 
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                // Also check for duplicate plate for new buses
-                if (busDAO.existePlaca(bus.getPlaca(), 0)) { 
-                     JOptionPane.showMessageDialog(this, 
-                        "La placa '" + bus.getPlaca() + "' ya está registrada en otro bus. No se puede crear un bus con una placa duplicada.", 
-                        "Error de Duplicidad", 
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                exito = busDAO.guardarBus(bus); // Calls the modified guardarBus that takes ID
-                mensaje = exito ? "Bus guardado correctamente" : "No se pudo guardar el bus";
-            } else {
-                // If ID was changed during modification, delete old record and insert new one
-                if (bus.getIdBus() != originalIdBus) {
-                    // Check if the new ID already exists
-                    if (busDAO.existeIdBus(bus.getIdBus())) {
-                        JOptionPane.showMessageDialog(this, 
-                            "El nuevo ID de bus '" + bus.getIdBus() + "' ya existe. Por favor, ingrese un ID diferente o mantenga el original.", 
-                            "Error de ID Duplicado", 
-                            JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    // Delete the old record and insert a new one with the updated ID
-                    if (busDAO.eliminarBus(originalIdBus)) {
-                        exito = busDAO.guardarBus(bus); // Insert as new with the new ID
-                        mensaje = exito ? "Bus actualizado correctamente (ID modificado)" : "No se pudo actualizar el bus (ID modificado)";
-                    } else {
-                        JOptionPane.showMessageDialog(this, 
-                            "No se pudo eliminar el bus original para actualizar el ID. Operación cancelada.", 
-                            "Error de Actualización", 
-                            JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                } else {
-                    // If ID was NOT changed, proceed with normal update
-                    // Check for duplicate plate for existing bus (excluding its own original plate)
-                    if (busDAO.existePlaca(bus.getPlaca(), bus.getIdBus())) {
-                        JOptionPane.showMessageDialog(this, 
-                            "La placa '" + bus.getPlaca() + "' ya está registrada en otro bus. Por favor, use una placa diferente.", 
-                            "Error de Duplicidad", 
-                            JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    exito = busDAO.actualizarBus(bus); // Calls the regular actualizarBus
-                    mensaje = exito ? "Bus actualizado correctamente" : "No se pudo actualizar el bus";
-                }
-            }
-            
-            if (exito) {
-                JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                ListaBuses lista = new ListaBuses(); 
-                lista.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException e) {
-            // Error message already shown in getDatosBus() or validarCampos()
-            System.err.println("Error de formato de número: " + e.getMessage());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error inesperado al procesar el bus: " + e.getMessage(), 
-                "Error General", 
+        if (exito) {
+            JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            volverAListaBuses();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo completar la operación", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+                "Error inesperado: " + e.getMessage(),
+                "Error General",
                 JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace(); 
-        }
+        e.printStackTrace();
+    }
+}
+
+private void volverAListaBuses() {
+    if (listaBuses != null) {
+        listaBuses.actualizarTabla();
+        listaBuses.setVisible(true);
+    } else {
+        new ListaBuses(usuarioActual).setVisible(true);
+    }
+    this.dispose();
     }//GEN-LAST:event_btnGuardarBusActionPerformed
 
     private void txtIdBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdBusActionPerformed
@@ -555,312 +550,7 @@ private void inicializarParaNuevoBus() {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioBus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-       java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormularioBus().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
