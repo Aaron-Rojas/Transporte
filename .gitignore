@@ -3,6 +3,17 @@
 # Directorios de compilación y salida de Maven
 /target/
 
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildnumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
 # Archivos de configuración de NetBeans
 # El directorio 'nbproject/private/' contiene configuraciones de usuario y temporales.
 # El resto de 'nbproject/' sí debe ser versionado.
@@ -32,6 +43,15 @@ Thumbs.db      # Windows
 *.swp          # Archivos de intercambio de Vim
 *.swo          # Archivos de intercambio de Vim
 
+nbproject/private/
+build/
+dist/
+nbbuild/
+.nb-gradle/
+.flattened-pom.xml
+!nbproject/
+!nbproject/project.xml
+!nbproject/project.properties
 # Archivos generados automáticamente que pueden aparecer en el directorio raíz
 # (Ej: archivos de log que no son parte del control de versiones)
 # Puedes añadir líneas aquí si ves archivos no deseados en tu 'git status'
