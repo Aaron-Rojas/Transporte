@@ -127,4 +127,67 @@ public class ViajeProgramadoDAO {
             }
         }
     }
+     public boolean eliminarLogico(int idViajeProgramado) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        // La sentencia SQL para la eliminación lógica es un UPDATE
+        String sql = "UPDATE ViajeProgramado SET EstadoViaje = 'cancelado' WHERE ID_ViajeProgramado = ?"; 
+
+        try {
+            conn = Conexión.conectar(); // Obtener la conexión a la base de datos
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idViajeProgramado);
+
+            int filasAfectadas = ps.executeUpdate(); // Ejecutar la actualización
+            return filasAfectadas > 0; // Retorna true si al menos una fila fue actualizada
+        } finally {
+            // Asegúrate de cerrar los recursos para evitar fugas de memoria y problemas de conexión
+            Conexión.cerrar(ps);
+            Conexión.cerrar(conn);
+        }
+    }
+     
+     public List<ViajeProgramado> obtenerViajesNoCancelados() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        // La consulta SQL selecciona todos los campos de ViajeProgramado
+        // donde el EstadoViaje NO es 'cancelado'
+        String sql = "SELECT ID_ViajeProgramado, ID_Bus, ID_Origen, ID_DestinoFinal, FechaHoraSalida, FechaHoraLlegadaEstimada, EstadoViaje FROM ViajeProgramado WHERE EstadoViaje != 'cancelado'"; 
+        List<ViajeProgramado> viajes = new ArrayList<>();
+
+        try {
+            conn = Conexión.conectar();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery(); // Ejecutar la consulta
+
+            while (rs.next()) {
+                ViajeProgramado viaje = new ViajeProgramado();
+                viaje.setIdViajeProgramado(rs.getInt("ID_ViajeProgramado"));
+                viaje.setIdBus(rs.getInt("ID_Bus"));
+                viaje.setIdOrigen(rs.getInt("ID_Origen"));
+                viaje.setIdDestinoFinal(rs.getInt("ID_DestinoFinal"));
+
+                // Convertir los valores de Timestamp de la base de datos a LocalDateTime de Java
+                Timestamp tsSalida = rs.getTimestamp("FechaHoraSalida");
+                if (tsSalida != null) {
+                    viaje.setFechaHoraSalida(tsSalida.toLocalDateTime());
+                }
+                Timestamp tsLlegada = rs.getTimestamp("FechaHoraLlegadaEstimada");
+                if (tsLlegada != null) {
+                    viaje.setFechaHoraLlegadaEstimada(tsLlegada.toLocalDateTime());
+                }
+
+                viaje.setEstadoViaje(rs.getString("EstadoViaje"));
+                viajes.add(viaje); // Añadir el viaje a la lista
+            }
+        } finally {
+            // Cerrar los recursos en el orden inverso de su apertura
+            Conexión.cerrar(rs);
+            Conexión.cerrar(ps);
+            Conexión.cerrar(conn);
+        }
+        return viajes;
+    }
+    
 }

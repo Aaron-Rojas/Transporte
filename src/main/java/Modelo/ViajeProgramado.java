@@ -13,7 +13,7 @@ public class ViajeProgramado {
     private LocalDateTime fechaHoraLlegadaEstimada;
     private String estadoViaje;
 
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     public ViajeProgramado() {}
 

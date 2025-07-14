@@ -13,6 +13,9 @@ import java.util.List;
 
 public class ProveedorDAO {
 
+    public List<Proveedor> listarProveedores() {
+    return obtenerProveedoresActivos();
+}
     // --- C.R.U.D. para Proveedor (Adaptado con Estado y Eliminación Lógica) ---
 
     // 1. Crear (Guardar) un nuevo proveedor
