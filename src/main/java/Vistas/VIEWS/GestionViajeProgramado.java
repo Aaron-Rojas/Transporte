@@ -10,42 +10,53 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import dao.ClienteDAO;
+import Modelo.Cliente;
+import Modelo.Usuario;
         
         
 public class GestionViajeProgramado extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabla;
     
+    
     public GestionViajeProgramado() {
         initComponents();
-        modeloTabla = (DefaultTableModel) jTable2.getModel();
+        modeloTabla = (DefaultTableModel) tbViajes.getModel();
         cargarTablaViajes();
         setLocationRelativeTo(null); // Centrar la ventana
     }
     
     private void cargarTablaViajes() {
-        modeloTabla.setRowCount(0); // Limpiar tabla
-        
-        try {
-            ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
-            List<ViajeProgramado> viajes = dao.obtenerTodos();
-            
-            for (ViajeProgramado viaje : viajes) {
-                Object[] fila = {
-                    viaje.getIdViajeProgramado(),
-                    viaje.getIdBus(),
-                    viaje.getIdOrigen(),
-                    viaje.getIdDestinoFinal(),
-                    viaje.getFechaHoraSalidaFormateada(),
-                    viaje.getFechaHoraLlegadaEstimadaFormateada(),
-                    viaje.getEstadoViaje()
-                };
-                modeloTabla.addRow(fila);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar viajes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    // Limpiar todas las filas existentes en el modelo de la tabla
+    // Asegúrate de castear a DefaultTableModel si es el tipo de tu modelo de tabla
+    ((javax.swing.table.DefaultTableModel)tbViajes.getModel()).setRowCount(0); 
+
+    try {
+        ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
+        // <--- ¡Aquí se llama al nuevo método para obtener solo los viajes NO cancelados!
+        List<ViajeProgramado> viajes = dao.obtenerViajesNoCancelados(); 
+
+        // Iterar sobre la lista de viajes obtenidos y añadirlos a la tabla
+        for (ViajeProgramado viaje : viajes) {
+            Object[] fila = {
+                viaje.getIdViajeProgramado(),
+                viaje.getIdBus(),
+                viaje.getIdOrigen(),
+                viaje.getIdDestinoFinal(),
+                // Asegúrate de que los métodos getFechaHoraSalidaFormateada() y getFechaHoraLlegadaEstimadaFormateada()
+                // en tu clase Modelo.ViajeProgramado devuelvan la fecha en el formato de cadena que quieres mostrar (ej. dd-MM-yyyy HH:mm)
+                viaje.getFechaHoraSalidaFormateada(), 
+                viaje.getFechaHoraLlegadaEstimadaFormateada(), 
+                viaje.getEstadoViaje() // Mostrar el estado actual (programado, en viaje, completado)
+            };
+            ((javax.swing.table.DefaultTableModel)tbViajes.getModel()).addRow(fila);
         }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar viajes: " + e.getMessage(), "Error de SQL", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); // Imprimir el error para depuración
     }
+}
     
      private String capitalizarEstado(String estado) {
         if (estado == null || estado.isEmpty()) {
@@ -68,7 +79,7 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbViajes = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -95,8 +106,8 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Itinerario de Viajes Programados");
 
-        jTable2.setBackground(new java.awt.Color(204, 204, 204));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbViajes.setBackground(new java.awt.Color(204, 204, 204));
+        tbViajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -107,9 +118,9 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
                 "ID ", "ID Bus", "ID Origen", "ID Destino Final", "Fecha Hora Salida", "Fecha Llegada", "Estado"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(5).setResizable(false);
+        jScrollPane2.setViewportView(tbViajes);
+        if (tbViajes.getColumnModel().getColumnCount() > 0) {
+            tbViajes.getColumnModel().getColumn(5).setResizable(false);
         }
 
         btnAgregar.setText("Agregar");
@@ -200,49 +211,54 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        int filaSeleccionada = jTable2.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this,
-                "Seleccione un viaje para eliminar",
-                "Advertencia",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        int filaSeleccionada = tbViajes.getSelectedRow(); 
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this,
+            "Por favor, seleccione un viaje para cancelar.",
+            "Advertencia",
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        int confirmacion = JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de eliminar este viaje?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION);
+    // Mensaje de confirmación claro para el usuario
+    int confirmacion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Está seguro de CANCELAR este viaje? El viaje se marcará como 'cancelado' en el sistema.", 
+        "Confirmar Cancelación de Viaje",
+        JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            try {
-                int idViaje = (int) jTable2.getValueAt(filaSeleccionada, 0);
-                ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        try {
+            // Obtener el ID del viaje de la primera columna (índice 0) de la fila seleccionada
+            int idViaje = (int) tbViajes.getValueAt(filaSeleccionada, 0); 
+            ViajeProgramadoDAO dao = new ViajeProgramadoDAO(); // Instanciar tu DAO
 
-                if (dao.eliminar(idViaje)) {
-                    JOptionPane.showMessageDialog(this,
-                        "Viaje eliminado correctamente",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
-                    cargarTablaViajes(); // Refrescar tabla después de eliminar
-                } else {
-                    JOptionPane.showMessageDialog(this,
-                        "Error al eliminar el viaje",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException e) {
+            if (dao.eliminarLogico(idViaje)) { // <--- ¡Aquí se llama al nuevo método de eliminación lógica!
                 JOptionPane.showMessageDialog(this,
-                    "Error al eliminar viaje: " + e.getMessage(),
+                    "Viaje cancelado correctamente (eliminación lógica).",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+                // Una vez cancelado, recarga la tabla para que el viaje ya no aparezca
+                cargarTablaViajes(); 
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "No se pudo cancelar el viaje. Intente nuevamente.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
+        } catch (SQLException e) {
+            // Manejo de errores de base de datos
+            JOptionPane.showMessageDialog(this,
+                "Error de base de datos al cancelar viaje: " + e.getMessage(),
+                "Error de SQL",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Imprimir el stack trace en consola para depuración
         }
+    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int filaSeleccionada = jTable2.getSelectedRow();
+        int filaSeleccionada = tbViajes.getSelectedRow();
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this,
                 "Seleccione un viaje para modificar",
@@ -252,7 +268,7 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
         }
 
         try {
-            int idViaje = (int) jTable2.getValueAt(filaSeleccionada, 0);
+            int idViaje = (int) tbViajes.getValueAt(filaSeleccionada, 0);
             ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
             ViajeProgramado viaje = dao.obtenerPorId(idViaje);
 
@@ -329,6 +345,6 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tbViajes;
     // End of variables declaration//GEN-END:variables
 }

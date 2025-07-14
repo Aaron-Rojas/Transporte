@@ -13,17 +13,20 @@ import java.util.List;
 
 public class ProveedorDAO {
 
+    public List<Proveedor> listarProveedores() {
+    return obtenerProveedoresActivos();
+}
     // --- C.R.U.D. para Proveedor (Adaptado con Estado y Eliminación Lógica) ---
 
     // 1. Crear (Guardar) un nuevo proveedor
     // Ahora incluye el campo 'estado' en la inserción
     public boolean guardarProveedor(Proveedor proveedor) {
-        String sql = "INSERT INTO proveedor (nombreProveedor, contacto, estado) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO proveedor (nombreProveedor, contacto, Estado) VALUES (?, ?, ?)";
         try (Connection conn = Conexión.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, proveedor.getNombreProveedor());
             pstmt.setString(2, proveedor.getContacto());
-            pstmt.setString(3, proveedor.getEstado()); // Añadido el estado
+            pstmt.setBoolean(3, proveedor.IsActivo()); // Añadido el estado
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -37,7 +40,7 @@ public class ProveedorDAO {
     // Este método solo devolverá los proveedores con Estado = 'activo'
     public List<Proveedor> obtenerProveedoresActivos() {
         List<Proveedor> proveedores = new ArrayList<>();
-        String sql = "SELECT ID_Proveedor, NombreProveedor, Contacto, Estado FROM proveedor WHERE Estado = 'activo'"; // Filtrado por estado
+        String sql = "SELECT ID_Proveedor, NombreProveedor, Contacto, Estado FROM proveedor WHERE Estado = 1 "; // Filtrado por estado
         try (Connection conn = Conexión.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -47,7 +50,7 @@ public class ProveedorDAO {
                 proveedor.setIdProveedor(rs.getInt("ID_Proveedor"));
                 proveedor.setNombreProveedor(rs.getString("NombreProveedor"));
                 proveedor.setContacto(rs.getString("Contacto"));
-                proveedor.setEstado(rs.getString("Estado")); // Obtener el estado
+                proveedor.setActivo(rs.getBoolean("Estado")); // Obtener el estado
                 proveedores.add(proveedor);
             }
         } catch (SQLException e) {
@@ -71,7 +74,7 @@ public class ProveedorDAO {
                 proveedor.setIdProveedor(rs.getInt("ID_Proveedor"));
                 proveedor.setNombreProveedor(rs.getString("NombreProveedor"));
                 proveedor.setContacto(rs.getString("Contacto"));
-                proveedor.setEstado(rs.getString("Estado"));
+                proveedor.setActivo(rs.getBoolean("Estado"));
                 proveedores.add(proveedor);
             }
         } catch (SQLException e) {
@@ -97,7 +100,7 @@ public class ProveedorDAO {
                     proveedor.setIdProveedor(rs.getInt("ID_Proveedor"));
                     proveedor.setNombreProveedor(rs.getString("NombreProveedor"));
                     proveedor.setContacto(rs.getString("Contacto"));
-                    proveedor.setEstado(rs.getString("Estado")); // Obtener el estado
+                    proveedor.setActivo(rs.getBoolean("Estado"));// Obtener el estado
                 }
             }
         } catch (SQLException e) {
@@ -115,7 +118,7 @@ public class ProveedorDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, proveedor.getNombreProveedor());
             pstmt.setString(2, proveedor.getContacto());
-            pstmt.setString(3, proveedor.getEstado()); // Actualizar el estado
+            pstmt.setBoolean(3, proveedor.IsActivo());// Actualizar el estado
             pstmt.setInt(4, proveedor.getIdProveedor());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
@@ -129,7 +132,7 @@ public class ProveedorDAO {
     // 5. Eliminar lógicamente un proveedor (cambiar su estado a 'desactivo')
     // Reemplaza la eliminación física por una actualización de estado
     public boolean eliminarLogicamenteProveedor(int idProveedor) {
-        String sql = "UPDATE proveedor SET Estado = 'desactivo' WHERE ID_Proveedor = ?"; // Eliminación lógica
+        String sql = "UPDATE proveedor SET Estado = 0 WHERE ID_Proveedor = ?"; // Eliminación lógica
         try (Connection conn = Conexión.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -144,7 +147,35 @@ public class ProveedorDAO {
         }
     }
 
-    // NOTA: El método 'eliminarProveedor' (físico) ha sido reemplazado por 'eliminarLogicamenteProveedor'.
-    // Si realmente necesitas una eliminación física, podrías añadir un método separado para ello,
-    // pero para un CRUD típico con eliminación lógica, solo se usa el que actualiza el estado.
+    public boolean eliminarProveedor(int idProveedor){
+        String sql = "DELETE FROM proveedor WHERE ID_Proveedor";
+        try(Connection conn = Conexión.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1,idProveedor);
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas>0;
+        }catch(SQLException e){
+            System.err.println("Error al eliminar cliente: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }      
+    public boolean restaurarProveedor (int idProveedor) {
+        String sql = "UPDATE proveedor SET Estado = 1 WHERE ID_Proveedor=? "; // Establece 'Estado' a 1 (activo)
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idProveedor);
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al restaurar el Proveedor: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    
+    }
+    
+
 }

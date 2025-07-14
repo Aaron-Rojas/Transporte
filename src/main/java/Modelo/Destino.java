@@ -4,25 +4,23 @@ public class Destino {
     private int idDestino;
     private String nombreDestino;
     private String descripcion;
-    private String estado; // <--- New field
+    private String estado; // Mantenemos String para mayor flexibilidad
 
-    // Constructor vacío
+    // Constructores
     public Destino() {
     }
 
-    // Constructor para crear un nuevo destino (sin ID, ya que es auto_increment)
-    public Destino(String nombreDestino, String descripcion, String estado) { // <--- Added estado
+    public Destino(String nombreDestino, String descripcion, String estado) {
         this.nombreDestino = nombreDestino;
         this.descripcion = descripcion;
-        this.estado = estado; // <--- Added
+        this.estado = estado;
     }
 
-    // Constructor para recuperar un destino de la base de datos (con ID)
-    public Destino(int idDestino, String nombreDestino, String descripcion, String estado) { // <--- Added estado
+    public Destino(int idDestino, String nombreDestino, String descripcion, String estado) {
         this.idDestino = idDestino;
         this.nombreDestino = nombreDestino;
         this.descripcion = descripcion;
-        this.estado = estado; // <--- Added
+        this.estado = estado;
     }
 
     // Getters y Setters
@@ -50,11 +48,11 @@ public class Destino {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() { // <--- New getter
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) { // <--- New setter
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -64,7 +62,7 @@ public class Destino {
                "idDestino=" + idDestino +
                ", nombreDestino='" + nombreDestino + '\'' +
                ", descripcion='" + descripcion + '\'' +
-               ", estado='" + estado + '\'' + // <--- Added to toString
+               ", estado='" + estado + '\'' +
                '}';
     }
 }

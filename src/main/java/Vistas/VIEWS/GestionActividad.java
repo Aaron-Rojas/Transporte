@@ -5,28 +5,48 @@
 package Vistas.VIEWS;
 
 import Controlador.NavegacionController;
+import Modelo.Actividad;
+import dao.ActividadDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author LAB-USR-LCENTRO
  */
-public class ItinerarioDeActividad extends javax.swing.JFrame {
+public class GestionActividad extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
-    public ItinerarioDeActividad() {
+     private final ActividadDAO actividadDAO = new ActividadDAO(); // Instancia del DAO
+
+    public GestionActividad() {
         initComponents();
-        NavegacionController.configurarBotones(
-            btnHome, 
-            btnClientes, 
-            btnReservas, 
-            btnProveedores, 
-            btnReportes, 
-            btnConfiguracion, 
-            this
-        );
+        setLocationRelativeTo(null); // Centrar la ventana
+        // Asegúrate de que NavegacionController y las vistas referenciadas existan
+        // NavegacionController.configurarBotones(
+        //         btnHome, btnClientes, btnReservas, btnProveedores, btnReportes, btnConfiguracion, this
+        // );
+        refrescarTabla(); // Cargar datos al iniciar la ventana
     }
+
+    public void refrescarTabla() {
+        DefaultTableModel model = (DefaultTableModel) tbActividades.getModel();
+        model.setRowCount(0); // Limpiar filas existentes
+
+        List<Actividad> actividades = actividadDAO.listarActividades();
+        for (Actividad actividad : actividades) {
+            model.addRow(new Object[]{
+                actividad.getIdActividad(),
+                actividad.getNombre(),
+                actividad.getDescripcion(),
+                actividad.getDuracion(), // Ya es String
+                actividad.getIdLugarTuristico(),
+                actividad.getIdProveedor(),
+                actividad.getEstado()
+            });
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,8 +63,6 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         btnConfiguracion = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
@@ -52,6 +70,11 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
         btnReservas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbActividades = new javax.swing.JTable();
+        btnCrear = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -122,27 +145,10 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 460, 890, 90);
 
-        jTable1.setBackground(new java.awt.Color(204, 204, 204));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Itinerario", "Hotel", "Fecha de Entrada", "Fecha de Salida", "Tipo de Habitacion", "Cantidad de Noches", "Costo"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(210, 210, 670, 230);
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         jLabel3.setText("Itinerario de Alojamiento");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 140, 470, 70);
+        jLabel3.setBounds(220, 100, 470, 70);
 
         btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
         btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -216,6 +222,49 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
 
+        tbActividades.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID Actividad", "Nombre Actividad", "Descripcion", "Duracion", "ID Lugar Turistico", "ID Proveedor", "Estado"
+            }
+        ));
+        jScrollPane1.setViewportView(tbActividades);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(210, 170, 650, 200);
+
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCrear);
+        btnCrear.setBounds(240, 390, 100, 50);
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEditar);
+        btnEditar.setBounds(370, 390, 100, 50);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(780, 410, 80, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -259,6 +308,55 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
 
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        FormularioActividad formulario = new FormularioActividad(this, null); // null indica nuevo
+        formulario.setVisible(true);
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int filaSeleccionada = tbActividades.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            // Obtener el ID de la actividad de la fila seleccionada (columna 0)
+            int idActividad = (int) tbActividades.getValueAt(filaSeleccionada, 0); 
+            Actividad actividad = actividadDAO.obtenerActividadPorId(idActividad); // Llamada al método de instancia
+
+            if (actividad != null) {
+                FormularioActividad formulario = new FormularioActividad(this, actividad);
+                formulario.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la actividad para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una actividad para editar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int filaSeleccionada = tbActividades.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            int id = (int) tbActividades.getValueAt(filaSeleccionada, 0); // Columna 0 = ID
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Estás seguro de 'desactivar' esta actividad? (Eliminación lógica)", // Mensaje de confirmación claro
+                    "Confirmar Desactivación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (actividadDAO.eliminarActividad(id)) { 
+                    // Mensaje de éxito explícito para eliminación lógica
+                    JOptionPane.showMessageDialog(this, "✅ Eliminación lógica de actividad exitosa: La actividad ha sido 'desactivada'.", "Éxito - Eliminación Lógica", JOptionPane.INFORMATION_MESSAGE);
+                    refrescarTabla(); // Recarga la tabla para que ya no aparezca la actividad desactivada
+                } else {
+                    JOptionPane.showMessageDialog(this, "❌ Error al realizar la eliminación lógica de la actividad.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila para 'desactivar'.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -276,14 +374,46 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ItinerarioDeActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ItinerarioDeActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ItinerarioDeActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ItinerarioDeActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -320,7 +450,7 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ItinerarioDeActividad().setVisible(true);
+                new GestionActividad().setVisible(true);
             }
         });
     }
@@ -328,6 +458,9 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
@@ -340,6 +473,6 @@ public class ItinerarioDeActividad extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbActividades;
     // End of variables declaration//GEN-END:variables
 }

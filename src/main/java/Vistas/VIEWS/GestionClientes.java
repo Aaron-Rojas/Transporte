@@ -22,19 +22,7 @@ public class GestionClientes extends javax.swing.JFrame {
     public GestionClientes(Usuario usuarioLogeado) {
         this.usuarioActual=usuarioLogeado;
         initComponents();
-        
-        /*
-        NavegacionController.configurarBotones(
-            btnHome, 
-            btnClientes, 
-            btnReservas, 
-            btnProveedores, 
-            btnReportes, 
-            btnConfiguracion, 
-            this
-        );
-        */
-        
+ 
         
     this.setLocationRelativeTo(null);
     tbClientes.setDefaultEditor(Object.class, null); //Quitar que la tabla sea editable
@@ -342,53 +330,7 @@ public class GestionClientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-/*
-    //Perpara la estructura del JTable
-    public void configurarTablaClientes() {
-    modeloTabla = new DefaultTableModel();
-    modeloTabla.addColumn("ID");
-    modeloTabla.addColumn("DNI");
-    modeloTabla.addColumn("Nombre Completo");
-    modeloTabla.addColumn("Teléfono");
-    modeloTabla.addColumn("Email");
-    modeloTabla.addColumn("Preferencias");
-    tbClientes.setModel(modeloTabla);
-}
-*/    
- 
-
-   
- 
- 
- /*
-    //metodo para obtener los datos de tbClientes a JTable
-    public void cargarClientesEnTabla() {
-    // Limpiar la tabla antes de cargar nuevos 
-    modeloTabla.setRowCount(0);
-    
-    // Obtener todos los clientes desde la base de datos desde tu clase DTO
-    List<Cliente> clientes = clienteDAO.obtenerTodosLosClientes();
-
-    // Añadir cada cliente como una fila a la tabla
-    for (Cliente cliente : clientes) {
-        Object[] fila = new Object[6]; // 6 columnas definidas
-        fila[0] = cliente.getIdCliente();
-        fila[1] = cliente.getDni();
-        fila[2] = cliente.getNombreCompleto();
-        fila[3] = cliente.getTelefono();
-        fila[4] = cliente.getEmail();
-        fila[5] = cliente.getPreferencias();
-        modeloTabla.addRow(fila);
-    }
-}
-    
-    //metodo para refrescar la tabla
-    public void refrescarTabla() {
-    cargarClientesEnTabla();
-    }
-  */
-    
-    
+     
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int filaSeleccionada = tbClientes.getSelectedRow();
         if (filaSeleccionada >= 0) {
@@ -429,10 +371,7 @@ public class GestionClientes extends javax.swing.JFrame {
         if (filaSeleccionada >= 0) {
             int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
             Cliente clienteParaEditar = clienteDAO.obtenerClientePorId(idCliente);
-
             if (clienteParaEditar != null) {
-                // Al pasar 'this', el formulario CreacionCliente tendrá una referencia a GestionClientes
-                // para poder refrescar la tabla cuando se guarden los cambios.
                 CreacionCliente edicionClienteFrame = new CreacionCliente(this, this,clienteParaEditar);
                 edicionClienteFrame.setVisible(true);
             } else {
