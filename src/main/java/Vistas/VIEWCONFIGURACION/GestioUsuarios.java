@@ -11,6 +11,7 @@ import Modelo.Usuario;
 import Modelo.Rol;
 import Vistas.VIEWS.GestionClientes;
 import Vistas.VIEWS.GestionItinerario;
+import Vistas.VIEWS.Login;
 import dao.UsuarioDAO;
 import dao.RolDAO;
 import javax.swing.JOptionPane;
@@ -57,12 +58,6 @@ public class GestioUsuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -77,96 +72,20 @@ public class GestioUsuarios extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         btnConfiguracion = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(8, 8, 100));
-
-        jButton7.setBackground(new java.awt.Color(179, 23, 23));
-        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cerrar sesión");
-
-        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Expreso");
-
-        jLabel2.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Los Chankas");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(318, 318, 318)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 890, 120);
-
-        jPanel3.setBackground(new java.awt.Color(8, 8, 100));
-
-        jButton9.setBackground(new java.awt.Color(179, 23, 23));
-        jButton9.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Volver");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(696, Short.MAX_VALUE)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 460, 890, 90);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel3.setText("Gestion de Usuarios");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel3.setText("GESTIÓN DE USUARIOS");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 130, 470, 40);
+        jLabel3.setBounds(220, 110, 220, 40);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,10 +101,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(222, 252, 460, 190);
+        jScrollPane1.setBounds(310, 290, 460, 190);
 
-        jButton12.setBackground(new java.awt.Color(255, 171, 33));
-        jButton12.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jButton12.setBackground(new java.awt.Color(179, 23, 23));
+        jButton12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
         jButton12.setText("Eliminar");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -194,10 +113,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton12);
-        jButton12.setBounds(730, 390, 110, 40);
+        jButton12.setBounds(350, 220, 110, 40);
 
-        jButton13.setBackground(new java.awt.Color(255, 171, 33));
-        jButton13.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jButton13.setBackground(new java.awt.Color(40, 167, 69));
+        jButton13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton13.setForeground(new java.awt.Color(255, 255, 255));
         jButton13.setText("Crear");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -206,10 +125,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton13);
-        jButton13.setBounds(730, 270, 110, 40);
+        jButton13.setBounds(620, 220, 110, 40);
 
         jButton14.setBackground(new java.awt.Color(255, 171, 33));
-        jButton14.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jButton14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton14.setForeground(new java.awt.Color(255, 255, 255));
         jButton14.setText("Editar");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -218,18 +137,19 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton14);
-        jButton14.setBounds(730, 330, 110, 40);
+        jButton14.setBounds(480, 220, 110, 40);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Asignar Rol");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(230, 170, 220, 30);
+        jLabel4.setBounds(230, 160, 70, 30);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(230, 200, 190, 30);
+        jComboBox1.setBounds(320, 160, 190, 30);
 
-        btnReportes.setBackground(new java.awt.Color(8, 8, 100));
-        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -238,10 +158,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 320, 200, 50);
+        btnReportes.setBounds(0, 280, 200, 50);
 
-        btnProveedores.setBackground(new java.awt.Color(8, 8, 100));
-        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -250,10 +170,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 270, 200, 50);
+        btnProveedores.setBounds(0, 230, 200, 50);
 
-        btnReservas.setBackground(new java.awt.Color(8, 8, 100));
-        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -262,10 +182,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 220, 200, 50);
+        btnReservas.setBounds(0, 180, 200, 50);
 
-        btnClientes.setBackground(new java.awt.Color(8, 8, 100));
-        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -274,10 +194,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 170, 200, 50);
+        btnClientes.setBounds(0, 130, 200, 50);
 
-        btnHome.setBackground(new java.awt.Color(8, 8, 100));
-        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnHome.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -286,10 +206,10 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 120, 200, 50);
+        btnHome.setBounds(0, 80, 200, 50);
 
-        btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
-        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +218,57 @@ public class GestioUsuarios extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 370, 200, 50);
+        btnConfiguracion.setBounds(0, 330, 200, 50);
+
+        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText(" EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 356, Short.MAX_VALUE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 890, 80);
+
+        jTextField3.setBackground(new java.awt.Color(0, 46, 121));
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextField3);
+        jTextField3.setBounds(0, 340, 200, 210);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -406,12 +376,19 @@ public class GestioUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        Configuración configuración = new Configuración();
-    configuración.setVisible(true); // mostrar frame Reportes
-    this.dispose();
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -425,16 +402,14 @@ public class GestioUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
