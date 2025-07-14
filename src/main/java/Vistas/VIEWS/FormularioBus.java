@@ -214,6 +214,11 @@ private void updateToggleButtonText(boolean isActive) {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -230,17 +235,16 @@ private void updateToggleButtonText(boolean isActive) {
         btnGuardarBus = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtPlaca = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         ToggleButtonEstado = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
-
 
         jPanel2.setBackground(new java.awt.Color(8, 8, 100));
 
@@ -311,8 +315,8 @@ private void updateToggleButtonText(boolean isActive) {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 460, 890, 90);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setText("Formulario de Buses");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel3.setText("FORMULARIO DE BUSES");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(230, 120, 290, 30);
 
@@ -340,10 +344,6 @@ private void updateToggleButtonText(boolean isActive) {
         jLabel7.setBounds(260, 230, 120, 17);
         jPanel1.add(txtCapacidad);
         txtCapacidad.setBounds(380, 280, 140, 22);
-
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operativo", "Mantenimiento", "Inactivo", " " }));
-        jPanel1.add(cbEstado);
-        cbEstado.setBounds(380, 320, 140, 22);
 
         btnCancelar.setBackground(new java.awt.Color(179, 23, 23));
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -448,62 +448,44 @@ private void updateToggleButtonText(boolean isActive) {
         jPanel1.add(txtPlaca);
         txtPlaca.setBounds(380, 230, 140, 22);
 
-        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
+        jPanel4.setBackground(new java.awt.Color(0, 46, 121));
 
-        jButton7.setBackground(new java.awt.Color(179, 23, 23));
-        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cerrar sesión");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jButton8.setBackground(new java.awt.Color(179, 23, 23));
+        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Cerrar sesión");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
+        jPanel4.add(jButton8);
 
-        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("EXPRESO LOS CHANKAS");
+        jLabel8.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("EXPRESO LOS CHANKAS");
+        jPanel4.add(jLabel8);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(0, 0, 890, 90);
 
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 890, 90);
+        jPanel5.setBackground(new java.awt.Color(0, 46, 121));
 
-        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 200, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 170, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 380, 200, 170);
+        jPanel1.add(jPanel5);
+        jPanel5.setBounds(0, 380, 200, 170);
+
         ToggleButtonEstado.setText("Activo");
         ToggleButtonEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -677,15 +659,20 @@ private void updateToggleButtonText(boolean isActive) {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField txtCapacidad;
     private javax.swing.JTextField txtIdBus;
     private javax.swing.JTextField txtPlaca;
