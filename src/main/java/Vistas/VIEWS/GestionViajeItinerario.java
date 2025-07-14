@@ -422,7 +422,7 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
             if ("usuario".equalsIgnoreCase(nombreRol)) {
                 FormularioViajeItinerario GI = new  FormularioViajeItinerario (this,this,usuarioActual);
                 GI.setVisible(true);
-                GI.setLocationRelativeTo(null); 
+                GI.setLocationRelativeTo(null);  
                 System.out.println("User redirigiendo a Formulario de Itinerario.");
                 return;
             }else{
