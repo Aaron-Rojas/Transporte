@@ -38,3 +38,5 @@ Thumbs.db      # Windows
 # .env             # Si usas variables de entorno en un archivo .env
 # *.jar            # Si los JARs compilados no se generan en target/
 # *.war            # Si los WARs compilados no se generan en target/target/
+target/
+*.class
