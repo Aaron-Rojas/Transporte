@@ -88,7 +88,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboboxTipoProv = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnGuardarProveedor = new javax.swing.JButton();
@@ -178,9 +178,14 @@ public class FormularioProveedor extends javax.swing.JDialog {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(250, 130, 220, 30);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(380, 173, 190, 30);
+        comboboxTipoProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hotel", "Agencia Tour", "Transporte" }));
+        comboboxTipoProv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboboxTipoProvActionPerformed(evt);
+            }
+        });
+        jPanel1.add(comboboxTipoProv);
+        comboboxTipoProv.setBounds(380, 173, 190, 30);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Tipo Proveedor: ");
@@ -425,6 +430,10 @@ public class FormularioProveedor extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreProveedorActionPerformed
 
+    private void comboboxTipoProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxTipoProvActionPerformed
+        
+    }//GEN-LAST:event_comboboxTipoProvActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -437,8 +446,8 @@ public class FormularioProveedor extends javax.swing.JDialog {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
+    private javax.swing.JComboBox<String> comboboxTipoProv;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
