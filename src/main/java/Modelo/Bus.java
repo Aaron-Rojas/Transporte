@@ -4,19 +4,18 @@ public class Bus {
     private int idBus;
     private String placa;
     private int capacidad;
-    private String estadoBus; // Cambiado a estadoBus para coincidir con la BD
-
+    private boolean estado; // Cambiar a booleano para simplificar
+    
     public Bus() {
     }
-
-    public Bus(int idBus, String placa, int capacidad, String estadoBus) {
+    
+    public Bus(int idBus, String placa, int capacidad, boolean estado) {
         this.idBus = idBus;
         this.placa = placa;
         this.capacidad = capacidad;
-        this.estadoBus = estadoBus;
+        this.estado = estado;
     }
-
-    // Getters y Setters
+    
     public int getIdBus() {
         return idBus;
     }
@@ -37,15 +36,22 @@ public class Bus {
         return capacidad;
     }
 
-    public void setCapacidad(int capacidad) {
+    // Getters y Setters
+    public void setCapacidad(int capacidad) {    
         this.capacidad = capacidad;
     }
 
-    public String getEstadoBus() {
-        return estadoBus;
+    public boolean isEstado() {
+        return estado;
     }
-
-    public void setEstadoBus(String estadoBus) {
-        this.estadoBus = estadoBus;
+    
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
+    
+    // Método para obtener el estado como texto (opcional)
+    public String getEstadoTexto() {
+        return estado ? "operativo" : "inactivo";
+    }
+    
 }

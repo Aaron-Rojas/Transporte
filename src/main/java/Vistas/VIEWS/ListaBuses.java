@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import Modelo.Usuario;
 import dao.ClienteDAO;
 
-
 public class ListaBuses extends javax.swing.JFrame {
 
     private ListaBuses listaBuses;
@@ -22,62 +21,71 @@ public class ListaBuses extends javax.swing.JFrame {
     private Cliente clienteSeleccionado;
     private BusDAO busDAO;
 
-public ListaBuses(Usuario usuarioLogeado) {
-    this.usuarioActual=usuarioLogeado;
-    this.listaBuses = listaBuses;
-    initComponents();  // Primero: inicializa componentes (generado por NetBeans)
-    busDAO = new BusDAO();
-    cargarBuses();
-    actualizarTabla(); // Llama a esto al iniciar la ventana para cargar los datos iniciales
-    
-     if (usuarioActual != null && usuarioActual.getRol() != null) {
+    public ListaBuses(Usuario usuarioLogeado) {
+        this.usuarioActual = usuarioLogeado;
+        this.listaBuses = listaBuses;
+        initComponents();  // Primero: inicializa componentes (generado por NetBeans)
+        busDAO = new BusDAO();
+
+        actualizarTabla(); // Llama a esto al iniciar la ventana para cargar los datos iniciales
+
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
             setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
-        }else{
+        } else {
             setTitle("Sistema de User");
         }
-       
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{}, // No initial rows
+                new String[]{"ID Bus", "Placa", "Capacidad", "Estado"} // Headers
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make all cells non-editable
+            }
+        };
+
     }
 
-  
-
-  private void cargarBuses() {
+   // En el método cargarBuses()
+private void cargarBuses() {
     DefaultTableModel model = (DefaultTableModel) tablaBuses.getModel();
-    model.setRowCount(0); // Limpiar tabla
+    model.setRowCount(0);
     
     BusDAO busDAO = new BusDAO();
-    List<Bus> buses = busDAO.obtenerBusesOperativos(); // Nuevo método que solo trae activos
+    List<Bus> buses = busDAO.obtenerBusesActivos();
     
     for (Bus bus : buses) {
         model.addRow(new Object[]{
-            bus.getIdBus(), 
-            bus.getPlaca(), 
+            bus.getIdBus(),
+            bus.getPlaca(),
             bus.getCapacidad(),
-            bus.getEstadoBus()
+            bus.getEstadoTexto() // Muestra "Operativo" o "Inactivo"
         });
     }
 }
 
     // Add this method to handle editing a bus (e.g., when a row is double-clicked or "Edit" button clicked)
-   
-   public void actualizarTabla() {
+    public void actualizarTabla() {
         DefaultTableModel model = (DefaultTableModel) tablaBuses.getModel();
-        model.setRowCount(0); // Limpia todas las filas existentes en la tabla
+        model.setRowCount(0); // Clear existing rows
 
-        // *** LA LÍNEA CLAVE ES ESTA ***
-        // OPCIÓN 1: Mostrar buses 'operativo' Y 'mantenimiento'
-        List<Bus> buses = busDAO.obtenerBusesOperativosODisponibles(); 
-        
-        // OPCIÓN 2: Mostrar SOLO buses 'operativo' (si ese es tu deseo final)
-        // List<Bus> buses = busDAO.obtenerBusesOperativos(); 
+        try {
+            // Call the new method to get only active buses
+            List<Bus> buses = busDAO.obtenerBusesActivos();
 
-        for (Bus bus : buses) {
-            model.addRow(new Object[]{
-                bus.getIdBus(),
-                bus.getPlaca(),
-                bus.getCapacidad(),
-                bus.getEstadoBus()
-            });
+            for (Bus bus : buses) {
+                // Ensure this order matches your table headers: ID, Placa, Capacidad, Estado
+                model.addRow(new Object[]{
+                    bus.getIdBus(),
+                    bus.getPlaca(),
+                    bus.getCapacidad(), // Column 2
+                    bus.isEstado()// Column 3 (the boolean value for the renderer)
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar buses: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
@@ -360,31 +368,31 @@ public ListaBuses(Usuario usuarioLogeado) {
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
-         // TODO add your handling code here:
-                
+        // TODO add your handling code here:
+
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
 
             if ("admin".equalsIgnoreCase(nombreRol)) {
-                GestionItinerario GI = new  GestionItinerario (usuarioActual);
+                GestionItinerario GI = new GestionItinerario(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose(); 
+                this.dispose();
                 System.out.println("Admin redirigiendo a Gestión de Itinerario.");
                 return;
             }
             if ("usuario".equalsIgnoreCase(nombreRol)) {
-                GestionItinerario GI = new  GestionItinerario (usuarioActual);
+                GestionItinerario GI = new GestionItinerario(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose();                 
+                this.dispose();
                 System.out.println("User redirigiendo a Gestión de Itinerario.");
-                return; 
-            }else{
+                return;
+            } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Gestión de Itinerario por rol: " + nombreRol);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnReservasActionPerformed
@@ -398,82 +406,60 @@ public ListaBuses(Usuario usuarioLogeado) {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         int filaSeleccionada = tablaBuses.getSelectedRow();
-
+          int filaSeleccionada = tablaBuses.getSelectedRow();
     if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, 
-            "Por favor seleccione un bus para marcar como inactivo", 
-            "Advertencia", 
-            JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Seleccione un bus", "Advertencia", JOptionPane.WARNING_MESSAGE);
         return;
     }
-
-    int confirmacion = JOptionPane.showConfirmDialog(
-        this, 
-        "¿Está seguro que desea marcar este bus como INACTIVO?\nEl bus desaparecerá de esta lista.", 
-        "Confirmar cambio de estado", 
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE
-    );
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
-        int idBus = (int) modelo.getValueAt(filaSeleccionada, 0);
-
-        BusDAO dao = new BusDAO();
-        if (dao.eliminarBusLogico(idBus)) {
-            JOptionPane.showMessageDialog(this, 
-                "Bus marcado como INACTIVO y removido de la lista", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-            cargarBuses(); // Esto ahora solo mostrará buses activos
-        } else {
-            JOptionPane.showMessageDialog(this, 
-                "No se pudo cambiar el estado del bus", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
+    
+    int idBus = (int) tablaBuses.getValueAt(filaSeleccionada, 0);
+    int confirm = JOptionPane.showConfirmDialog(this, 
+        "¿Marcar como inactivo el bus ID: " + idBus + "?", 
+        "Confirmar", JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        if (new BusDAO().eliminarBusLogico(idBus)) {
+            cargarBuses(); // Refrescar la tabla
         }
     }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBusActionPerformed
-      FormularioBus formulario = new FormularioBus(usuarioActual, this);
-    formulario.setVisible(true);
-    this.dispose();
+        FormularioBus formulario = new FormularioBus(usuarioActual, this);
+        formulario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAgregarBusActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-         int filaSeleccionada = tablaBuses.getSelectedRow();
+        int filaSeleccionada = tablaBuses.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, 
-            "Por favor seleccione un bus para editar", 
-            "Advertencia", 
-            JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor seleccione un bus para editar",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    try {
-        DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
-        int idBus = (int) modelo.getValueAt(filaSeleccionada, 0);
-        String placa = modelo.getValueAt(filaSeleccionada, 1).toString();
-        int capacidad = (int) modelo.getValueAt(filaSeleccionada, 2);
-        String estado = modelo.getValueAt(filaSeleccionada, 3).toString();
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tablaBuses.getModel();
+            int idBus = (int) modelo.getValueAt(filaSeleccionada, 0);
+            String placa = modelo.getValueAt(filaSeleccionada, 1).toString();
+            int capacidad = (int) modelo.getValueAt(filaSeleccionada, 2);
+            String estado = modelo.getValueAt(filaSeleccionada, 3).toString();
 
-        FormularioBus formulario = new FormularioBus(usuarioActual, this);
-        formulario.setDatosBus(idBus, placa, capacidad, estado);
-        formulario.setVisible(true);
-        this.dispose();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, 
-            "Error al preparar edición: " + e.getMessage(), 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE);
-    }
+            FormularioBus formulario = new FormularioBus(usuarioActual, this);
+            formulario.setDatosBus(idBus, placa, capacidad, estado);
+            formulario.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al preparar edición: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
-   
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
