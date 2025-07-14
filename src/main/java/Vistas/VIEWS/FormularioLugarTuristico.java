@@ -47,7 +47,7 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
     
     private void cargarCombos() {
     cbDestino.removeAllItems();
-    destinoDAO.listarDestinos().forEach(destino -> cbDestino.addItem(destino));
+    destinoDAO.obtenerTodosLosDestinos().forEach(destino -> cbDestino.addItem(destino));
     
     cbIDProveedor.removeAllItems();
     proveedorDAO.listarProveedores().forEach(proveedor -> cbIDProveedor.addItem(proveedor));
