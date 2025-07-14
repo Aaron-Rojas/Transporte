@@ -93,10 +93,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnReservas2 = new javax.swing.JButton();
         btnProveedores2 = new javax.swing.JButton();
         btnReportes2 = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombreHotel = new javax.swing.JTextField();
@@ -112,7 +108,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jComboBoxProveedor = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -120,7 +119,7 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jPanel6.setLayout(null);
 
         btnConfiguracion2.setBackground(new java.awt.Color(0, 46, 121));
-        btnConfiguracion2.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnConfiguracion2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion2.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-config-23 (1).png"))); // NOI18N
         btnConfiguracion2.setText(" CONFIGURACIÓN");
@@ -130,10 +129,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(btnConfiguracion2);
-        btnConfiguracion2.setBounds(-20, 340, 210, 50);
+        btnConfiguracion2.setBounds(-10, 340, 210, 50);
 
         btnHome2.setBackground(new java.awt.Color(0, 46, 121));
-        btnHome2.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnHome2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome2.setForeground(new java.awt.Color(255, 255, 255));
         btnHome2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-house-23.png"))); // NOI18N
         btnHome2.setText(" HOME");
@@ -143,10 +142,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(btnHome2);
-        btnHome2.setBounds(-20, 90, 210, 50);
+        btnHome2.setBounds(-10, 90, 210, 50);
 
         btnClientes2.setBackground(new java.awt.Color(0, 46, 121));
-        btnClientes2.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnClientes2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes2.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-customers-23.png"))); // NOI18N
         btnClientes2.setText(" CLIENTES");
@@ -156,10 +155,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(btnClientes2);
-        btnClientes2.setBounds(-20, 140, 210, 50);
+        btnClientes2.setBounds(-10, 140, 210, 50);
 
         btnReservas2.setBackground(new java.awt.Color(0, 46, 121));
-        btnReservas2.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReservas2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas2.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-calendar-23.png"))); // NOI18N
         btnReservas2.setText(" RESERVAS");
@@ -169,10 +168,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(btnReservas2);
-        btnReservas2.setBounds(-20, 190, 210, 50);
+        btnReservas2.setBounds(-10, 190, 210, 50);
 
         btnProveedores2.setBackground(new java.awt.Color(0, 46, 121));
-        btnProveedores2.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnProveedores2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores2.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-supplier-23.png"))); // NOI18N
         btnProveedores2.setText(" PROVEEDORES");
@@ -182,10 +181,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(btnProveedores2);
-        btnProveedores2.setBounds(-20, 240, 210, 50);
+        btnProveedores2.setBounds(-10, 240, 210, 50);
 
         btnReportes2.setBackground(new java.awt.Color(0, 46, 121));
-        btnReportes2.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReportes2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes2.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-report-23 (1).png"))); // NOI18N
         btnReportes2.setText(" REPORTES");
@@ -195,69 +194,17 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(btnReportes2);
-        btnReportes2.setBounds(-20, 290, 210, 50);
+        btnReportes2.setBounds(-10, 290, 210, 50);
 
-        jPanel7.setBackground(new java.awt.Color(0, 46, 121));
-
-        jButton9.setBackground(new java.awt.Color(179, 23, 23));
-        jButton9.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-lock-30.png"))); // NOI18N
-        jButton9.setText("Cerrar sesión");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-bus-58.png"))); // NOI18N
-        jLabel10.setText("  Expreso los Chankas");
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addGap(18, 18, 18))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jPanel6.add(jPanel7);
-        jPanel7.setBounds(0, 0, 890, 90);
-
-        jTextField1.setBackground(new java.awt.Color(0, 46, 121));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jTextField1);
-        jTextField1.setBounds(-20, 90, 210, 460);
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel8.setText("FORMULARIO DEL HOTEL");
         jPanel6.add(jLabel8);
-        jLabel8.setBounds(450, 130, 206, 20);
+        jLabel8.setBounds(220, 120, 280, 25);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nombre:");
         jPanel6.add(jLabel2);
-        jLabel2.setBounds(330, 170, 60, 17);
+        jLabel2.setBounds(240, 180, 60, 17);
 
         txtNombreHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,12 +212,12 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(txtNombreHotel);
-        txtNombreHotel.setBounds(330, 190, 222, 38);
+        txtNombreHotel.setBounds(240, 200, 222, 38);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Descripción:");
         jPanel6.add(jLabel3);
-        jLabel3.setBounds(330, 260, 75, 20);
+        jLabel3.setBounds(240, 270, 75, 20);
 
         txtDescripcionHotel1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,12 +225,12 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(txtDescripcionHotel1);
-        txtDescripcionHotel1.setBounds(330, 280, 278, 40);
+        txtDescripcionHotel1.setBounds(240, 290, 278, 40);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Direccion:");
         jPanel6.add(jLabel4);
-        jLabel4.setBounds(330, 350, 61, 17);
+        jLabel4.setBounds(240, 360, 61, 17);
 
         txtDireccionHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,12 +238,12 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(txtDireccionHotel);
-        txtDireccionHotel.setBounds(330, 370, 278, 35);
+        txtDireccionHotel.setBounds(240, 380, 278, 35);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Categoria:");
         jPanel6.add(jLabel5);
-        jLabel5.setBounds(670, 170, 63, 17);
+        jLabel5.setBounds(580, 180, 63, 17);
 
         jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Estrella", "2  Estrella", "3  Estrella", "4  Estrella", "5  Estrella" }));
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -305,12 +252,12 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(jComboBoxCategoria);
-        jComboBoxCategoria.setBounds(670, 190, 97, 40);
+        jComboBoxCategoria.setBounds(580, 200, 97, 40);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Estado:");
         jPanel6.add(jLabel6);
-        jLabel6.setBounds(670, 260, 47, 17);
+        jLabel6.setBounds(580, 270, 47, 17);
 
         jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Desactivo" }));
         jComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -319,12 +266,12 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(jComboBoxEstado);
-        jComboBoxEstado.setBounds(670, 280, 85, 40);
+        jComboBoxEstado.setBounds(580, 290, 85, 40);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Id Provedor:");
         jPanel6.add(jLabel7);
-        jLabel7.setBounds(670, 350, 78, 17);
+        jLabel7.setBounds(580, 360, 78, 17);
 
         jComboBoxProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,7 +279,7 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(jComboBoxProveedor);
-        jComboBoxProveedor.setBounds(670, 370, 72, 30);
+        jComboBoxProveedor.setBounds(580, 380, 72, 30);
 
         btnGuardar.setBackground(new java.awt.Color(40, 167, 69));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -357,9 +304,62 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jPanel6.add(btnLimpiar);
         btnLimpiar.setBounds(400, 480, 160, 30);
 
-        jTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(204, 204, 204)));
-        jPanel6.add(jTextField2);
-        jTextField2.setBounds(300, 120, 510, 350);
+        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel6.add(jPanel2);
+        jPanel2.setBounds(0, 0, 890, 90);
+
+        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel6.add(jPanel3);
+        jPanel3.setBounds(0, 380, 200, 170);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -502,13 +502,15 @@ private void cargarProveedores() {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportes2ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -548,34 +550,19 @@ private void cargarProveedores() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClientes;
-    private javax.swing.JButton btnClientes1;
     private javax.swing.JButton btnClientes2;
-    private javax.swing.JButton btnConfiguracion;
-    private javax.swing.JButton btnConfiguracion1;
     private javax.swing.JButton btnConfiguracion2;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnHome1;
     private javax.swing.JButton btnHome2;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnProveedores;
-    private javax.swing.JButton btnProveedores1;
     private javax.swing.JButton btnProveedores2;
-    private javax.swing.JButton btnReportes;
-    private javax.swing.JButton btnReportes1;
     private javax.swing.JButton btnReportes2;
-    private javax.swing.JButton btnReservas;
-    private javax.swing.JButton btnReservas1;
     private javax.swing.JButton btnReservas2;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBoxCategoria;
     private javax.swing.JComboBox<String> jComboBoxEstado;
     private javax.swing.JComboBox<ProveedorItem> jComboBoxProveedor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -583,15 +570,9 @@ private void cargarProveedores() {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField txtDescripcionHotel1;
     private javax.swing.JTextField txtDireccionHotel;
     private javax.swing.JTextField txtNombreHotel;

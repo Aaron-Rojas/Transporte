@@ -6,6 +6,8 @@ package Vistas.VIEWCONFIGURACION;
 
 import Controlador.NavegacionController;
 import Vistas.VIEWS.Configuración;
+import Vistas.VIEWS.Login;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,12 +45,6 @@ public class Parametros extends javax.swing.JFrame {
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -82,118 +78,43 @@ public class Parametros extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         btnConfiguracion = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(8, 8, 100));
-
-        jButton7.setBackground(new java.awt.Color(179, 23, 23));
-        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cerrar sesión");
-
-        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Expreso");
-
-        jLabel2.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Los Chankas");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(318, 318, 318)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 890, 120);
-
-        jPanel3.setBackground(new java.awt.Color(8, 8, 100));
-
-        jButton8.setBackground(new java.awt.Color(179, 23, 23));
-        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Volver");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(693, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 490, 890, 60);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel3.setText("PARAMETROS DEL SISTEMA");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel3.setText("PARÁMETROS DEL SISTEMA");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 130, 470, 40);
+        jLabel3.setBounds(220, 110, 290, 40);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Configurar");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(220, 180, 150, 20);
+        jLabel4.setBounds(220, 150, 150, 20);
 
         jRadioButton1.setText("No");
         jPanel1.add(jRadioButton1);
-        jRadioButton1.setBounds(440, 290, 39, 30);
+        jRadioButton1.setBounds(540, 240, 39, 30);
 
         jRadioButton2.setText("Dolares(USD)");
         jPanel1.add(jRadioButton2);
-        jRadioButton2.setBounds(450, 210, 100, 30);
+        jRadioButton2.setBounds(240, 240, 100, 30);
 
         jRadioButton3.setText("Otros");
         jPanel1.add(jRadioButton3);
-        jRadioButton3.setBounds(590, 210, 52, 30);
+        jRadioButton3.setBounds(240, 260, 52, 30);
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel6.setText("Moneda");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(220, 210, 90, 30);
+        jLabel6.setBounds(240, 200, 90, 20);
 
         jRadioButton4.setText("IGV");
         jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -202,39 +123,39 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jRadioButton4);
-        jRadioButton4.setBounds(330, 250, 41, 30);
+        jRadioButton4.setBounds(370, 220, 41, 30);
 
         jRadioButton5.setText("Exenciones");
         jPanel1.add(jRadioButton5);
-        jRadioButton5.setBounds(410, 250, 90, 30);
+        jRadioButton5.setBounds(370, 240, 90, 30);
 
         jRadioButton6.setText("Impuesto a la renta");
         jPanel1.add(jRadioButton6);
-        jRadioButton6.setBounds(520, 250, 124, 30);
+        jRadioButton6.setBounds(370, 260, 124, 30);
 
         jRadioButton7.setText("Impuesto Municipal");
         jPanel1.add(jRadioButton7);
-        jRadioButton7.setBounds(680, 250, 140, 30);
+        jRadioButton7.setBounds(370, 280, 140, 30);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel7.setText("Impuestos");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(220, 250, 90, 30);
+        jLabel7.setBounds(370, 200, 90, 20);
 
         jRadioButton8.setText("Soles(PEN)");
         jPanel1.add(jRadioButton8);
-        jRadioButton8.setBounds(330, 210, 90, 30);
+        jRadioButton8.setBounds(240, 220, 90, 30);
 
         jRadioButton9.setText("Si");
         jPanel1.add(jRadioButton9);
-        jRadioButton9.setBounds(370, 290, 32, 30);
+        jRadioButton9.setBounds(540, 220, 32, 30);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel8.setText("Limites de reservas ");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(220, 290, 140, 30);
+        jLabel8.setBounds(540, 200, 140, 20);
 
-        jButton13.setBackground(new java.awt.Color(255, 171, 33));
+        jButton13.setBackground(new java.awt.Color(179, 23, 23));
         jButton13.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jButton13.setForeground(new java.awt.Color(255, 255, 255));
         jButton13.setText("Cancelar");
@@ -244,9 +165,9 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton13);
-        jButton13.setBounds(730, 440, 110, 40);
+        jButton13.setBounds(480, 500, 110, 30);
 
-        jButton12.setBackground(new java.awt.Color(255, 171, 33));
+        jButton12.setBackground(new java.awt.Color(40, 167, 69));
         jButton12.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
         jButton12.setText("Guardar");
@@ -256,47 +177,47 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton12);
-        jButton12.setBounds(730, 390, 110, 40);
+        jButton12.setBounds(610, 500, 110, 30);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(490, 370, 110, 22);
+        jComboBox1.setBounds(540, 360, 110, 22);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(390, 370, 72, 22);
+        jComboBox2.setBounds(450, 360, 72, 22);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel9.setText("Horario de Atención");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(220, 340, 140, 20);
+        jLabel9.setBounds(240, 330, 140, 20);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox3);
-        jComboBox3.setBounds(400, 400, 72, 22);
+        jComboBox3.setBounds(690, 360, 72, 22);
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox4);
-        jComboBox4.setBounds(490, 340, 72, 22);
+        jComboBox4.setBounds(320, 360, 72, 22);
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel10.setText("Horario de Reservas");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(220, 370, 140, 20);
+        jLabel10.setBounds(450, 330, 140, 20);
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox5);
-        jComboBox5.setBounds(390, 340, 72, 22);
+        jComboBox5.setBounds(240, 360, 72, 22);
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel11.setText("Horario de Salida de Buses");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(220, 400, 180, 20);
+        jLabel11.setBounds(690, 330, 180, 20);
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel12.setText("Dias no operativos ");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(220, 450, 130, 20);
+        jLabel12.setBounds(240, 420, 130, 20);
 
         jCheckBox1.setText("1 de Enero");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -305,7 +226,7 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jCheckBox1);
-        jCheckBox1.setBounds(380, 460, 150, 20);
+        jCheckBox1.setBounds(240, 460, 90, 20);
 
         jCheckBox2.setText("Navidad ");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -314,10 +235,10 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jCheckBox2);
-        jCheckBox2.setBounds(380, 440, 150, 20);
+        jCheckBox2.setBounds(240, 440, 80, 20);
 
-        btnReportes.setBackground(new java.awt.Color(8, 8, 100));
-        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -326,10 +247,10 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 320, 200, 50);
+        btnReportes.setBounds(0, 290, 200, 50);
 
-        btnProveedores.setBackground(new java.awt.Color(8, 8, 100));
-        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -338,10 +259,10 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 270, 200, 50);
+        btnProveedores.setBounds(0, 240, 200, 50);
 
-        btnReservas.setBackground(new java.awt.Color(8, 8, 100));
-        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -350,10 +271,10 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 220, 200, 50);
+        btnReservas.setBounds(0, 190, 200, 50);
 
-        btnClientes.setBackground(new java.awt.Color(8, 8, 100));
-        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -362,10 +283,10 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 170, 200, 50);
+        btnClientes.setBounds(0, 140, 200, 50);
 
-        btnHome.setBackground(new java.awt.Color(8, 8, 100));
-        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnHome.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -374,10 +295,10 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 120, 200, 50);
+        btnHome.setBounds(0, 90, 200, 50);
 
-        btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
-        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -386,7 +307,76 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 370, 200, 50);
+        btnConfiguracion.setBounds(0, 340, 200, 50);
+
+        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 890, 90);
+
+        jButton8.setBackground(new java.awt.Color(102, 102, 102));
+        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Volver");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton8);
+        jButton8.setBounds(730, 110, 120, 30);
+
+        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 380, 200, 170);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -399,9 +389,10 @@ public class Parametros extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -456,6 +447,16 @@ Configuración configuración = new Configuración();
     configuración.setVisible(true); // mostrar frame Reportes
     this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -525,7 +526,6 @@ Configuración configuración = new Configuración();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

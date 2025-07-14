@@ -99,12 +99,6 @@ private void cargarBuses() {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        btnAceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaBuses = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -117,90 +111,16 @@ private void cargarBuses() {
         btnEliminar = new javax.swing.JButton();
         btnAgregarBus = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
-
-        jPanel2.setBackground(new java.awt.Color(8, 8, 100));
-
-        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Expreso");
-
-        jLabel2.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Los Chankas");
-
-        jButton8.setBackground(new java.awt.Color(179, 23, 23));
-        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Cerrar sesión");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(316, 316, 316)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
-
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 890, 120);
-
-        jPanel3.setBackground(new java.awt.Color(8, 8, 100));
-
-        btnAceptar.setBackground(new java.awt.Color(179, 23, 23));
-        btnAceptar.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(709, Short.MAX_VALUE)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btnAceptar)
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 460, 890, 90);
 
         tablaBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -216,15 +136,15 @@ private void cargarBuses() {
         jScrollPane1.setViewportView(tablaBuses);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(240, 200, 570, 190);
+        jScrollPane1.setBounds(260, 220, 570, 190);
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setText("Lista de Buses:");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("LISTA DE BUSES");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(240, 150, 160, 30);
+        jLabel4.setBounds(240, 120, 160, 30);
 
-        btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
-        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -233,10 +153,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 370, 200, 50);
+        btnConfiguracion.setBounds(0, 330, 200, 50);
 
-        btnReportes.setBackground(new java.awt.Color(8, 8, 100));
-        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -245,10 +165,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 320, 200, 50);
+        btnReportes.setBounds(0, 280, 200, 50);
 
-        btnProveedores.setBackground(new java.awt.Color(8, 8, 100));
-        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -257,10 +177,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 270, 200, 50);
+        btnProveedores.setBounds(0, 230, 200, 50);
 
-        btnReservas.setBackground(new java.awt.Color(8, 8, 100));
-        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -269,10 +189,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 220, 200, 50);
+        btnReservas.setBounds(0, 180, 200, 50);
 
-        btnClientes.setBackground(new java.awt.Color(8, 8, 100));
-        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -281,10 +201,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 170, 200, 50);
+        btnClientes.setBounds(0, 130, 200, 50);
 
-        btnHome.setBackground(new java.awt.Color(8, 8, 100));
-        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnHome.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -293,10 +213,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 120, 200, 50);
+        btnHome.setBounds(0, 80, 200, 50);
 
-        btnEliminar.setBackground(new java.awt.Color(8, 153, 192));
-        btnEliminar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnEliminar.setBackground(new java.awt.Color(179, 23, 23));
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -305,10 +225,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(640, 410, 150, 30);
+        btnEliminar.setBounds(290, 170, 150, 30);
 
-        btnAgregarBus.setBackground(new java.awt.Color(8, 153, 192));
-        btnAgregarBus.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnAgregarBus.setBackground(new java.awt.Color(40, 167, 69));
+        btnAgregarBus.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         btnAgregarBus.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarBus.setText("Agregar Bus");
         btnAgregarBus.addActionListener(new java.awt.event.ActionListener() {
@@ -317,10 +237,10 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnAgregarBus);
-        btnAgregarBus.setBounds(260, 410, 150, 32);
+        btnAgregarBus.setBounds(470, 170, 150, 27);
 
-        btnModificar.setBackground(new java.awt.Color(8, 153, 192));
-        btnModificar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnModificar.setBackground(new java.awt.Color(255, 171, 33));
+        btnModificar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -329,7 +249,76 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(450, 410, 150, 30);
+        btnModificar.setBounds(650, 170, 150, 30);
+
+        btnAceptar.setBackground(new java.awt.Color(0, 60, 241));
+        btnAceptar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAceptar);
+        btnAceptar.setBounds(710, 480, 124, 29);
+
+        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 380, 200, 170);
+
+        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 890, 90);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -461,6 +450,18 @@ private void cargarBuses() {
     }//GEN-LAST:event_btnModificarActionPerformed
 
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarBus;
@@ -472,9 +473,8 @@ private void cargarBuses() {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
