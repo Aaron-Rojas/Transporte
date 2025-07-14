@@ -189,7 +189,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnGuardarProveedor);
-        btnGuardarProveedor.setBounds(630, 370, 180, 30);
+        btnGuardarProveedor.setBounds(580, 370, 230, 30);
         jPanel1.add(txtContacto);
         txtContacto.setBounds(330, 270, 170, 20);
 
