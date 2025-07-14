@@ -18,52 +18,65 @@ import Modelo.Usuario;
 public class GestionViajeProgramado extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabla;
+    private ViajeProgramadoDAO viajeDAO;
     
     
     public GestionViajeProgramado() {
         initComponents();
-        modeloTabla = (DefaultTableModel) tbViajes.getModel();
-        cargarTablaViajes();
-        setLocationRelativeTo(null); // Centrar la ventana
+        viajeDAO = new ViajeProgramadoDAO();
+        configurarTablaViajes();
+        cargarViajesEnTabla();
+        setLocationRelativeTo(null);
     }
-    
-    private void cargarTablaViajes() {
-    // Limpiar todas las filas existentes en el modelo de la tabla
-    // Asegúrate de castear a DefaultTableModel si es el tipo de tu modelo de tabla
-    ((javax.swing.table.DefaultTableModel)tbViajes.getModel()).setRowCount(0); 
 
-    try {
-        ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
-        // <--- ¡Aquí se llama al nuevo método para obtener solo los viajes NO cancelados!
-        List<ViajeProgramado> viajes = dao.obtenerViajesNoCancelados(); 
+    private void configurarTablaViajes() {
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("ID Bus");
+        modeloTabla.addColumn("ID Origen");
+        modeloTabla.addColumn("ID Destino");
+        modeloTabla.addColumn("Fecha Salida");
+        modeloTabla.addColumn("Fecha Llegada");
+        modeloTabla.addColumn("Estado");
+        
+        tbViajes.setModel(modeloTabla);
+    }
 
-        // Iterar sobre la lista de viajes obtenidos y añadirlos a la tabla
-        for (ViajeProgramado viaje : viajes) {
-            Object[] fila = {
-                viaje.getIdViajeProgramado(),
-                viaje.getIdBus(),
-                viaje.getIdOrigen(),
-                viaje.getIdDestinoFinal(),
-                // Asegúrate de que los métodos getFechaHoraSalidaFormateada() y getFechaHoraLlegadaEstimadaFormateada()
-                // en tu clase Modelo.ViajeProgramado devuelvan la fecha en el formato de cadena que quieres mostrar (ej. dd-MM-yyyy HH:mm)
-                viaje.getFechaHoraSalidaFormateada(), 
-                viaje.getFechaHoraLlegadaEstimadaFormateada(), 
-                viaje.getEstadoViaje() // Mostrar el estado actual (programado, en viaje, completado)
-            };
-            ((javax.swing.table.DefaultTableModel)tbViajes.getModel()).addRow(fila);
+   public void cargarViajesEnTabla() {
+        modeloTabla.setRowCount(0); // Limpiar tabla existente
+        
+        try {
+            List<ViajeProgramado> viajes = viajeDAO.obtenerViajesActivos();
+            
+            for (ViajeProgramado viaje : viajes) {
+                Object[] fila = {
+                    viaje.getIdViajeProgramado(),
+                    viaje.getIdBus(),
+                    viaje.getIdOrigen(),
+                    viaje.getIdDestinoFinal(),
+                    viaje.getFechaHoraSalidaFormateada(),
+                    viaje.getFechaHoraLlegadaEstimadaFormateada(),
+                    viaje.isActivo() ? "Activo" : "Inactivo"
+                };
+                modeloTabla.addRow(fila);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al cargar viajes: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al cargar viajes: " + e.getMessage(), "Error de SQL", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace(); // Imprimir el error para depuración
     }
-}
-    
-     private String capitalizarEstado(String estado) {
-        if (estado == null || estado.isEmpty()) {
-            return estado;
-        }
-        return estado.substring(0, 1).toUpperCase() + estado.substring(1);
-    }
+ 
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -253,55 +266,51 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
-        int filaSeleccionada = tbViajes.getSelectedRow(); 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this,
-            "Por favor, seleccione un viaje para cancelar.",
-            "Advertencia",
-            JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Mensaje de confirmación claro para el usuario
-    int confirmacion = JOptionPane.showConfirmDialog(
-        this,
-        "¿Está seguro de CANCELAR este viaje? El viaje se marcará como 'cancelado' en el sistema.", 
-        "Confirmar Cancelación de Viaje",
-        JOptionPane.YES_NO_OPTION);
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        try {
-            // Obtener el ID del viaje de la primera columna (índice 0) de la fila seleccionada
-            int idViaje = (int) tbViajes.getValueAt(filaSeleccionada, 0); 
-            ViajeProgramadoDAO dao = new ViajeProgramadoDAO(); // Instanciar tu DAO
-
-            if (dao.eliminarLogico(idViaje)) { // <--- ¡Aquí se llama al nuevo método de eliminación lógica!
-                JOptionPane.showMessageDialog(this,
-                    "Viaje cancelado correctamente (eliminación lógica).",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-                // Una vez cancelado, recarga la tabla para que el viaje ya no aparezca
-                cargarTablaViajes(); 
-            } else {
-                JOptionPane.showMessageDialog(this,
-                    "No se pudo cancelar el viaje. Intente nuevamente.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException e) {
-            // Manejo de errores de base de datos
+  int filaSeleccionada = tbViajes.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this,
-                "Error de base de datos al cancelar viaje: " + e.getMessage(),
-                "Error de SQL",
-                JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace(); // Imprimir el stack trace en consola para depuración
+                "Por favor, seleccione un viaje para cancelar.",
+                "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    }
+
+        int confirmacion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de CANCELAR este viaje? El viaje se marcará como 'inactivo' en el sistema.",
+            "Confirmar Cancelación de Viaje",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                int idViaje = (int) tbViajes.getValueAt(filaSeleccionada, 0);
+                
+                if (viajeDAO.eliminarLogico(idViaje)) {
+                    JOptionPane.showMessageDialog(this,
+                        "Viaje cancelado correctamente (marcado como inactivo).",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                    cargarViajesEnTabla();
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "No se pudo cancelar el viaje. Intente nuevamente.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this,
+                    "Error de base de datos al cancelar viaje: " + e.getMessage(),
+                    "Error de SQL",
+                    JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int filaSeleccionada = tbViajes.getSelectedRow();
+         int filaSeleccionada = tbViajes.getSelectedRow();
+        
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this,
                 "Seleccione un viaje para modificar",
@@ -312,17 +321,18 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
 
         try {
             int idViaje = (int) tbViajes.getValueAt(filaSeleccionada, 0);
-            ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
-            ViajeProgramado viaje = dao.obtenerPorId(idViaje);
-
+            ViajeProgramado viaje = viajeDAO.obtenerPorId(idViaje);
+            
             if (viaje != null) {
                 FormularioViajeProgramado formulario = new FormularioViajeProgramado(
-                    this,
-                    true,
-                    viaje,
-                    true);
+                    this, // Ventana padre
+                    true, // Modal
+                    this, // Referencia a GestionViajeProgramado
+                    viaje, // Viaje a modificar
+                    true // Es modificación
+                );
                 formulario.setVisible(true);
-                cargarTablaViajes(); // Refrescar tabla después de modificar
+                cargarViajesEnTabla();
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this,
@@ -333,13 +343,15 @@ public class GestionViajeProgramado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        FormularioViajeProgramado formulario = new FormularioViajeProgramado(
-            this,
-            true,
-            null,
-            false);
+       FormularioViajeProgramado formulario = new FormularioViajeProgramado(
+            this, // Ventana padre
+            true, // Modal
+            this, // Referencia a GestionViajeProgramado
+            null, // Viaje nuevo
+            false // No es modificación
+        );
         formulario.setVisible(true);
-        cargarTablaViajes(); // Refrescar tabla después de agrega
+        cargarViajesEnTabla();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

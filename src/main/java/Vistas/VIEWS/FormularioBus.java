@@ -9,47 +9,69 @@ import dao.BusDAO;
 import Controlador.NavegacionController;
 import Modelo.Usuario;
 import Vistas.VIEWS.ListaBuses;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FormularioBus extends javax.swing.JFrame {
-    
-private ListaBuses listaBuses;
-private Usuario usuarioActual;
+
+    private ListaBuses listaBuses;
+    private Usuario usuarioActual;
     private boolean esNuevoBus = true;
     private int originalIdBus;
     Usuario usuarioLogeado;
 
-    
     public FormularioBus(Usuario usuarioLogeado) {
         this.listaBuses = listaBuses;
-        this.usuarioActual=usuarioLogeado;
+        this.usuarioActual = usuarioLogeado;
         initComponents();
-        
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[]{"operativo", "mantenimiento", "inactivo"}));
 
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
             setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
-        }else{
+        } else {
             setTitle("Sistema de User");
         }
+        
+        
 // Inicializar para nuevo bus
         inicializarParaNuevoBus();
     }
+    
+    private void addToggleButtonActionListener() {
+    ToggleButtonEstado.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            boolean estaActivo = ToggleButtonEstado.isSelected();
+            updateToggleButtonText(estaActivo);
+        }
+    });
+}
 
-    private void inicializarParaNuevoBus() {
-        esNuevoBus = true;
-        originalIdBus = 0;
-        txtIdBus.setText(""); // Indicate auto-generation
-        txtIdBus.setEnabled(true); // Disable ID field for new buses
-        txtPlaca.setText("");
-        txtCapacidad.setText("");
-        cbEstado.setSelectedIndex(0);
-        btnGuardarBus.setText("Guardar Nuevo Bus"); // Change button text
+
+
+    public FormularioBus(Usuario usuarioLogeado, ListaBuses listaBuses) {
+        this(usuarioLogeado); // Llama al constructor anterior
+        this.listaBuses = listaBuses; // Asigna la referencia a ListaBuses
     }
+
+    
+    
+    private void inicializarParaNuevoBus() {
+    esNuevoBus = true;
+    originalIdBus = 0;
+    txtIdBus.setText(""); // Auto-generado
+    txtPlaca.setText("");
+    txtCapacidad.setText("");
+    ToggleButtonEstado.setSelected(true); // Activo por defecto
+    updateToggleButtonText(true);
+}
+
+// Método para actualizar texto del toggle
+private void updateToggleButtonText(boolean isActive) {
+    ToggleButtonEstado.setText(isActive ? "Operativo" : "Inactivo");
+}
 
     // Method to set data when editing an existing bus
     public void setDatosBus(int idBus, String placa, int capacidad, String estado) {
@@ -59,7 +81,6 @@ private Usuario usuarioActual;
         txtIdBus.setEnabled(true); // Keep ID field enabled for modification
         txtPlaca.setText(placa);
         txtCapacidad.setText(String.valueOf(capacidad));
-        cbEstado.setSelectedItem(estado);
         btnGuardarBus.setText("Actualizar Bus");
     }
 
@@ -93,8 +114,16 @@ private Usuario usuarioActual;
                     JOptionPane.ERROR_MESSAGE);
             throw e;
         }
-
-        bus.setEstadoBus(cbEstado.getSelectedItem().toString().toLowerCase());
+        if (esNuevoBus) {
+            bus.setEstado(true); // Un nuevo bus se crea como activo
+        } else {
+            Bus busActual = new BusDAO().obtenerBusPorId(bus.getIdBus());
+            if (busActual != null) {
+                bus.setEstado(busActual.isEstado());
+            } else {
+                bus.setEstado(false); // Default to false if not found (shouldn't happen for existing bus)
+            }
+        }
 
         return bus;
     }
@@ -151,13 +180,6 @@ private Usuario usuarioActual;
             return false;
         }
 
-        String estado = cbEstado.getSelectedItem().toString().toLowerCase();
-        if (!estado.matches("operativo|mantenimiento|inactivo")) {
-            mostrarError("Estado inválido. Seleccione: Operativo, Mantenimiento o Inactivo");
-            cbEstado.requestFocus();
-            return false;
-        }
-
         return true;
     }
 
@@ -167,17 +189,21 @@ private Usuario usuarioActual;
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
-    
-    
+
     // Método para establecer la referencia
     public void setListaBuses(ListaBuses listaBuses) {
         this.listaBuses = listaBuses;
     }
 
-    public FormularioBus(Usuario usuarioLogeado, ListaBuses listaBuses){
-        this(usuarioLogeado);
-        this.listaBuses = listaBuses;
+    private void volverAListaBuses() {
+        if (listaBuses != null) {
+            listaBuses.actualizarTabla(); // Call the method to refresh the table in ListaBuses
+            listaBuses.setVisible(true); // Make the ListaBuses window visible again
+        }
+        this.dispose(); // Close the current FormularioBus window
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -194,7 +220,6 @@ private Usuario usuarioActual;
         txtIdBus = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtCapacidad = new javax.swing.JTextField();
-        cbEstado = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         btnConfiguracion = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
@@ -209,14 +234,85 @@ private Usuario usuarioActual;
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        ToggleButtonEstado = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel3.setText("FORMULARIO DE BUSES");
+
+        jPanel2.setBackground(new java.awt.Color(8, 8, 100));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Expreso");
+
+        jLabel2.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Los Chankas");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(232, 232, 232)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(318, 318, 318)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 890, 120);
+
+        jPanel3.setBackground(new java.awt.Color(8, 8, 100));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 890, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 90, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 460, 890, 90);
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Formulario de Buses");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(230, 120, 290, 30);
 
@@ -408,6 +504,14 @@ private Usuario usuarioActual;
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 380, 200, 170);
+        ToggleButtonEstado.setText("Activo");
+        ToggleButtonEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ToggleButtonEstadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ToggleButtonEstado);
+        ToggleButtonEstado.setBounds(380, 320, 140, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -472,91 +576,98 @@ private Usuario usuarioActual;
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnGuardarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarBusActionPerformed
-         if (!validarCampos()) {
-        return;
-    }
-
+        if (!validarCampos()) return;
+    
     try {
-        Bus bus = getDatosBus();
+        Bus bus = new Bus();
+        bus.setIdBus(Integer.parseInt(txtIdBus.getText().trim()));
+        bus.setPlaca(txtPlaca.getText().trim());
+        bus.setCapacidad(Integer.parseInt(txtCapacidad.getText().trim()));
+        bus.setEstado(ToggleButtonEstado.isSelected());
+        
         BusDAO busDAO = new BusDAO();
-        boolean exito = false;
-        String mensaje = "";
-
-        if (esNuevoBus) {
-            if (busDAO.existeIdBus(bus.getIdBus())) {
-                JOptionPane.showMessageDialog(this,
-                        "El ID de bus '" + bus.getIdBus() + "' ya existe.",
-                        "Error de ID Duplicado",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (busDAO.existePlaca(bus.getPlaca(), 0)) {
-                JOptionPane.showMessageDialog(this,
-                        "La placa '" + bus.getPlaca() + "' ya está registrada.",
-                        "Error de Duplicidad",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            exito = busDAO.guardarBus(bus);
-            mensaje = "Bus guardado correctamente";
-        } else {
-            // Lógica para actualización existente
-            if (busDAO.existePlaca(bus.getPlaca(), bus.getIdBus())) {
-                JOptionPane.showMessageDialog(this,
-                        "La placa '" + bus.getPlaca() + "' ya está registrada en otro bus.",
-                        "Error de Duplicidad",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            exito = busDAO.actualizarBus(bus);
-            mensaje = "Bus actualizado correctamente";
-        }
-
+        boolean exito = esNuevoBus ? busDAO.guardarBus(bus) : busDAO.actualizarBus(bus);
+        
         if (exito) {
-            JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Operación exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             volverAListaBuses();
         } else {
-            JOptionPane.showMessageDialog(this, "No se pudo completar la operación", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error en la operación", "Error", JOptionPane.ERROR_MESSAGE);
         }
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-                "Error inesperado: " + e.getMessage(),
-                "Error General",
-                JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
-
-private void volverAListaBuses() {
-    if (listaBuses != null) {
-        listaBuses.actualizarTabla();
-        listaBuses.setVisible(true);
-    } else {
-        new ListaBuses(usuarioActual).setVisible(true);
-    }
-    this.dispose();
     }//GEN-LAST:event_btnGuardarBusActionPerformed
 
     private void txtIdBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdBusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdBusActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
-
-        if (respuesta == JOptionPane.OK_OPTION) {
-            this.dispose(); // Cierra la ventana actual
-            new Login().setVisible(true); // Abre la ventana de login
+    private void ToggleButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToggleButtonEstadoActionPerformed
+        // Asegúrate de que el bus sea existente (no un nuevo bus)
+        if (esNuevoBus) {
+            mostrarError("Primero debe guardar el bus para poder cambiar su estado.");
+            return;
         }
+
+        int idBus;
+        try {
+            idBus = Integer.parseInt(txtIdBus.getText().trim());
+        } catch (NumberFormatException e) {
+            mostrarError("No se pudo obtener el ID del bus. Asegúrese de que sea un número válido.");
+            return;
+        }
+
+        BusDAO busDAO = new BusDAO();
+        Bus busActual = busDAO.obtenerBusPorId(idBus);
+
+        if (busActual == null) {
+            mostrarError("No se encontró el bus con ID: " + idBus + " en la base de datos.");
+            return;
+        }
+
+        boolean estadoActual = busActual.isEstado();
+        boolean nuevoEstado = !estadoActual; // Toggle (invertir) el estado actual
+        String mensajeConfirmacion = "¿Está seguro de que desea " + (nuevoEstado ? "ACTIVAR" : "DESACTIVAR") + " el bus?";
+        String operacion = nuevoEstado ? "activar" : "desactivar";
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, mensajeConfirmacion, "Confirmar Cambio de Estado", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            boolean exito = busDAO.cambiarEstadoBus(idBus, nuevoEstado);
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Bus " + operacion + " exitosamente.");
+                // Actualizar el texto del botón y la tabla en ListaBuses
+                ToggleButtonEstado.setText("Estado: " + (nuevoEstado ? "Activo" : "Inactivo"));
+                if (listaBuses != null) {
+                    listaBuses.actualizarTabla();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo " + operacion + " el bus.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+
+    }//GEN-LAST:event_ToggleButtonEstadoActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if (listaBuses != null) {
+            listaBuses.actualizarTabla();
+            listaBuses.setVisible(true);
+        } else {
+            // Si no hay referencia, crea una nueva instancia de ListaBuses.
+            // Asegúrate de que ListaBuses también tenga un constructor que acepte Usuario
+            new ListaBuses(usuarioActual).setVisible(true);
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ToggleButtonEstado;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
@@ -565,7 +676,6 @@ private void volverAListaBuses() {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
-    private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
