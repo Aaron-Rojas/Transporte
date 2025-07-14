@@ -256,29 +256,46 @@ private void guardarLugar() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    guardarLugar();
+        guardarLugar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    txtNombre.setText("");
-    txtDescripcion.setText("");
-    cbTipo.setSelectedIndex(0);  // selecciona el primer valor del combo (ej: "Histórico")
-    cbEstado.setSelectedIndex(0);
-
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        cbTipo.setSelectedIndex(0);  // selecciona el primer valor del combo (ej: "Histórico")
+        cbEstado.setSelectedIndex(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbTipoActionPerformed
-
-    private void cbDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDestinoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbDestinoActionPerformed
 
     private void cbIDProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbIDProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbIDProveedorActionPerformed
 
+    private void cbDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDestinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDestinoActionPerformed
+
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoActionPerformed
+
+
+//    cbEstado.setSelectedIndex(0);
+
+//    }                                          
+
+    /*
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // TODO add your handling code here:
+    }                                      
+
+    private void cbDestinoActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // TODO add your handling code here:
+    }                                         
+
+    private void cbIDProveedorActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
+*/
     /**
      * @param args the command line arguments
      */
