@@ -4,7 +4,10 @@
  */
 package Vistas.VIEWS;
 
+import Modelo.Cliente;
 import Modelo.Destino;
+import Modelo.Usuario;
+import dao.ClienteDAO;
 import dao.DestinoDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,11 +21,24 @@ public class GestionDestino extends javax.swing.JFrame {
 
      private DestinoDAO destinoDAO; // Declare your DAO
     private DefaultTableModel modeloTablaDestinos; // Declare the table model
+    private ClienteDAO clienteDAO;
+    private Usuario usuarioActual;
+    private Cliente clienteSeleccionado;
     
-    public GestionDestino() {
+    public GestionDestino(Usuario usuarioLogeado) {
         initComponents();
+        this.usuarioActual=usuarioLogeado;
         this.setLocationRelativeTo(null); // Center the frame on the screen
         destinoDAO = new DestinoDAO(); // Initialize the DAO
+        
+        
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
+        }else{
+            setTitle("Sistema de User");
+        }
+        
         configurarTabla(); // Set up the table model
         cargarDestinosEnTabla(); // Load data when the frame starts
     }
@@ -44,20 +60,27 @@ public class GestionDestino extends javax.swing.JFrame {
 
     // Method to load destinations into the table
     private void cargarDestinosEnTabla() {
-        modeloTablaDestinos.setRowCount(0); // Clear existing data
-
-        List<Destino> destinos = destinoDAO.obtenerTodosLosDestinos();
-        if (destinos != null) {
-            for (Destino d : destinos) {
-                Object[] row = new Object[]{
-                    d.getIdDestino(),
-                    d.getNombreDestino(),
-                    d.getDescripcion(),
-                    d.getEstado()
-                };
-                modeloTablaDestinos.addRow(row);
-            }
+    modeloTablaDestinos.setRowCount(0); // Limpiar tabla existente
+    
+    // Cambiar a obtener solo destinos activos
+    List<Destino> destinos = destinoDAO.obtenerDestinosActivos();
+    
+    if (destinos != null && !destinos.isEmpty()) {
+        for (Destino d : destinos) {
+            Object[] row = new Object[]{
+                d.getIdDestino(),
+                d.getNombreDestino(),
+                d.getDescripcion(),
+                d.getEstado()
+            };
+            modeloTablaDestinos.addRow(row);
         }
+    } else {
+        JOptionPane.showMessageDialog(this,
+            "No se encontraron destinos activos.",
+            "Información",
+            JOptionPane.INFORMATION_MESSAGE);
+    }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -189,29 +212,37 @@ public class GestionDestino extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int selectedRow = tbdestino.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un destino de la tabla para eliminar.", "Ningún Destino Seleccionado", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un destino de la tabla para eliminar.", 
+                "Ningún Destino Seleccionado", 
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         int idDestino = (int) modeloTablaDestinos.getValueAt(selectedRow, 0);
         String nombreDestino = (String) modeloTablaDestinos.getValueAt(selectedRow, 1);
-        String estadoDestino = (String) modeloTablaDestinos.getValueAt(selectedRow, 3); // <--- Get Estado for confirmation
 
         int confirm = JOptionPane.showConfirmDialog(
             this,
-            "¿Está seguro de que desea eliminar el destino: " + nombreDestino + " (ID: " + idDestino + ", Estado: " + estadoDestino + ")?", // <--- Added Estado
-            "Confirmar Eliminación",
+            "¿Está seguro de que desea marcar como INACTIVO el destino: " + nombreDestino + "?",
+            "Confirmar Eliminación Lógica",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirm == JOptionPane.YES_OPTION) {
-            boolean exito = destinoDAO.eliminarDestino(idDestino);
+            boolean exito = destinoDAO.eliminarDestinoLogico(idDestino);
             if (exito) {
-                JOptionPane.showMessageDialog(this, "Destino eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Destino marcado como INACTIVO exitosamente.", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
                 cargarDestinosEnTabla();
             } else {
-                JOptionPane.showMessageDialog(this, "Error al eliminar el destino. Consulte la consola para más detalles.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Error al marcar el destino como INACTIVO.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -240,54 +271,7 @@ public class GestionDestino extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionDestino().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;

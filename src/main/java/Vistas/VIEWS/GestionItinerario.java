@@ -1,4 +1,5 @@
 package Vistas.VIEWS;
+
 import Controlador.NavegacionController;
 import Modelo.Bus;
 import Modelo.Cliente;
@@ -11,32 +12,22 @@ import javax.swing.JOptionPane;
 
 public class GestionItinerario extends javax.swing.JFrame {
 
-    private Usuario usuarioActual; 
+    private Usuario usuarioActual;
     private Cliente clienteSeleccionado;
     private ClienteDAO clienteDAO;
-    
+
     public GestionItinerario(Usuario usuarioLogeado) {
         this.usuarioActual = usuarioLogeado;
         initComponents();
         cargarClientesEnComboBox();
 
- /*       NavegacionController.configurarBotones(
-            btnHome, 
-            btnClientes, 
-            btnReservas, 
-            btnProveedores, 
-            btnReportes, 
-            btnConfiguracion, 
-            this
-        );
-  */      
-         this.setLocationRelativeTo(null);
-         this.clienteDAO = new ClienteDAO();
-    
-         if (usuarioActual != null && usuarioActual.getRol() != null) {
+        this.setLocationRelativeTo(null);
+        this.clienteDAO = new ClienteDAO();
+
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
             setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
-        }else{
+        } else {
             setTitle("Sistema de User");
         }
     }
@@ -69,6 +60,8 @@ public class GestionItinerario extends javax.swing.JFrame {
         btnHome = new javax.swing.JButton();
         bntDestino = new javax.swing.JButton();
         btnBus = new javax.swing.JButton();
+        btnItinerario = new javax.swing.JButton();
+        btnViaje = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -260,6 +253,24 @@ public class GestionItinerario extends javax.swing.JFrame {
         jPanel1.add(btnBus);
         btnBus.setBounds(690, 220, 130, 40);
 
+        btnItinerario.setText("Itinerario");
+        btnItinerario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnItinerarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnItinerario);
+        btnItinerario.setBounds(690, 280, 130, 40);
+
+        btnViaje.setText("Viaje Programado");
+        btnViaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViajeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnViaje);
+        btnViaje.setBounds(690, 330, 130, 40);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -279,11 +290,10 @@ public class GestionItinerario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     private void cargarClientesEnComboBox() {
         DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
         model.addElement(null);
-        
+
         ClienteDAO clienteDAO = new ClienteDAO(); // Instancia tu DAO
         List<Cliente> clientes = clienteDAO.obtenerClientesActivos();
         if (clientes.isEmpty()) {
@@ -295,7 +305,7 @@ public class GestionItinerario extends javax.swing.JFrame {
             cmbClientes.setModel(model);
         }
     }
-    
+
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 //        CrearReserva crearReserva = new CrearReserva(); // Abrimos el nuevo frame
 //        crearReserva.setVisible(true);
@@ -308,19 +318,19 @@ public class GestionItinerario extends javax.swing.JFrame {
         // TODO add your handling code here:
         clienteSeleccionado = (Cliente) cmbClientes.getSelectedItem();
         if (clienteSeleccionado != null) {
-        int confirmacion = JOptionPane.showConfirmDialog(
-    null,
-    "Selección para Iniciar un Itinerario a: " + clienteSeleccionado.getNombreCompleto(), // Tu mensaje
-    "Confirmación", 
-    JOptionPane.YES_NO_OPTION );
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    null,
+                    "Selección para Iniciar un Itinerario a: " + clienteSeleccionado.getNombreCompleto(), // Tu mensaje
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION);
 
-        // Aquí puedes añadir tu lógica para manejar la respuesta del usuario
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            System.out.println("Usuario confirmó iniciar itinerario." + clienteSeleccionado.getNombreCompleto());
-        } else {
-            System.out.println("Usuario canceló el inicio del itinerario. "+ clienteSeleccionado.getNombreCompleto());
-        }   
-        
+            // Aquí puedes añadir tu lógica para manejar la respuesta del usuario
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                System.out.println("Usuario confirmó iniciar itinerario." + clienteSeleccionado.getNombreCompleto());
+            } else {
+                System.out.println("Usuario canceló el inicio del itinerario. " + clienteSeleccionado.getNombreCompleto());
+            }
+
         }
     }//GEN-LAST:event_cmbClientesActionPerformed
 
@@ -330,27 +340,26 @@ public class GestionItinerario extends javax.swing.JFrame {
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
-               
+
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
 
             if ("admin".equalsIgnoreCase(nombreRol)) {
-                Reportes GI = new  Reportes (usuarioActual);
+                Reportes GI = new Reportes(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose(); 
+                this.dispose();
                 System.out.println("Admin redirigiendo a Reportes.");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
             }
-            }else{
-             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
-                  
-            }
-        
-            
-            
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
@@ -359,86 +368,231 @@ public class GestionItinerario extends javax.swing.JFrame {
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnReservasActionPerformed
 
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
-            
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
 
             if ("admin".equalsIgnoreCase(nombreRol)) {
-                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GestionItinerario GI = new GestionItinerario(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose(); 
+                this.dispose();
+                System.out.println("Admin redirigiendo a Gestión de Itinerario.");
+                return;
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionItinerario GI = new GestionItinerario(usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();
+                System.out.println("User redirigiendo a Gestión de Itinerario.");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Itinerario por rol: " + nombreRol);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnReservasActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        // TODO add your handling code here:
+
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new GestionClientes(usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();
                 System.out.println("Admin redirigiendo a Gestión de Clientes.");
 
             }
             if ("usuario".equalsIgnoreCase(nombreRol)) {
-                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GestionClientes GI = new GestionClientes(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose();                 
+                this.dispose();
                 System.out.println("User redirigiendo a Gestión de Clientes.");
-            
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
-             
+
         if (usuarioActual != null && usuarioActual.getRol() != null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
 
             if ("admin".equalsIgnoreCase(nombreRol)) {
-                Principal GI = new  Principal (usuarioActual);
+                Principal GI = new Principal(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose(); 
+                this.dispose();
                 System.out.println("Admin redirigiendo a Principal.");
 
             }
             if ("usuario".equalsIgnoreCase(nombreRol)) {
-                Principal GI = new  Principal (usuarioActual);
+                Principal GI = new Principal(usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                this.dispose();                 
+                this.dispose();
                 System.out.println("User redirigiendo a Principal.");
-            
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    
+
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void bntDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntDestinoActionPerformed
-        GestionDestino destinos = new GestionDestino();
-        destinos.setVisible(true);
-        
+        if (usuarioActual == null || usuarioActual.getRol() == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error de seguridad. No se pudo verificar su rol.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        String nombreRol = usuarioActual.getRol().getNombreRol();
+
+        // Permite acceso tanto a "admin" como a "usuario"
+        if ("admin".equalsIgnoreCase(nombreRol) || "usuario".equalsIgnoreCase(nombreRol)) {
+            GestionDestino gestionDestino = new GestionDestino(usuarioActual);
+            gestionDestino.setVisible(true);
+            gestionDestino.setLocationRelativeTo(null);
+            this.dispose(); // Cierra la ventana actual
+
+            // Mensaje de depuración
+            System.out.println((nombreRol.equalsIgnoreCase("admin") ? "Admin" : "User")
+                    + " redirigiendo a GestionDestino.");
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Acceso denegado. No tienes permisos para gestionar destinos.",
+                    "Permiso Denegado",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            System.out.println("Intento de acceso no autorizado a GestionDestino por rol: " + nombreRol);
+        }
+
     }//GEN-LAST:event_bntDestinoActionPerformed
 
     private void btnBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusActionPerformed
-         ListaBuses listaBusesFrame = new ListaBuses();
-        
-        // Make the ListaBuses frame visible
-        listaBusesFrame.setVisible(true);
+        if (usuarioActual == null || usuarioActual.getRol() == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error de seguridad. No se pudo verificar su rol.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return; // Detiene la ejecución si no hay usuario o rol
+        }
+
+        String nombreRol = usuarioActual.getRol().getNombreRol();
+
+        // Solo permite acceso a admin y usuario
+        if ("admin".equalsIgnoreCase(nombreRol)) {
+            ListaBuses listaBuses = new ListaBuses(usuarioActual);
+            listaBuses.setVisible(true);
+            listaBuses.setLocationRelativeTo(null);
+            this.dispose(); // Cierra GestionItinerario
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Acceso denegado. No tienes permisos para ver la lista de buses.",
+                    "Permiso Denegado",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnBusActionPerformed
+
+    private void btnItinerarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItinerarioActionPerformed
+        if (usuarioActual == null || usuarioActual.getRol() == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error de seguridad. No se pudo verificar su rol.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        String nombreRol = usuarioActual.getRol().getNombreRol();
+
+        // Permite acceso tanto a "admin" como a "usuario"
+        if ("admin".equalsIgnoreCase(nombreRol) || "usuario".equalsIgnoreCase(nombreRol)) {
+            GestionViajeItinerario viajeItinerario = new GestionViajeItinerario(usuarioActual);
+            viajeItinerario.setVisible(true);
+            viajeItinerario.setLocationRelativeTo(null);
+            this.dispose(); // Cierra la ventana actual
+
+            // Mensaje de depuración
+            System.out.println((nombreRol.equalsIgnoreCase("admin") ? "Admin" : "User")
+                    + " redirigiendo a GestionViajeItinerario.");
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Acceso denegado. No tienes permisos para acceder a Viaje Itinerario.",
+                    "Permiso Denegado",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            System.out.println("Intento de acceso no autorizado a GestionViajeItinerario por rol: " + nombreRol);
+        }
+    }//GEN-LAST:event_btnItinerarioActionPerformed
+
+    private void btnViajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViajeActionPerformed
+        if (usuarioActual == null || usuarioActual.getRol() == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error de seguridad. No se pudo verificar su rol.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        String nombreRol = usuarioActual.getRol().getNombreRol();
+
+        // Permite acceso tanto a "admin" como a "usuario"
+        if ("admin".equalsIgnoreCase(nombreRol) || "usuario".equalsIgnoreCase(nombreRol)) {
+            GestionViajeProgramado viajeProgramado = new GestionViajeProgramado();
+            viajeProgramado.setVisible(true);
+            viajeProgramado.setLocationRelativeTo(null);
+            this.dispose(); // Cierra la ventana actual
+
+            // Mensaje de depuración
+            System.out.println((nombreRol.equalsIgnoreCase("admin") ? "Admin" : "User")
+                    + " redirigiendo a GestionViajeProgramado.");
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Acceso denegado. No tienes permisos para acceder a Viajes Programados.",
+                    "Permiso Denegado",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            System.out.println("Intento de acceso no autorizado a GestionViajeProgramado por rol: " + nombreRol);
+        }
+    }//GEN-LAST:event_btnViajeActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntDestino;
     private javax.swing.JButton btnAceptar;
@@ -446,9 +600,11 @@ public class GestionItinerario extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnItinerario;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
+    private javax.swing.JButton btnViaje;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Cliente> cmbClientes;
     private javax.swing.JButton jButton7;
