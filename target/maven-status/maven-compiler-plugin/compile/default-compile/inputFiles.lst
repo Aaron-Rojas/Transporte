@@ -5,6 +5,7 @@
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/Configuración.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWREPORTE/ReporteCliente.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWREPORTE/ReporteReserva.java
+/Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/TipoServicio.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/Asiento.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/dao/ItinerarioViajeDAO.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/ItinerarioDeAlojamiento.java
@@ -43,6 +44,8 @@
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/GestionDestino.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/dao/UsuarioDAO.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/Cliente.java
+/Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/dao/TipoServicioDAO.java
+/Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/ProveedorTipoServicio.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/FormularioBuses.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/Reportes.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/FormularioDestino.java
@@ -54,7 +57,6 @@
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWCONFIGURACION/GestioUsuarios.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/ItinerarioDeViajesPorBuses.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/CrearReserva.java
-/Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/TipoProveedor.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWREPORTE/ReporteHoteles.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/CreacionCliente.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/Panel123.java
