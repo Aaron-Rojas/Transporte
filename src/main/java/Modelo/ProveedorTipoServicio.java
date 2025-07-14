@@ -1,29 +1,28 @@
-
 package Modelo;
 
 public class ProveedorTipoServicio {
     private int idProveedorTipoServicio;
-    private int idProveedor;
-    private int idTipoServicio;
+    private Proveedor proveedor;  // Objeto Proveedor en lugar de solo ID
+    private TipoServicio tipoServicio;  // Objeto TipoServicio en lugar de solo ID
 
-    // Constructor vacío
+   
     public ProveedorTipoServicio() {
     }
 
-    // Constructor con todos los campos
-    public ProveedorTipoServicio(int idProveedorTipoServicio, int idProveedor, int idTipoServicio) {
+    
+    public ProveedorTipoServicio(int idProveedorTipoServicio, Proveedor proveedor, TipoServicio tipoServicio) {
         this.idProveedorTipoServicio = idProveedorTipoServicio;
-        this.idProveedor = idProveedor;
-        this.idTipoServicio = idTipoServicio;
+        this.proveedor = proveedor;
+        this.tipoServicio = tipoServicio;
     }
 
-    // Constructor sin el ID autoincremental (para inserciones)
-    public ProveedorTipoServicio(int idProveedor, int idTipoServicio) {
-        this.idProveedor = idProveedor;
-        this.idTipoServicio = idTipoServicio;
+    
+    public ProveedorTipoServicio(Proveedor proveedor, TipoServicio tipoServicio) {
+        this.proveedor = proveedor;
+        this.tipoServicio = tipoServicio;
     }
 
-    // Getters y Setters
+    
     public int getIdProveedorTipoServicio() {
         return idProveedorTipoServicio;
     }
@@ -32,29 +31,37 @@ public class ProveedorTipoServicio {
         this.idProveedorTipoServicio = idProveedorTipoServicio;
     }
 
-    public int getIdProveedor() {
-        return idProveedor;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
-    public int getIdTipoServicio() {
-        return idTipoServicio;
+    public TipoServicio getTipoServicio() {
+        return tipoServicio;
     }
 
-    public void setIdTipoServicio(int idTipoServicio) {
-        this.idTipoServicio = idTipoServicio;
+    public void setTipoServicio(TipoServicio tipoServicio) {
+        this.tipoServicio = tipoServicio;
     }
 
     
+    public int getIdProveedor() {
+        return proveedor != null ? proveedor.getIdProveedor() : 0;
+    }
+
+    public int getIdTipoServicio() {
+        return tipoServicio != null ? tipoServicio.getIdTipoServicio() : 0;
+    }
+
     @Override
     public String toString() {
         return "ProveedorTipoServicio{" +
                 "idProveedorTipoServicio=" + idProveedorTipoServicio +
-                ", idProveedor=" + idProveedor +
-                ", idTipoServicio=" + idTipoServicio +
+                ", proveedor=" + (proveedor != null ? proveedor.getNombreProveedor() : "null") +
+                ", tipoServicio=" + (tipoServicio != null ? tipoServicio.getNombreTipo() : "null") +
                 '}';
     }
 }
