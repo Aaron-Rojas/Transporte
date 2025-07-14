@@ -1,11 +1,12 @@
 
 package Vistas.VIEWS;
 
-import Modelo.Destino; 
-import dao.DestinoDAO; 
+import Modelo.Destino;
+import dao.DestinoDAO;
 import javax.swing.JOptionPane;
 import java.awt.Frame;
-import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener; // Added for ToggleButton
 
 public class FormularioDestino extends javax.swing.JDialog {
    
@@ -13,36 +14,79 @@ public class FormularioDestino extends javax.swing.JDialog {
     private boolean esNuevo; // Bandera para saber si es nuevo o edición
     private Destino destinoEditando; // Objeto para mantener el destino que se está editando
 
-    public FormularioDestino(java.awt.Frame parent, boolean modal) {
+      public FormularioDestino(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         this.setLocationRelativeTo(parent); // Centrar respecto a la ventana padre
-        destinoDAO = new DestinoDAO(); // Inicializar el DAO
+        this.setLocationRelativeTo(parent);
+        destinoDAO = new DestinoDAO();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        cbEstado.setModel(new DefaultComboBoxModel<>(new String[]{"ACTIVO", "INACTIVO"}));
         
-    };
-     
-    // Método para configurar el formulario en modo edición o creación
+        // Initialize the toggle button text
+        updateToggleButtonText(ToggleButtonEstado.isSelected());
+        addToggleButtonActionListener(); // Add action listener for the toggle button
+    }
+
+    // Method to configure the form in edit or creation mode
     public void setModoEdicion(boolean esNuevo, Destino destino) {
         this.esNuevo = esNuevo;
         this.destinoEditando = destino;
-
         if (esNuevo) {
             setTitle("Agregar Nuevo Destino");
-            // Limpiar campos para un nuevo registro
-            txtNombreDestino.setText(""); // Asegúrate que tu JTextField se llama txtNombreDestino
-            txtDescripcion.setText("");   // Asegúrate que tu JTextArea se llama txtDescripcion
+            txtNombreDestino.setText("");
+            txtDescripcion.setText("");
+            ToggleButtonEstado.setSelected(true); // Default to active for new destination
+            updateToggleButtonText(true);
         } else {
             setTitle("Modificar Destino");
             if (destino != null) {
-                // Cargar datos del destino en los campos para edición
                 txtNombreDestino.setText(destino.getNombreDestino());
                 txtDescripcion.setText(destino.getDescripcion());
-                cbEstado.setSelectedItem(destino.getEstado());
+                ToggleButtonEstado.setSelected(destino.isEstado()); // Set state from object
+                updateToggleButtonText(destino.isEstado());
             }
         }
     }
+    
+    // Method to update the toggle button text based on its state
+    
+    private void updateToggleButtonText(boolean isActive) {
+        if (isActive) {
+            ToggleButtonEstado.setText("Activo");
+        } else {
+            ToggleButtonEstado.setText("Inactivo");
+        }
+    }
+
+    // THIS IS THE MODIFIED PART
+    private void addToggleButtonActionListener() {
+        if (ToggleButtonEstado != null) {
+            ToggleButtonEstado.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    boolean estaActivo = ToggleButtonEstado.isSelected();
+                    updateToggleButtonText(estaActivo); // Update the button text immediately
+
+                    if (destinoEditando != null) {
+                        destinoEditando.setEstado(estaActivo); // Update the Destino object
+                        
+                        // Attempt to update the database directly
+                        boolean exitoActualizacion = destinoDAO.actualizarDestino(destinoEditando); 
+                        if (exitoActualizacion) {
+                            JOptionPane.showMessageDialog(null, "Estado del destino actualizado a: " + (estaActivo ? "Activo" : "Inactivo"), "Actualización Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al actualizar el estado del destino en la base de datos.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
+                            // Optionally, revert the toggle button state if update fails
+                            ToggleButtonEstado.setSelected(!estaActivo);
+                            updateToggleButtonText(!estaActivo);
+                        }
+                    } else {
+                        // If it's a new destination, just reflect the state in the message
+                        JOptionPane.showMessageDialog(null, "El estado de 'Activo' para el nuevo destino es: " + (estaActivo ? "Activo" : "Inactivo"), "Estado Nuevo Destino", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            });
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,7 +100,7 @@ public class FormularioDestino extends javax.swing.JDialog {
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        cbEstado = new javax.swing.JComboBox<>();
+        ToggleButtonEstado = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -88,7 +132,12 @@ public class FormularioDestino extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Estado:");
 
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ToggleButtonEstado.setText("Activo");
+        ToggleButtonEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ToggleButtonEstadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,7 +162,7 @@ public class FormularioDestino extends javax.swing.JDialog {
                                         .addGap(56, 56, 56)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(ToggleButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -140,7 +189,7 @@ public class FormularioDestino extends javax.swing.JDialog {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ToggleButtonEstado))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,22 +203,22 @@ public class FormularioDestino extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         String nombre = txtNombreDestino.getText().trim();
         String descripcion = txtDescripcion.getText().trim();
-        String estado = (String) cbEstado.getSelectedItem(); // <--- Get selected state
+        boolean estado = ToggleButtonEstado.isSelected(); // Get state from ToggleButton
 
-        if (nombre.isEmpty() || descripcion.isEmpty() || estado == null || estado.isEmpty()) { // <--- Validate state
+        if (nombre.isEmpty() || descripcion.isEmpty()) { // No need to check state for emptiness
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         boolean exito;
         if (esNuevo) {
-            Destino nuevoDestino = new Destino(nombre, descripcion, estado); // <--- Pass state
+            Destino nuevoDestino = new Destino(nombre, descripcion, estado); // Pass boolean state
             exito = destinoDAO.agregarDestino(nuevoDestino);
         } else {
             if (destinoEditando != null) {
                 destinoEditando.setNombreDestino(nombre);
                 destinoEditando.setDescripcion(descripcion);
-                destinoEditando.setEstado(estado); // <--- Set state
+                destinoEditando.setEstado(estado); // Set boolean state
                 exito = destinoDAO.actualizarDestino(destinoEditando);
             } else {
                 JOptionPane.showMessageDialog(this, "Error: No se encontró el destino a modificar.", "Error de Edición", JOptionPane.ERROR_MESSAGE);
@@ -186,10 +235,26 @@ public class FormularioDestino extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtNombreDestino.setText("");
+         txtNombreDestino.setText("");
         txtDescripcion.setText("");
-        cbEstado.setSelectedIndex(0);
+        ToggleButtonEstado.setSelected(true); // Reset to active when cleaning
+        updateToggleButtonText(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void ToggleButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToggleButtonEstadoActionPerformed
+        if (ToggleButtonEstado != null) {
+            ToggleButtonEstado.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    boolean estaActivo = ToggleButtonEstado.isSelected();
+                    updateToggleButtonText(estaActivo);
+                    // If in edit mode, update the destinoEditando object
+                    if (destinoEditando != null) {
+                        destinoEditando.setEstado(estaActivo);
+                    }
+                }
+            });
+        }
+    }//GEN-LAST:event_ToggleButtonEstadoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -232,9 +297,9 @@ public class FormularioDestino extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ToggleButtonEstado;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
