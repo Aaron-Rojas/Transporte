@@ -63,7 +63,7 @@ public class GestionDestino extends javax.swing.JFrame {
     modeloTablaDestinos.setRowCount(0); // Limpiar tabla existente
     
     // Cambiar a obtener solo destinos activos
-    List<Destino> destinos = destinoDAO.obtenerDestinosActivos();
+    List<Destino> destinos = destinoDAO.obtenerTodosLosDestinos();
     
     if (destinos != null && !destinos.isEmpty()) {
         for (Destino d : destinos) {
@@ -71,7 +71,7 @@ public class GestionDestino extends javax.swing.JFrame {
                 d.getIdDestino(),
                 d.getNombreDestino(),
                 d.getDescripcion(),
-                d.getEstado()
+                d.isEstado(),
             };
             modeloTablaDestinos.addRow(row);
         }
@@ -329,41 +329,34 @@ public class GestionDestino extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int selectedRow = tbdestino.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, 
-                "Por favor, seleccione un destino de la tabla para eliminar.", 
-                "Ningún Destino Seleccionado", 
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        int filaSeleccionada = tbdestino.getSelectedRow();
+    if (filaSeleccionada >= 0) {
+        int idDestino = (int) tbdestino.getValueAt(filaSeleccionada, 0); // Assuming ID is in column 0
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea inactivar este destino?", "Confirmar Inactivación", JOptionPane.YES_NO_OPTION);
 
-        int idDestino = (int) modeloTablaDestinos.getValueAt(selectedRow, 0);
-        String nombreDestino = (String) modeloTablaDestinos.getValueAt(selectedRow, 1);
-
-        int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea marcar como INACTIVO el destino: " + nombreDestino + "?",
-            "Confirmar Eliminación Lógica",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            boolean exito = destinoDAO.eliminarDestinoLogico(idDestino);
-            if (exito) {
-                JOptionPane.showMessageDialog(this, 
-                    "Destino marcado como INACTIVO exitosamente.", 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE);
-                cargarDestinosEnTabla();
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Error al marcar el destino como INACTIVO.", 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                boolean exito = destinoDAO.eliminarDestino(idDestino); // This calls the method that updates Estado to FALSE
+                if (exito) {
+                    JOptionPane.showMessageDialog(this, "Destino inactivado exitosamente.");
+                    cargarDestinosEnTabla(); // Refresh your table
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo inactivar el destino.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) { // Catch the general Exception to see what happens
+                if (ex.getCause() instanceof java.sql.SQLIntegrityConstraintViolationException) {
+                    JOptionPane.showMessageDialog(this,
+                            "No se puede inactivar este destino porque tiene lugares turísticos o hoteles asociados. Por favor, desvincule o inactive primero los elementos relacionados.",
+                            "Error de Integridad", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al inactivar el destino: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                ex.printStackTrace();
             }
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un destino para inactivar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
