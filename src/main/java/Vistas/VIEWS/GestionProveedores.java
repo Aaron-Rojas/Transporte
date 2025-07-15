@@ -125,6 +125,7 @@ public class GestionProveedores extends javax.swing.JFrame {
         btnLugar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
 
+
         btnActividad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -329,6 +330,15 @@ public class GestionProveedores extends javax.swing.JFrame {
 
         jPanel1.add(jPanel6);
         jPanel6.setBounds(0, 380, 200, 170);
+
+        btnActividad.setText("Actividad");
+        btnActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActividadActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnActividad);
+        btnActividad.setBounds(420, 460, 200, 50);
 
         btnActividad.setText("Actividad");
         btnActividad.addActionListener(new java.awt.event.ActionListener() {
