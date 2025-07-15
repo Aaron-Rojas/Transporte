@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.Objects;
+
 public class Destino {
     private int idDestino;
     private String nombreDestino;
@@ -56,13 +58,24 @@ public class Destino {
         this.estado = estado;
     }
 
+   
+    
     @Override
     public String toString() {
-        return "Destino{" +
-               "idDestino=" + idDestino +
-               ", nombreDestino='" + nombreDestino + '\'' +
-               ", descripcion='" + descripcion + '\'' +
-               ", estado=" + estado + // Updated to reflect boolean
-               '}';
+        return nombreDestino; // Muestra solo el nombre en el ComboBox
+                              // Original: return "Destino{" + "idDestino=" + idDestino + ", nombreDestino='" + nombreDestino + '\'' + ", descripcion='" + descripcion + '\'' + ", estado=" + estado + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Destino destino = (Destino) o;
+        return idDestino == destino.idDestino; // La igualdad se basa en el ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idDestino); // El hash se basa en el ID
     }
 }

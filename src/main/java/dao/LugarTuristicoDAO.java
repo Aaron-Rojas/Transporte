@@ -1,157 +1,217 @@
+
 package dao;
 
 import Modelo.LugarTuristico;
+import Modelo.Proveedor;
+import Modelo.Destino;
+
 import Conexión.Conexión;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class LugarTuristicoDAO {
-    // No es necesario declarar Connection, PreparedStatement, ResultSet como atributos de clase
-    // si se usan en bloques try-with-resources. Esto ayuda a evitar fugas de recursos.
-    private static final Logger logger = Logger.getLogger(LugarTuristicoDAO.class.getName());
 
-    public boolean insertarLugarTuristico(LugarTuristico lugar) {
+    private DestinoDAO destinoDAO;
+    private ProveedorDAO proveedorDAO;
+
+    public LugarTuristicoDAO(DestinoDAO destinoDAO, ProveedorDAO proveedorDAO) {
+        this.destinoDAO = destinoDAO;
+        this.proveedorDAO = proveedorDAO;
+    }
+    
+    public boolean insertarLugarTuristico(LugarTuristico lugarTuristico) {
         String sql = "INSERT INTO lugarturistico (NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, lugar.getNombre());
-            ps.setString(2, lugar.getTipo());
-            ps.setString(3, lugar.getDescripcion());
-            ps.setInt(4, lugar.getIdDestino());
-            ps.setInt(5, lugar.getIdProveedor());
-            ps.setString(6, lugar.getEstado());
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al insertar lugar turístico: {0}", e.getMessage());
-            return false;
-        }
-    }
+        try (Connection conn = Conexión.conectar(); // Usar tu método de conexión
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-    public boolean actualizarLugarTuristico(LugarTuristico lugar) {
-        String sql = "UPDATE lugarturistico SET NombreLugar=?, TipoLugar=?, Descripcion=?, ID_Destino=?, ID_Proveedor=?, Estado=? WHERE ID_LugarTuristico=?";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, lugar.getNombre());
-            ps.setString(2, lugar.getTipo());
-            ps.setString(3, lugar.getDescripcion());
-            ps.setInt(4, lugar.getIdDestino());
-            ps.setInt(5, lugar.getIdProveedor());
-            ps.setString(6, lugar.getEstado());
-            ps.setInt(7, lugar.getIdLugarTuristico());
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al actualizar lugar turístico: {0}", e.getMessage());
-            return false;
-        }
-    }
+            stmt.setString(1, lugarTuristico.getNombreLugar());
+            stmt.setString(2, lugarTuristico.getTipoLugar());
+            stmt.setString(3, lugarTuristico.getDescripcion());
+            // Obtener los IDs de los objetos Destino y Proveedor
+            stmt.setInt(4, lugarTuristico.getDestino().getIdDestino()); // Asumo getIdDestino() existe
+            stmt.setInt(5, lugarTuristico.getProveedor().getIdProveedor()); // Asumo getIdProveedor() existe
+            // Convertir el String "activo"/"desactivo" a boolean para el campo BIT(1)
+            stmt.setBoolean(6, lugarTuristico.getEstado());
 
-    public LugarTuristico obtenerLugarPorId(int id) {
-        LugarTuristico lugar = null;
-        String sql = "SELECT ID_LugarTuristico, NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado FROM lugarturistico WHERE ID_LugarTuristico=?";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        lugarTuristico.setIdLugarTuristico(rs.getInt(1)); // Asignar el ID generado
+                    }
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al insertar Lugar Turístico: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+     public LugarTuristico obtenerLugarTuristicoPorId(int idLugarTuristico) {
+        LugarTuristico lugarTuristico = null;
+        String sql = "SELECT ID_LugarTuristico, NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado FROM lugarturistico WHERE ID_LugarTuristico = ?";
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idLugarTuristico);
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    lugar = new LugarTuristico(
-                        rs.getInt("ID_LugarTuristico"),
-                        rs.getString("NombreLugar"),
-                        rs.getString("TipoLugar"),
-                        rs.getString("Descripcion"),
-                        rs.getInt("ID_Destino"),
-                        rs.getInt("ID_Proveedor"),
-                        rs.getString("Estado")
-                    );
+                    // Obtener los IDs de las claves foráneas
+                    int idDestino = rs.getInt("ID_Destino");
+                    int idProveedor = rs.getInt("ID_Proveedor");
+
+                    // Usar los DAOs para obtener los objetos Destino y Proveedor completos
+                    Destino destino = destinoDAO.obtenerDestinoPorId(idDestino); // Asumo este método existe
+                    Proveedor proveedor = proveedorDAO.obtenerProveedorPorId(idProveedor); // Asumo este método existe
+
+                    // Construir el objeto LugarTuristico
+                    lugarTuristico = new LugarTuristico();
+                    lugarTuristico.setIdLugarTuristico(rs.getInt("ID_LugarTuristico"));
+                    lugarTuristico.setNombreLugar(rs.getString("NombreLugar"));
+                    lugarTuristico.setTipoLugar(rs.getString("TipoLugar"));
+                    lugarTuristico.setDescripcion(rs.getString("Descripcion"));
+                    lugarTuristico.setDestino(destino);
+                    lugarTuristico.setProveedor(proveedor);
+                    // Convertir boolean de DB a String "activo"/"desactivo"
+                    lugarTuristico.setEstado(rs.getBoolean("Estado"));
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al obtener lugar turístico por ID: {0}", e.getMessage());
+            System.err.println("Error al obtener Lugar Turístico por ID: " + e.getMessage());
+            e.printStackTrace();
         }
-        return lugar;
+        return lugarTuristico;
     }
 
-    // LISTAR SOLO LUGARES TURÍSTICOS ACTIVOS (Eliminación Lógica)
-    public List<LugarTuristico> listarLugaresTuristicos() {
-        List<LugarTuristico> lista = new ArrayList<>();
-        // Filtra por 'Estado' = 'Activo'
-        String sql = "SELECT ID_LugarTuristico, NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado FROM lugarturistico WHERE Estado = 'Activo'";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                LugarTuristico lugar = new LugarTuristico(
-                    rs.getInt("ID_LugarTuristico"),
-                    rs.getString("NombreLugar"),
-                    rs.getString("TipoLugar"),
-                    rs.getString("Descripcion"),
-                    rs.getInt("ID_Destino"),
-                    rs.getInt("ID_Proveedor"),
-                    rs.getString("Estado")
-                );
-                lista.add(lugar);
-            }
+    public boolean actualizarLugarTuristico(LugarTuristico lugarTuristico) {
+        String sql = "UPDATE lugarturistico SET NombreLugar = ?, TipoLugar = ?, Descripcion = ?, ID_Destino = ?, ID_Proveedor = ?, Estado = ? WHERE ID_LugarTuristico = ?";
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, lugarTuristico.getNombreLugar());
+            stmt.setString(2, lugarTuristico.getTipoLugar());
+            stmt.setString(3, lugarTuristico.getDescripcion());
+            stmt.setInt(4, lugarTuristico.getDestino().getIdDestino());
+            stmt.setInt(5, lugarTuristico.getProveedor().getIdProveedor());
+            stmt.setBoolean(6, lugarTuristico.getEstado());
+            stmt.setInt(7, lugarTuristico.getIdLugarTuristico()); // El ID para identificar el registro a actualizar
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
+
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al listar lugares turísticos activos: {0}", e.getMessage());
+            System.err.println("Error al actualizar Lugar Turístico: " + e.getMessage());
+            e.printStackTrace();
         }
-        return lista;
+        return false;
     }
 
-    // (Opcional) Método para listar TODOS los lugares turísticos (activos e inactivos)
+
+
     public List<LugarTuristico> obtenerTodosLosLugaresTuristicos() {
-        List<LugarTuristico> lista = new ArrayList<>();
-        String sql = "SELECT ID_LugarTuristico, NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado FROM lugarturistico";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                LugarTuristico lugar = new LugarTuristico(
-                    rs.getInt("ID_LugarTuristico"),
-                    rs.getString("NombreLugar"),
-                    rs.getString("TipoLugar"),
-                    rs.getString("Descripcion"),
-                    rs.getInt("ID_Destino"),
-                    rs.getInt("ID_Proveedor"),
-                    rs.getString("Estado")
-                );
-                lista.add(lugar);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al listar todos los lugares turísticos: {0}", e.getMessage());
-        }
-        return lista;
+           List<LugarTuristico> lugares = new ArrayList<>();
+           String sql = "SELECT ID_LugarTuristico, NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado FROM lugarturistico";
+           try (Connection conn = Conexión.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
+               while (rs.next()) {
+                   // Obtener los IDs de las claves foráneas
+                   int idDestino = rs.getInt("ID_Destino");
+                   int idProveedor = rs.getInt("ID_Proveedor");
+
+                   // Usar los DAOs para obtener los objetos Destino y Proveedor completos
+                   Destino destino = destinoDAO.obtenerDestinoPorId(idDestino);
+                   Proveedor proveedor = proveedorDAO.obtenerProveedorPorId(idProveedor);
+
+                   LugarTuristico lugarTuristico = new LugarTuristico();
+                   lugarTuristico.setIdLugarTuristico(rs.getInt("ID_LugarTuristico"));
+                   lugarTuristico.setNombreLugar(rs.getString("NombreLugar"));
+                   lugarTuristico.setTipoLugar(rs.getString("TipoLugar"));
+                   lugarTuristico.setDescripcion(rs.getString("Descripcion"));
+                   lugarTuristico.setDestino(destino);
+                   lugarTuristico.setProveedor(proveedor);
+                   lugarTuristico.setEstado(rs.getBoolean("Estado")); // Mapear a String
+
+                   lugares.add(lugarTuristico);
+               }
+           } catch (SQLException e) {
+               System.err.println("Error al obtener todos los Lugares Turísticos: " + e.getMessage());
+               e.printStackTrace();
+           }
+           return lugares;
     }
 
-    // ELIMINACIÓN LÓGICA: Cambia el estado a 'Inactivo'
-   public boolean eliminarLugarTuristico(int id) {
-        // La sentencia SQL se cambia a UPDATE para la eliminación lógica
-        String sql = "UPDATE lugarturistico SET Estado = 'Inactivo' WHERE ID_LugarTuristico=?";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+    public List<LugarTuristico> obtenerTodosLosLugaresTuristicosActivos() {
+        List<LugarTuristico> lugares = new ArrayList<>();
+        String sql = "SELECT ID_LugarTuristico, NombreLugar, TipoLugar, Descripcion, ID_Destino, ID_Proveedor, Estado FROM lugarturistico WHERE Estado = 1"; // 1 para "activo"
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                // Obtener los IDs de las claves foráneas
+                int idDestino = rs.getInt("ID_Destino");
+                int idProveedor = rs.getInt("ID_Proveedor");
+
+                // Usar los DAOs para obtener los objetos Destino y Proveedor completos
+                Destino destino = destinoDAO.obtenerDestinoPorId(idDestino);
+                Proveedor proveedor = proveedorDAO.obtenerProveedorPorId(idProveedor);
+
+                LugarTuristico lugarTuristico = new LugarTuristico();
+                lugarTuristico.setIdLugarTuristico(rs.getInt("ID_LugarTuristico"));
+                lugarTuristico.setNombreLugar(rs.getString("NombreLugar"));
+                lugarTuristico.setTipoLugar(rs.getString("TipoLugar"));
+                lugarTuristico.setDescripcion(rs.getString("Descripcion"));
+                lugarTuristico.setDestino(destino);
+                lugarTuristico.setProveedor(proveedor);
+                lugarTuristico.setEstado(rs.getBoolean("Estado")); // Mapear a String
+                
+                lugares.add(lugarTuristico);
+            }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al desactivar lugar turístico: {0}", e.getMessage());
-            return false;
+            System.err.println("Error al obtener Lugares Turísticos activos: " + e.getMessage());
+            e.printStackTrace();
         }
+        return lugares;
     }
-    
-    // (Opcional) Método para restaurar un lugar turístico (cambiar su estado a 'Activo')
-    public boolean restaurarLugarTuristico(int id) {
-        String sql = "UPDATE lugarturistico SET Estado = 'Activo' WHERE ID_LugarTuristico=?";
-        try (Connection con = Conexión.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+
+ public boolean eliminarLugarTuristicoFisico(int idLugarTuristico) {
+        String sql = "DELETE FROM lugarturistico WHERE ID_LugarTuristico = ?";
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idLugarTuristico);
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
+
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al restaurar lugar turístico: {0}", e.getMessage());
-            return false;
+            System.err.println("Error al eliminar Lugar Turístico físicamente: " + e.getMessage());
+            e.printStackTrace();
         }
+        return false;
     }
+ 
+        
+ public boolean desactivarLugarTuristico(int idLugarTuristico) { // Renombrado para mayor claridad
+        String sql = "UPDATE lugarturistico SET Estado = 0 WHERE ID_LugarTuristico = ?"; // 0 para "desactivo"
+        try (Connection conn = Conexión.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idLugarTuristico);
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al desactivar Lugar Turístico: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+ 
+
 }
