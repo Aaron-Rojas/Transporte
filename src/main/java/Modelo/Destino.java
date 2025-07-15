@@ -4,23 +4,23 @@ public class Destino {
     private int idDestino;
     private String nombreDestino;
     private String descripcion;
-    private String estado; // Mantenemos String para mayor flexibilidad
+    private boolean estado; // Changed from String to boolean
 
-    // Constructores
+    // Constructors
     public Destino() {
     }
 
-    public Destino(String nombreDestino, String descripcion, String estado) {
+    public Destino(String nombreDestino, String descripcion, boolean estado) { // Updated parameter
         this.nombreDestino = nombreDestino;
         this.descripcion = descripcion;
         this.estado = estado;
     }
 
-    public Destino(int idDestino, String nombreDestino, String descripcion, String estado) {
+    public Destino(int idDestino, String nombreDestino, String descripcion, boolean estado) { // Updated parameter
         this.idDestino = idDestino;
         this.nombreDestino = nombreDestino;
         this.descripcion = descripcion;
-        this.estado = estado;
+        this.estado = true;
     }
 
     // Getters y Setters
@@ -48,11 +48,11 @@ public class Destino {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
+    public boolean isEstado() { // Changed from getEstado() to isEstado() for boolean
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) { // Updated parameter
         this.estado = estado;
     }
 
@@ -62,9 +62,7 @@ public class Destino {
                "idDestino=" + idDestino +
                ", nombreDestino='" + nombreDestino + '\'' +
                ", descripcion='" + descripcion + '\'' +
-               ", estado='" + estado + '\'' +
+               ", estado=" + estado + // Updated to reflect boolean
                '}';
     }
 }
-
-

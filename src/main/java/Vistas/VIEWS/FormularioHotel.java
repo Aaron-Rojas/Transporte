@@ -16,26 +16,7 @@ private GestionHotel gestionHotel;
 
 
 
-public void setModoEdicion(boolean esEdicion, Hotel hotel) {
-    this.esEdicion = esEdicion;
-    if (hotel != null) {
-        this.idHotelEnEdicion = hotel.getIdHotel();
-        txtNombreHotel.setText(hotel.getNombreHotel());
-        txtDescripcionHotel1.setText(hotel.getDescripcion());
-        txtDireccionHotel.setText(hotel.getDireccion());
-        jComboBoxCategoria.setSelectedItem(hotel.getCategoria());
-        jComboBoxEstado.setSelectedItem(hotel.getEstado());
 
-        // Buscar y seleccionar proveedor en el combo
-        for (int i = 0; i < jComboBoxProveedor.getItemCount(); i++) {
-            ProveedorItem item = (ProveedorItem) jComboBoxProveedor.getItemAt(i);
-            if (item.getId() == hotel.getIdProveedor()) {
-                jComboBoxProveedor.setSelectedIndex(i);
-                break;
-            }
-        }
-    }
-}
 
 
 
@@ -107,11 +88,11 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jLabel5 = new javax.swing.JLabel();
         jComboBoxCategoria = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jComboBoxEstado = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jComboBoxProveedor = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        ToggleButtonActivo = new javax.swing.JToggleButton();
         jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -252,7 +233,7 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel8.setText("FORMULARIO DEL HOTEL");
         jPanel6.add(jLabel8);
-        jLabel8.setBounds(450, 130, 206, 20);
+        jLabel8.setBounds(450, 130, 205, 20);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nombre:");
@@ -270,7 +251,7 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Descripción:");
         jPanel6.add(jLabel3);
-        jLabel3.setBounds(330, 260, 75, 20);
+        jLabel3.setBounds(330, 260, 74, 20);
 
         txtDescripcionHotel1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +264,7 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Direccion:");
         jPanel6.add(jLabel4);
-        jLabel4.setBounds(330, 350, 61, 17);
+        jLabel4.setBounds(330, 350, 60, 17);
 
         txtDireccionHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,15 +293,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jPanel6.add(jLabel6);
         jLabel6.setBounds(670, 260, 47, 17);
 
-        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Desactivo" }));
-        jComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxEstadoActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jComboBoxEstado);
-        jComboBoxEstado.setBounds(670, 280, 85, 40);
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Id Provedor:");
         jPanel6.add(jLabel7);
@@ -332,7 +304,7 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(jComboBoxProveedor);
-        jComboBoxProveedor.setBounds(670, 370, 72, 30);
+        jComboBoxProveedor.setBounds(670, 370, 90, 30);
 
         btnGuardar.setBackground(new java.awt.Color(40, 167, 69));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -356,6 +328,15 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         });
         jPanel6.add(btnLimpiar);
         btnLimpiar.setBounds(400, 480, 160, 30);
+
+        ToggleButtonActivo.setText("Activo");
+        ToggleButtonActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ToggleButtonActivoActionPerformed(evt);
+            }
+        });
+        jPanel6.add(ToggleButtonActivo);
+        ToggleButtonActivo.setBounds(670, 290, 90, 24);
 
         jTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(204, 204, 204)));
         jPanel6.add(jTextField2);
@@ -404,54 +385,66 @@ private void cargarProveedores() {
     }
 }
 
-    
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+private void limpiarFormulario() {
+    // Limpiar campos de texto
     txtNombreHotel.setText("");
     txtDireccionHotel.setText("");
     txtDescripcionHotel1.setText("");
+    
+    // Restablecer combobox
     jComboBoxCategoria.setSelectedIndex(0);
-    jComboBoxEstado.setSelectedIndex(0);
+    
+    // Establecer toggle button como activo por defecto
+    ToggleButtonActivo.setSelected(true);
+    
+    // Opcional: Regresar el foco al primer campo
+    txtNombreHotel.requestFocus();
+}
+
+    
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        btnLimpiar.addActionListener(e -> limpiarFormulario());
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    String nombre = txtNombreHotel.getText().trim();
-    String descripcion = txtDescripcionHotel1.getText().trim();
-    String direccion = txtDireccionHotel.getText().trim();
-    String categoria = jComboBoxCategoria.getSelectedItem().toString();
-    String estado = jComboBoxEstado.getSelectedItem().toString();
-
-    if (nombre.isEmpty() || descripcion.isEmpty() || direccion.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+                                          
+    if (txtNombreHotel.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre del hotel es requerido", "Error", JOptionPane.ERROR_MESSAGE);
+        txtNombreHotel.requestFocus();
         return;
     }
 
-    ProveedorItem proveedorSeleccionado = (ProveedorItem) jComboBoxProveedor.getSelectedItem();
-    int idProveedor = proveedorSeleccionado.getId();
-    int idDestino = 1; // Puedes modificarlo si usas jComboBoxDestino u otro valor
-
-    HotelDAO hotelDAO = new HotelDAO();
-    boolean exito;
-
-    if (esEdicion && idHotelEnEdicion != -1) {
-        Hotel hotelActualizado = new Hotel(idHotelEnEdicion, nombre, descripcion, direccion, categoria, estado, idDestino, idProveedor);
-        exito = hotelDAO.actualizarHotel(hotelActualizado);
-    } else {
-        Hotel nuevoHotel = new Hotel(nombre, descripcion, direccion, categoria, estado, idDestino, idProveedor);
-        exito = hotelDAO.insertarHotel(nuevoHotel);
+    if (txtDireccionHotel.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "La dirección es requerida", "Error", JOptionPane.ERROR_MESSAGE);
+        txtDireccionHotel.requestFocus();
+        return;
     }
 
-    if (exito) {
-        JOptionPane.showMessageDialog(this, esEdicion ? "Hotel actualizado correctamente." : "Hotel registrado exitosamente.");
+    // 2. Crear objeto Hotel con los datos del formulario
+    Hotel hotel = new Hotel();
+    try {
+        hotel.setNombreHotel(txtNombreHotel.getText().trim());
+        hotel.setDireccion(txtDireccionHotel.getText().trim());
+ //       hotel.setDescripcion(txtDescripcionHotel1.getText().trim());
+        hotel.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
+//        hotel.setActivo(ToggleButtonActivo.isSelected());
 
-        // ✅ Refrescar tabla en GestionHotel si hay referencia
-        if (gestionHotel != null) {
-            gestionHotel.cargarHotelesEnTabla();
+        // 3. Guardar en la base de datos
+        HotelDAO dao = new HotelDAO();
+        if (dao.insertar(hotel)) {
+            JOptionPane.showMessageDialog(this, "Hotel registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+           limpiarFormulario();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al guardar el hotel", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        this.dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Error al guardar el hotel.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error de base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
     }
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtDireccionHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionHotelActionPerformed
@@ -461,10 +454,6 @@ private void cargarProveedores() {
     private void jComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
-
-    private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxEstadoActionPerformed
 
     private void txtDescripcionHotel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionHotel1ActionPerformed
         // TODO add your handling code here:
@@ -510,6 +499,10 @@ private void cargarProveedores() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void ToggleButtonActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToggleButtonActivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ToggleButtonActivoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -548,33 +541,18 @@ private void cargarProveedores() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClientes;
-    private javax.swing.JButton btnClientes1;
+    private javax.swing.JToggleButton ToggleButtonActivo;
     private javax.swing.JButton btnClientes2;
-    private javax.swing.JButton btnConfiguracion;
-    private javax.swing.JButton btnConfiguracion1;
     private javax.swing.JButton btnConfiguracion2;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnHome1;
     private javax.swing.JButton btnHome2;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnProveedores;
-    private javax.swing.JButton btnProveedores1;
     private javax.swing.JButton btnProveedores2;
-    private javax.swing.JButton btnReportes;
-    private javax.swing.JButton btnReportes1;
     private javax.swing.JButton btnReportes2;
-    private javax.swing.JButton btnReservas;
-    private javax.swing.JButton btnReservas1;
     private javax.swing.JButton btnReservas2;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBoxCategoria;
-    private javax.swing.JComboBox<String> jComboBoxEstado;
     private javax.swing.JComboBox<ProveedorItem> jComboBoxProveedor;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -583,11 +561,6 @@ private void cargarProveedores() {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField jTextField1;

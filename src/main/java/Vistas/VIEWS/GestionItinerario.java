@@ -522,28 +522,28 @@ public class GestionItinerario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBusActionPerformed
 
     private void btnItinerarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItinerarioActionPerformed
-        if (usuarioActual == null || usuarioActual.getRol() == null) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Error de seguridad. No se pudo verificar su rol.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-
-        String nombreRol = usuarioActual.getRol().getNombreRol();
-
-        // Permite acceso tanto a "admin" como a "usuario"
-        if ("admin".equalsIgnoreCase(nombreRol) || "usuario".equalsIgnoreCase(nombreRol)) {
+        if (usuarioActual != null || usuarioActual.getRol() != null) {
+         String nombreRol = usuarioActual.getRol().getNombreRol();
+         
+     // Permite acceso tanto a "admin" como a "usuario"
+        if ("admin".equalsIgnoreCase(nombreRol)){
             GestionViajeItinerario viajeItinerario = new GestionViajeItinerario(usuarioActual);
             viajeItinerario.setVisible(true);
             viajeItinerario.setLocationRelativeTo(null);
             this.dispose(); // Cierra la ventana actual
-
             // Mensaje de depuración
-            System.out.println((nombreRol.equalsIgnoreCase("admin") ? "Admin" : "User")
-                    + " redirigiendo a GestionViajeItinerario.");
+            System.out.println("Admin redirigiendo a Gestión Viaje Itinerario.");
+            return;
+
+        }
+        if("usuario".equalsIgnoreCase(nombreRol)){            
+            GestionViajeItinerario viajeItinerario = new GestionViajeItinerario(usuarioActual);
+            viajeItinerario.setVisible(true);
+            viajeItinerario.setLocationRelativeTo(null);
+            this.dispose(); // Cierra la ventana actual
+            // Mensaje de depuración
+            System.out.println("User redirigiendo a Gestión Viaje Itinerario.");
+            return;
         } else {
             JOptionPane.showMessageDialog(
                     this,
@@ -553,6 +553,17 @@ public class GestionItinerario extends javax.swing.JFrame {
             );
             System.out.println("Intento de acceso no autorizado a GestionViajeItinerario por rol: " + nombreRol);
         }
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error de seguridad. No se pudo verificar su rol.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        
+   
     }//GEN-LAST:event_btnItinerarioActionPerformed
 
     private void btnViajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViajeActionPerformed

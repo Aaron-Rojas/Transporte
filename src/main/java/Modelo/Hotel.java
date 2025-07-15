@@ -1,80 +1,53 @@
 package Modelo;
 
-/**
- * Clase que representa un Hotel en el sistema de gestión de viajes.
- */
-public class Hotel {
+import java.util.Arrays;
 
+public class Hotel {
+    
     private int idHotel;
-    private int idDestino;
-    private int idProveedor;
     private String nombreHotel;
-    private String descripcion;
     private String direccion;
     private String categoria;
-    private String estado;
-
-    // ─────────────────────────────────────────────────────────────
-    // Constructores
-    // ─────────────────────────────────────────────────────────────
-
-    /**
-     * Constructor reducido (usado para mostrar en tablas).
-     * @param idHotel ID del hotel.
-     * @param nombreHotel Nombre del hotel.
-     * @param descripcion Descripción del hotel.
-     */
-    public Hotel(int idHotel, String nombreHotel, String descripcion) {
-        this.idHotel = idHotel;
-        this.nombreHotel = nombreHotel;
-        this.descripcion = descripcion;
+    private Destino destino;
+    private Proveedor proveedor;
+    private boolean estado;
+    
+    public static final String[] CATEGORIAS_VALIDAS = {
+        "1 estrella", 
+        "2 estrellas", 
+        "3 estrellas", 
+        "4 estrellas", 
+        "5 estrellas"
+    };  
+    
+    public void setCategoria(String categoria) {
+        if (!Arrays.asList(CATEGORIAS_VALIDAS).contains(categoria)) {
+            throw new IllegalArgumentException("Categoría no válida");
+        }
+        this.categoria = categoria;
     }
 
-    /**
-     * Constructor para registrar un nuevo hotel (sin ID).
-     * @param nombreHotel Nombre del hotel.
-     * @param descripcion Descripción del hotel.
-     * @param direccion Dirección del hotel.
-     * @param categoria Categoría (Ej. 3 Estrellas).
-     * @param estado Estado del hotel (Ej. Activo, Inactivo).
-     * @param idDestino ID del destino asociado.
-     * @param idProveedor ID del proveedor asociado.
-     */
-    public Hotel(String nombreHotel, String descripcion, String direccion, String categoria, String estado, int idDestino, int idProveedor) {
+    public Hotel() {
+    }
+
+    public Hotel(String nombreHotel, String direccion, String categoria, Destino destino, Proveedor proveedor, boolean estado) {
         this.nombreHotel = nombreHotel;
-        this.descripcion = descripcion;
         this.direccion = direccion;
         this.categoria = categoria;
+        this.destino = destino;
+        this.proveedor = proveedor;
         this.estado = estado;
-        this.idDestino = idDestino;
-        this.idProveedor = idProveedor;
     }
 
-    /**
-     * Constructor completo con ID (usado para actualización o lectura de base de datos).
-     * @param idHotel ID del hotel.
-     * @param nombreHotel Nombre del hotel.
-     * @param descripcion Descripción del hotel.
-     * @param direccion Dirección del hotel.
-     * @param categoria Categoría del hotel.
-     * @param estado Estado del hotel.
-     * @param idDestino ID del destino asociado.
-     * @param idProveedor ID del proveedor asociado.
-     */
-    public Hotel(int idHotel, String nombreHotel, String descripcion, String direccion, String categoria, String estado, int idDestino, int idProveedor) {
+    public Hotel(int idHotel, String nombreHotel, String direccion, String categoria, Destino destino, Proveedor proveedor, boolean estado) {
         this.idHotel = idHotel;
         this.nombreHotel = nombreHotel;
-        this.descripcion = descripcion;
         this.direccion = direccion;
         this.categoria = categoria;
+        this.destino = destino;
+        this.proveedor = proveedor;
         this.estado = estado;
-        this.idDestino = idDestino;
-        this.idProveedor = idProveedor;
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // Getters y Setters
-    // ─────────────────────────────────────────────────────────────
 
     public int getIdHotel() {
         return idHotel;
@@ -82,22 +55,6 @@ public class Hotel {
 
     public void setIdHotel(int idHotel) {
         this.idHotel = idHotel;
-    }
-
-    public int getIdDestino() {
-        return idDestino;
-    }
-
-    public void setIdDestino(int idDestino) {
-        this.idDestino = idDestino;
-    }
-
-    public int getIdProveedor() {
-        return idProveedor;
-    }
-
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
     }
 
     public String getNombreHotel() {
@@ -108,14 +65,6 @@ public class Hotel {
         this.nombreHotel = nombreHotel;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public String getDireccion() {
         return direccion;
     }
@@ -124,19 +73,33 @@ public class Hotel {
         this.direccion = direccion;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public Destino getDestino() {
+        return destino;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setDestino(Destino destino) {
+        this.destino = destino;
     }
 
-    public String getEstado() {
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    public String getCategoria() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
 }

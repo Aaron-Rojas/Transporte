@@ -2,9 +2,11 @@ package Vistas.VIEWS;
 
 import Modelo.Hotel;
 import dao.HotelDAO;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GestionHotel extends javax.swing.JFrame {
@@ -13,14 +15,14 @@ public class GestionHotel extends javax.swing.JFrame {
     private DefaultTableModel modeloTablaHoteles;
     private static final Logger logger = Logger.getLogger(GestionHotel.class.getName());
     
-public GestionHotel() {
+public GestionHotel() throws SQLException {
     initComponents();
     modeloTablaHoteles = (DefaultTableModel) tbHotel.getModel();
     cargarHotelesEnTabla();
 }
 
 
-public void cargarHotelesEnTabla() {
+public void cargarHotelesEnTabla() throws SQLException {
     modeloTablaHoteles.setRowCount(0); // Limpiar tabla
 
     List<Hotel> lista = hotelDAO.listarHoteles();
@@ -28,7 +30,7 @@ public void cargarHotelesEnTabla() {
         modeloTablaHoteles.addRow(new Object[]{
             hotel.getIdHotel(),
             hotel.getNombreHotel(),
-            hotel.getDescripcion()
+            //hotel.getDescripcion()
     });
 }
 }
@@ -307,32 +309,66 @@ public void cargarHotelesEnTabla() {
     
     
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+                                             
+    // 1. Obtener el ID del hotel seleccionado
     int selectedRow = tbHotel.getSelectedRow();
+    
     if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un hotel de la tabla para eliminar.", "Ningún Hotel Seleccionado", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Por favor seleccione un hotel", "Advertencia", JOptionPane.WARNING_MESSAGE);
         return;
     }
-
-    int idHotel = (int) modeloTablaHoteles.getValueAt(selectedRow, 0); // Columna 0: ID
-    String nombreHotel = (String) modeloTablaHoteles.getValueAt(selectedRow, 1); // Columna 1: Nombre
-
-    int confirm = JOptionPane.showConfirmDialog(
-        this,
-        "¿Está seguro de que desea eliminar el hotel: " + nombreHotel + " (ID: " + idHotel + ")?",
-        "Confirmar Eliminación",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE
+    
+    int idHotel = (int) tbHotel.getValueAt(selectedRow, 0); // Asumiendo que ID está en la columna 0
+    
+    // 2. Confirmar eliminación
+    int confirmacion = JOptionPane.showConfirmDialog(
+        this, 
+        "¿Está seguro que desea eliminar el hotel seleccionado?", 
+        "Confirmar eliminación", 
+        JOptionPane.YES_NO_OPTION
     );
-
-    if (confirm == JOptionPane.YES_OPTION) {
-        boolean exito = hotelDAO.eliminarHotel(idHotel);
-        if (exito) {
-            JOptionPane.showMessageDialog(this, "Hotel eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            cargarHotelesEnTabla(); // Recarga la tabla
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al eliminar el hotel. Consulte la consola para más detalles.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    
+    if (confirmacion != JOptionPane.YES_OPTION) {
+        return;
     }
+    
+    // 3. Ejecutar eliminación
+    try {
+        HotelDAO hotelDAO = new HotelDAO();
+        if (hotelDAO.eliminar(idHotel)) {
+            JOptionPane.showMessageDialog(this, "Hotel eliminado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            actualizarTablaHoteles(); // Método para refrescar la tabla
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar el hotel", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar hotel: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
+
+// Método para actualizar la tabla después de eliminar
+private void actualizarTablaHoteles() {
+    try {
+        HotelDAO hotelDAO = new HotelDAO();
+        List<Hotel> hoteles = hotelDAO.listarHoteles();
+        
+        DefaultTableModel model = (DefaultTableModel) tbHotel.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        
+        for (Hotel hotel : hoteles) {
+            model.addRow(new Object[]{
+                hotel.getIdHotel(),
+                hotel.getNombreHotel(),
+                //hotel.getDescripcion()
+                // Agrega más columnas si es necesario
+            });
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar hoteles: " + ex.getMessage(), 
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -351,7 +387,12 @@ public void cargarHotelesEnTabla() {
     int idHotel = (int) tbHotel.getValueAt(filaSeleccionada, 0);
 
     HotelDAO hotelDAO = new HotelDAO();
-    Hotel hotelSeleccionado = hotelDAO.obtenerHotelPorId(idHotel);
+    Hotel hotelSeleccionado = null;
+       try {
+           hotelSeleccionado = hotelDAO.seleccionarPorId(idHotel);
+       } catch (SQLException ex) {
+           Logger.getLogger(GestionHotel.class.getName()).log(Level.SEVERE, null, ex);
+       }
 
     if (hotelSeleccionado != null) {
         FormularioHotel formulario = new FormularioHotel(this, true);
@@ -399,7 +440,7 @@ public void cargarHotelesEnTabla() {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         FormularioHotel formulario = new FormularioHotel(this, true);
         formulario.setVisible(true);
-        cargarHotelesEnTabla(); // Refrescar tabla después de cerrar el formulario
+        //cargarHotelesEnTabla(); // Refrescar tabla después de cerrar el formulario
     }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
@@ -424,7 +465,13 @@ public void cargarHotelesEnTabla() {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GestionHotel().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                new GestionHotel().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(GestionHotel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

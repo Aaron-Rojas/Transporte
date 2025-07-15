@@ -63,7 +63,9 @@
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/GestionLugarTuristico.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/ItinerarioDeViajesPorBuses.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/LugarTuristico.java
+/Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Modelo/Itinerario.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/CrearReserva.java
+/Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/dao/ItinerarioDAO.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWREPORTE/ReporteHoteles.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/CreacionCliente.java
 /Users/rubigutierrezcedano/NetBeansProjects/Transporte/src/main/java/Vistas/VIEWS/Panel123.java

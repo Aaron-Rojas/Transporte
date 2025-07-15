@@ -33,8 +33,8 @@ public class GestionClientes extends javax.swing.JFrame {
             String nombreRol = usuarioActual.getRol().getNombreRol();
             setTitle("Sistema para el usuario " + usuarioActual.getNombreCompleto());
         }else{
-            setTitle("Sistema de User");
-        }
+            setTitle("Sistema de User");  
+     }
     configurarTablaClientes();
     cargarClientesEnTabla();
     }
