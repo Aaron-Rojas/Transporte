@@ -386,14 +386,93 @@ public class GestionClientes extends javax.swing.JFrame {
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Configuracion.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la Configuracion.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Configuracion por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reportes.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver Reportes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Proveedores.");
+
+            }
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
@@ -429,10 +508,59 @@ public class GestionClientes extends javax.swing.JFrame {
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestión Clientes.");
+
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");           
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
 
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                Principal GI = new Principal(usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();
+                System.out.println("Admin redirigiendo a Principal.");
+
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                Principal GI = new Principal(usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();
+                System.out.println("User redirigiendo a Principal.");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
 
         

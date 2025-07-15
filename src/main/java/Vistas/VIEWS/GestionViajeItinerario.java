@@ -146,6 +146,7 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -337,6 +338,18 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
         jPanel1.add(jPanel6);
         jPanel6.setBounds(0, 380, 200, 170);
 
+        jToggleButton1.setBackground(new java.awt.Color(102, 102, 102));
+        jToggleButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton1.setText("VOLVER ");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jToggleButton1);
+        jToggleButton1.setBounds(740, 120, 110, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -370,26 +383,26 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
         // TODO add your handling code here:
-                
-        if (usuarioActual != null && usuarioActual.getRol() != null) {
+        if (usuarioActual !=null && usuarioActual.getRol() !=null) {
             String nombreRol = usuarioActual.getRol().getNombreRol();
-
             if ("admin".equalsIgnoreCase(nombreRol)) {
                 GestionItinerario GI = new  GestionItinerario (usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                System.out.println("Admin redirigiendo a Gestión de Itinerario.");
-                return;
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reservas.");
+
             }
             if ("usuario".equalsIgnoreCase(nombreRol)) {
                 GestionItinerario GI = new  GestionItinerario (usuarioActual);
                 GI.setVisible(true);
                 GI.setLocationRelativeTo(null);
-                System.out.println("User redirigiendo a Gestión de Itinerario.");
-                return; 
+                this.dispose();                 
+                System.out.println("User redirigiendo a Reservas.");
+            
             }else{
-                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
-                System.out.println("Intento de acceso no autorizado a Gestión de Itinerario por rol: " + nombreRol);
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Reservas.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a la seccion de Reservas por rol: " + nombreRol);
             }
         }else{
             JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -497,6 +510,17 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea volver?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new GestionItinerario(usuarioActual).setVisible(true);
+        }
+
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnClientes;
@@ -515,6 +539,7 @@ public class GestionViajeItinerario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable tbItinerario;
     // End of variables declaration//GEN-END:variables
 }

@@ -360,16 +360,16 @@ public class FormularioViajeItinerario extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Clientes");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(280, 170, 68, 32);
+        jLabel2.setBounds(250, 170, 68, 32);
 
         cmbClientes.setModel(new javax.swing.DefaultComboBoxModel<Cliente>());
         jPanel2.add(cmbClientes);
-        cmbClientes.setBounds(270, 200, 161, 22);
+        cmbClientes.setBounds(250, 200, 161, 22);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Fecha de Creación");
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(280, 250, 117, 28);
+        jLabel8.setBounds(660, 170, 117, 28);
 
         txtFechaCreacion.setText("AUTOMATICO");
         txtFechaCreacion.addActionListener(new java.awt.event.ActionListener() {
@@ -378,22 +378,25 @@ public class FormularioViajeItinerario extends javax.swing.JDialog {
             }
         });
         jPanel2.add(txtFechaCreacion);
-        txtFechaCreacion.setBounds(270, 280, 193, 22);
+        txtFechaCreacion.setBounds(650, 200, 193, 22);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Fecha Inicio de Viaje: ");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(270, 340, 126, 27);
+        jLabel3.setBounds(250, 260, 126, 27);
         jPanel2.add(DateChooserInicio);
-        DateChooserInicio.setBounds(260, 370, 152, 22);
+        DateChooserInicio.setBounds(250, 290, 152, 22);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Costo");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(260, 440, 50, 26);
+        jLabel6.setBounds(260, 360, 50, 26);
         jPanel2.add(txtCosto);
-        txtCosto.setBounds(250, 470, 111, 22);
+        txtCosto.setBounds(260, 390, 111, 22);
 
+        jButton2.setBackground(new java.awt.Color(179, 23, 23));
+        jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,33 +404,36 @@ public class FormularioViajeItinerario extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jButton2);
-        jButton2.setBounds(550, 470, 92, 42);
+        jButton2.setBounds(450, 450, 92, 42);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Usuario");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(500, 160, 67, 32);
+        jLabel4.setBounds(460, 170, 67, 32);
 
         txtUsuario.setText("AUTOMATICO");
         jPanel2.add(txtUsuario);
-        txtUsuario.setBounds(490, 190, 137, 22);
+        txtUsuario.setBounds(460, 200, 137, 22);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Fecha Fin de Viaje:");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(510, 260, 113, 17);
+        jLabel5.setBounds(460, 270, 113, 17);
         jPanel2.add(DateChooserFin);
-        DateChooserFin.setBounds(460, 280, 162, 22);
+        DateChooserFin.setBounds(460, 290, 162, 22);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Estado");
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(440, 330, 43, 26);
+        jLabel7.setBounds(660, 260, 43, 26);
 
         ToggleButtonActivo.setText("Activo");
         jPanel2.add(ToggleButtonActivo);
-        ToggleButtonActivo.setBounds(430, 370, 117, 23);
+        ToggleButtonActivo.setBounds(660, 290, 117, 23);
 
+        btnCrearItinerario.setBackground(new java.awt.Color(40, 167, 69));
+        btnCrearItinerario.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCrearItinerario.setForeground(new java.awt.Color(255, 255, 255));
         btnCrearItinerario.setText("Crear");
         btnCrearItinerario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,7 +441,7 @@ public class FormularioViajeItinerario extends javax.swing.JDialog {
             }
         });
         jPanel2.add(btnCrearItinerario);
-        btnCrearItinerario.setBounds(650, 470, 173, 48);
+        btnCrearItinerario.setBounds(590, 450, 100, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -153,7 +153,7 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 330, 200, 50);
+        btnConfiguracion.setBounds(0, 340, 200, 50);
 
         btnReportes.setBackground(new java.awt.Color(0, 46, 121));
         btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -165,7 +165,7 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 280, 200, 50);
+        btnReportes.setBounds(0, 290, 200, 50);
 
         btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
         btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -177,7 +177,7 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 230, 200, 50);
+        btnProveedores.setBounds(0, 240, 200, 50);
 
         btnReservas.setBackground(new java.awt.Color(0, 46, 121));
         btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -189,7 +189,7 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 180, 200, 50);
+        btnReservas.setBounds(0, 190, 200, 50);
 
         btnClientes.setBackground(new java.awt.Color(0, 46, 121));
         btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -201,7 +201,7 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 130, 200, 50);
+        btnClientes.setBounds(0, 140, 200, 50);
 
         btnHome.setBackground(new java.awt.Color(0, 46, 121));
         btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -213,7 +213,7 @@ private void cargarBuses() {
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 80, 200, 50);
+        btnHome.setBounds(0, 90, 200, 50);
 
         btnEliminar.setBackground(new java.awt.Color(179, 23, 23));
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
@@ -277,7 +277,7 @@ private void cargarBuses() {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 380, 200, 170);
+        jPanel3.setBounds(0, 390, 200, 170);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 

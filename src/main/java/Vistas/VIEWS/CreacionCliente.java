@@ -4,6 +4,7 @@ package Vistas.VIEWS;
 import Conexión.Conexión;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
+import Modelo.Usuario;
 import dao.ClienteDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +15,18 @@ import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-
 public class CreacionCliente extends javax.swing.JDialog {
 
     private ClienteDAO clienteDAO;
     private GestionClientes padreGestionClientes;
     private Cliente clienteAEditar;
-    
+        private Usuario usuarioActual;
+
     
     public CreacionCliente(JFrame padre, GestionClientes gestionClientesPadre) {
+
     super(padre,true);
+
     initComponents();
     
     this.padreGestionClientes = gestionClientesPadre;
@@ -112,6 +115,7 @@ public class CreacionCliente extends javax.swing.JDialog {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -333,6 +337,18 @@ public class CreacionCliente extends javax.swing.JDialog {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 380, 200, 170);
 
+        jToggleButton1.setBackground(new java.awt.Color(102, 102, 102));
+        jToggleButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton1.setText("VOLVER\n");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jToggleButton1);
+        jToggleButton1.setBounds(730, 120, 110, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -355,6 +371,32 @@ public class CreacionCliente extends javax.swing.JDialog {
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Configuracion.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la Configuracion.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Configuracion por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -371,10 +413,62 @@ public class CreacionCliente extends javax.swing.JDialog {
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Proveedores.");
+
+            }
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
+               if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reportes.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver Reportes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btn_crearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearClienteActionPerformed
@@ -564,6 +658,26 @@ public boolean eliminarCliente(int idCliente) {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_emailActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+//        @Override
+    
+                int confirmacion = JOptionPane.showConfirmDialog(
+                    CreacionCliente.this,
+                    "¿Desea regresar a la pestaña anterior (Gestión de Clientes)?",
+                    "Confirmar Regreso",
+                    JOptionPane.OK_CANCEL_OPTION
+                );
+
+                if (confirmacion == JOptionPane.OK_OPTION) {
+                    if (padreGestionClientes != null) {
+                        padreGestionClientes.setVisible(true);
+                    }
+                    CreacionCliente.this.dispose();
+                }
+            
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ToggleButtonActivo;
@@ -586,6 +700,7 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField txt_dni;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_nombre;
