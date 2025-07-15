@@ -1,22 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package Vistas.VIEWS;
 
 import Modelo.ViajeProgramado;
+import Modelo.Bus;
+import Modelo.Destino;
+import Vistas.VIEWS.GestionViajeProgramado;
 import dao.ViajeProgramadoDAO;
+import dao.BusDAO;
+import dao.DestinoDAO;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import javax.swing.JOptionPane;
+import java.time.ZoneId;
+import java.util.Date;
 
-/**
- *
- * @author User
- */
+
 public class FormularioViajeProgramado extends javax.swing.JDialog {
     private ViajeProgramado viaje;
     private boolean esModificacion;
@@ -28,50 +29,119 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        if (gestionPadre == null) {
-            throw new IllegalArgumentException("La ventana padre no puede ser null");
-        }
-
         this.padreGestionViajes = gestionPadre;
         this.viaje = (viaje != null) ? viaje : new ViajeProgramado();
         this.esModificacion = esModificacion;
 
+        cargarComboboxes();
+        configurarToggleButton();
+        
         if (esModificacion) {
             cargarDatosViaje();
             btnCrear.setText("Actualizar");
         }
 
         setLocationRelativeTo(parent);
-        configurarToggleButton();
+    }
+
+    private void cargarComboboxes() {
+        try {
+            // Cargar buses activos
+            BusDAO busDAO = new BusDAO();
+            cmbbus.removeAllItems();
+            cmbbus.addItem("Seleccione bus");
+            busDAO.obtenerBusesActivos().forEach(bus -> {
+                cmbbus.addItem(bus.getIdBus() + " - " + bus.getPlaca());
+            });
+
+            // Cargar destinos disponibles
+            DestinoDAO destinoDAO = new DestinoDAO();
+            
+            // Origen
+            cmborigen.removeAllItems();
+            cmborigen.addItem("Seleccione origen");
+            destinoDAO.obtenerTodosLosDestinos().forEach(destino -> {
+                cmborigen.addItem(destino.getIdDestino() + " - " + destino.getNombreDestino());
+            });
+
+            // Destino Final
+            cmbdestino.removeAllItems();
+            cmbdestino.addItem("Seleccione destino");
+            destinoDAO.obtenerTodosLosDestinos().forEach(destino -> {
+                cmbdestino.addItem(destino.getIdDestino() + " - " + destino.getNombreDestino());
+            });
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al cargar datos: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void configurarToggleButton() {
+        ToggleEstado.setText(viaje.isActivo() ? "ACTIVO" : "INACTIVO");
+        ToggleEstado.setSelected(viaje.isActivo());
+        
+        ToggleEstado.addActionListener((ActionEvent e) -> {
+            boolean seleccionado = ToggleEstado.isSelected();
+            ToggleEstado.setText(seleccionado ? "ACTIVO" : "INACTIVO");
+        });
+    }
+
+    private int extraerIdDeComboBox(javax.swing.JComboBox<String> comboBox) {
+        String seleccion = (String) comboBox.getSelectedItem();
+        if (seleccion == null || seleccion.startsWith("Seleccione")) {
+            return -1;
+        }
+        return Integer.parseInt(seleccion.split(" - ")[0]);
     }
 
     private void cargarDatosViaje() {
         txtViaje.setText(String.valueOf(viaje.getIdViajeProgramado()));
-        txtBus.setText(String.valueOf(viaje.getIdBus()));
-        txtOrigen.setText(String.valueOf(viaje.getIdOrigen()));
-        txtFinal.setText(String.valueOf(viaje.getIdDestinoFinal()));
-        txtSalida.setText(viaje.getFechaHoraSalidaFormateada());
-        txtLlegada.setText(viaje.getFechaHoraLlegadaEstimadaFormateada());
-        ToggleButtonEstado.setSelected(viaje.isActivo());
-        actualizarTextoEstado();
-    }
-
-    private void configurarToggleButton() {
-        ToggleButtonEstado.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                actualizarTextoEstado();
+        
+        // Buscar y seleccionar el bus correspondiente
+        for (int i = 0; i < cmbbus.getItemCount(); i++) {
+            String item = cmbbus.getItemAt(i);
+            if (item.startsWith(viaje.getIdBus() + " - ")) {
+                cmbbus.setSelectedIndex(i);
+                break;
             }
-        });
+        }
+        
+        // Buscar y seleccionar el origen
+        for (int i = 0; i < cmborigen.getItemCount(); i++) {
+            String item = cmborigen.getItemAt(i);
+            if (item.startsWith(viaje.getIdOrigen() + " - ")) {
+                cmborigen.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        // Buscar y seleccionar el destino
+        for (int i = 0; i < cmbdestino.getItemCount(); i++) {
+            String item = cmbdestino.getItemAt(i);
+            if (item.startsWith(viaje.getIdDestinoFinal() + " - ")) {
+                cmbdestino.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        // Configurar fechas
+        if (viaje.getFechaHoraSalida() != null) {
+            dateSalida.setDate(Date.from(viaje.getFechaHoraSalida().atZone(ZoneId.systemDefault()).toInstant()));
+        }
+        if (viaje.getFechaHoraLlegadaEstimada() != null) {
+            dateLlegada.setDate(Date.from(viaje.getFechaHoraLlegadaEstimada().atZone(ZoneId.systemDefault()).toInstant()));
+        }
+        
+        // Configurar estado
+        ToggleEstado.setSelected(viaje.isActivo());
+        ToggleEstado.setText(viaje.isActivo() ? "ACTIVO" : "INACTIVO");
     }
 
-    private void actualizarTextoEstado() {
-        if (ToggleButtonEstado.isSelected()) {
-            ToggleButtonEstado.setText("Activo");
-        } else {
-            ToggleButtonEstado.setText("Inactivo");
-        }
-    }
+
  
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,9 +159,6 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
         btnReservas = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -102,18 +169,24 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtViaje = new javax.swing.JTextField();
-        txtBus = new javax.swing.JTextField();
-        txtOrigen = new javax.swing.JTextField();
-        txtFinal = new javax.swing.JTextField();
-        txtSalida = new javax.swing.JTextField();
-        txtLlegada = new javax.swing.JTextField();
-        ToggleButtonEstado = new javax.swing.JToggleButton();
+        ToggleEstado = new javax.swing.JToggleButton();
         jPanel4 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        DateChooserInicio = new com.toedter.calendar.JDateChooser();
+        DateChooserFin = new com.toedter.calendar.JDateChooser();
+        cmbbus = new javax.swing.JComboBox<>();
+        cmborigen = new javax.swing.JComboBox<>();
+        cmbdestino = new javax.swing.JComboBox<>();
+        jTextField2 = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        dateSalida = new com.toedter.calendar.JDateChooser();
+        dateLlegada = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        txtViaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -192,47 +265,6 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
         jPanel2.add(btnReportes);
         btnReportes.setBounds(-20, 290, 210, 50);
 
-        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
-
-        jButton7.setBackground(new java.awt.Color(179, 23, 23));
-        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cerrar sesión");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setBackground(new java.awt.Color(8, 8, 100));
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("  Expreso los Chankas");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
-                .addComponent(jButton7)
-                .addGap(18, 18, 18))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-
-        jPanel2.add(jPanel3);
-        jPanel3.setBounds(0, 0, 890, 90);
-
         jTextField1.setBackground(new java.awt.Color(0, 46, 121));
         jPanel2.add(jTextField1);
         jTextField1.setBounds(0, 90, 190, 460);
@@ -287,27 +319,15 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
         jLabel2.setText("Estado de Viaje");
         jPanel2.add(jLabel2);
         jLabel2.setBounds(620, 320, 97, 17);
-        jPanel2.add(txtViaje);
-        txtViaje.setBounds(320, 220, 186, 22);
-        jPanel2.add(txtBus);
-        txtBus.setBounds(320, 280, 190, 22);
-        jPanel2.add(txtOrigen);
-        txtOrigen.setBounds(320, 340, 180, 22);
-        jPanel2.add(txtFinal);
-        txtFinal.setBounds(320, 400, 180, 22);
-        jPanel2.add(txtSalida);
-        txtSalida.setBounds(620, 220, 190, 22);
-        jPanel2.add(txtLlegada);
-        txtLlegada.setBounds(620, 280, 190, 22);
 
-        ToggleButtonEstado.setText("Activo");
-        ToggleButtonEstado.addActionListener(new java.awt.event.ActionListener() {
+        ToggleEstado.setText("Activo");
+        ToggleEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ToggleButtonEstadoActionPerformed(evt);
+                ToggleEstadoActionPerformed(evt);
             }
         });
-        jPanel2.add(ToggleButtonEstado);
-        ToggleButtonEstado.setBounds(620, 350, 140, 30);
+        jPanel2.add(ToggleEstado);
+        ToggleEstado.setBounds(620, 350, 140, 30);
 
         jPanel4.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -349,22 +369,24 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
 
         jPanel2.add(jPanel4);
         jPanel4.setBounds(0, 0, 890, 90);
+        jPanel2.add(DateChooserInicio);
+        DateChooserInicio.setBounds(0, 0, 85, 20);
+        jPanel2.add(DateChooserFin);
+        DateChooserFin.setBounds(0, 0, 85, 22);
 
-        jPanel5.setBackground(new java.awt.Color(0, 46, 121));
+        cmbbus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmbbus);
+        cmbbus.setBounds(320, 290, 130, 22);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
-        );
+        cmborigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmborigen);
+        cmborigen.setBounds(320, 350, 130, 22);
 
-        jPanel2.add(jPanel5);
-        jPanel5.setBounds(0, 380, 200, 170);
+        cmbdestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmbdestino);
+        cmbdestino.setBounds(320, 410, 130, 22);
+        jPanel2.add(jTextField2);
+        jTextField2.setBounds(320, 230, 130, 22);
 
         btnCrear.setBackground(new java.awt.Color(40, 167, 69));
         btnCrear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -376,24 +398,84 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("  Expreso los Chankas");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 448, Short.MAX_VALUE)
+                .addComponent(jButton7)
+                .addGap(18, 18, 18))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(597, Short.MAX_VALUE)
-                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(216, 216, 216))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(173, 173, 173)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(dateSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(dateLlegada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(176, 176, 176))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(39, 39, 39)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(476, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(136, 136, 136)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtViaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(dateLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,133 +489,142 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        try {
-            // Validar campos obligatorios
-            if (txtBus.getText().isEmpty() || txtOrigen.getText().isEmpty() ||
-                txtFinal.getText().isEmpty() || txtSalida.getText().isEmpty() ||
-                txtLlegada.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                    "Todos los campos son obligatorios",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+       try {
+        // Validar selecciones
+        int idBus = extraerIdDeComboBox(cmbbus);
+        int idOrigen = extraerIdDeComboBox(cmborigen);
+        int idDestino = extraerIdDeComboBox(cmbdestino);
+        
+        if (idBus == -1 || idOrigen == -1 || idDestino == -1) {
+            JOptionPane.showMessageDialog(this, 
+                "Debe seleccionar bus, origen y destino", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            // Validar IDs numéricos
-            try {
-                viaje.setIdBus(Integer.parseInt(txtBus.getText()));
-                viaje.setIdOrigen(Integer.parseInt(txtOrigen.getText()));
-                viaje.setIdDestinoFinal(Integer.parseInt(txtFinal.getText()));
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this,
-                    "Los IDs de Bus, Origen y Destino deben ser números",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        // Validar que origen y destino sean diferentes
+        if (idOrigen == idDestino) {
+            JOptionPane.showMessageDialog(this, 
+                "El origen y destino no pueden ser iguales", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            // Validar fechas
-            try {
-                viaje.setFechaHoraSalida(txtSalida.getText());
-                viaje.setFechaHoraLlegadaEstimada(txtLlegada.getText());
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this,
-                    "Formato de fecha incorrecto. Use dd-MM-yyyy HH:mm",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            viaje.setActivo(ToggleButtonEstado.isSelected());
-
-            ViajeProgramadoDAO dao = new ViajeProgramadoDAO();
-            boolean exito;
-
-            if (esModificacion) {
-                exito = dao.actualizar(viaje);
-            } else {
-                exito = dao.guardarViaje(viaje);
-            }
-
-            if (exito) {
-                JOptionPane.showMessageDialog(this,
-                    esModificacion ? "Viaje actualizado correctamente" : "Viaje creado correctamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-                
-                if (padreGestionViajes != null && padreGestionViajes.isVisible()) {
-                    padreGestionViajes.cargarViajesEnTabla();
-                }
-            } else {
-                JOptionPane.showMessageDialog(this,
-                    "Error al guardar el viaje",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
+        // Validar fechas
+        if (dateSalida.getDate() == null || dateLlegada.getDate() == null) {
             JOptionPane.showMessageDialog(this,
-                "Error: " + e.getMessage(),
+                "Seleccione ambas fechas",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            return;
         }
+
+        // Configurar el objeto viaje
+        viaje.setIdBus(idBus);
+        viaje.setIdOrigen(idOrigen);
+        viaje.setIdDestinoFinal(idDestino);
+        
+        // Convertir Date a LocalDateTime
+        LocalDateTime salida = dateSalida.getDate().toInstant()
+            .atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime llegada = dateLlegada.getDate().toInstant()
+            .atZone(ZoneId.systemDefault()).toLocalDateTime();
+        
+        viaje.setFechaHoraSalida(salida);
+        viaje.setFechaHoraLlegadaEstimada(llegada);
+        
+        // Configurar estado
+        viaje.setActivo(ToggleEstado.isSelected());
+
+        // Crear DAOs necesarios
+        BusDAO busDAO = new BusDAO();
+        DestinoDAO destinoDAO = new DestinoDAO();
+        ViajeProgramadoDAO dao = new ViajeProgramadoDAO(busDAO, destinoDAO);
+
+        boolean exito;
+
+        if (esModificacion) {
+            exito = dao.actualizar(viaje);
+        } else {
+            exito = dao.guardarViaje(viaje);
+        }
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this,
+                esModificacion ? "Viaje actualizado correctamente" : "Viaje creado correctamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            
+            if (padreGestionViajes != null && padreGestionViajes.isVisible()) {
+                padreGestionViajes.cargarViajesEnTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Error al guardar el viaje",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Error: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_btnCrearActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void ToggleEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToggleEstadoActionPerformed
+
+    }//GEN-LAST:event_ToggleEstadoActionPerformed
+
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-       txtBus.setText("");
-        txtOrigen.setText("");
-        txtFinal.setText("");
-        txtSalida.setText("");
-        txtLlegada.setText("");
-        ToggleButtonEstado.setSelected(true);
-        actualizarTextoEstado();
+        cmbbus.setSelectedIndex(0);
+        cmborigen.setSelectedIndex(0);
+        cmbdestino.setSelectedIndex(0);
+        dateSalida.setDate(null);
+        dateLlegada.setDate(null);
+        ToggleEstado.setSelected(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfiguracionActionPerformed
-
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-
-    }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnClientesActionPerformed
-
-    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReservasActionPerformed
-
-    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         // TODO add your handling code here:
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+    }//GEN-LAST:event_btnProveedoresActionPerformed
 
-        if (respuesta == JOptionPane.OK_OPTION) {
-            this.dispose(); // Cierra la ventana actual
-            new Login().setVisible(true); // Abre la ventana de login
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReservasActionPerformed
 
-    private void ToggleButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToggleButtonEstadoActionPerformed
-        
-    }//GEN-LAST:event_ToggleButtonEstadoActionPerformed
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     /**
      * @param args the command line arguments
      */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton ToggleButtonEstado;
+    private com.toedter.calendar.JDateChooser DateChooserFin;
+    private com.toedter.calendar.JDateChooser DateChooserInicio;
+    private javax.swing.JToggleButton ToggleEstado;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnCrear;
@@ -542,10 +633,16 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
+    private javax.swing.JComboBox<String> cmbbus;
+    private javax.swing.JComboBox<String> cmbdestino;
+    private javax.swing.JComboBox<String> cmborigen;
+    private com.toedter.calendar.JDateChooser dateLlegada;
+    private com.toedter.calendar.JDateChooser dateSalida;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -557,13 +654,8 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txtBus;
-    private javax.swing.JTextField txtFinal;
-    private javax.swing.JTextField txtLlegada;
-    private javax.swing.JTextField txtOrigen;
-    private javax.swing.JTextField txtSalida;
-    private javax.swing.JTextField txtViaje;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel txtViaje;
     // End of variables declaration//GEN-END:variables
 }
