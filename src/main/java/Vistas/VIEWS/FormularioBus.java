@@ -236,6 +236,7 @@ private void updateToggleButtonText(boolean isActive) {
         jLabel6 = new javax.swing.JLabel();
         txtPlaca = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
+
         jButton8 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -272,32 +273,32 @@ private void updateToggleButtonText(boolean isActive) {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(232, 232, 232)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addGap(318, 318, 318)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 503, Short.MAX_VALUE)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(26, 26, 26))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
+                        .addGap(24, 24, 24)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 890, 120);
+        jPanel2.setBounds(0, 0, 890, 90);
 
         jPanel3.setBackground(new java.awt.Color(8, 8, 100));
 
@@ -449,6 +450,12 @@ private void updateToggleButtonText(boolean isActive) {
         txtPlaca.setBounds(380, 230, 140, 22);
 
         jPanel4.setBackground(new java.awt.Color(0, 46, 121));
+
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(0, 0, 890, 90);
+
+        jPanel5.setBackground(new java.awt.Color(0, 46, 121));
+
 
         jButton8.setBackground(new java.awt.Color(179, 23, 23));
         jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N

@@ -1,5 +1,8 @@
 package Modelo; // Tu paquete existente
 
+import java.util.Objects;
+
+
 public class Proveedor {
     private int idProveedor;
     private String nombreProveedor;
@@ -59,13 +62,24 @@ public class Proveedor {
         this.Estado = Estado;
     }
 
+   
+        
     @Override
     public String toString() {
-        return "Proveedor{" +
-               "idProveedor=" + idProveedor +
-               ", nombreProveedor='" + nombreProveedor + '\'' +
-               ", contacto='" + contacto + '\'' +
-               ", estado='" + Estado + '\'' + // Incluir estado en toString
-               '}';
+        return nombreProveedor; // Muestra solo el nombre en el ComboBox, es lo más común
+                                 // Original: return "Proveedor{" + "idProveedor=" + idProveedor + ", nombreProveedor='" + nombreProveedor + '\'' + ", contacto='" + contacto + '\'' + ", estado='" + Estado + '\'' + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Proveedor proveedor = (Proveedor) o;
+        return idProveedor == proveedor.idProveedor; // La igualdad se basa en el ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProveedor); // El hash se basa en el ID
     }
 }

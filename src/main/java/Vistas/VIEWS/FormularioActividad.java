@@ -81,7 +81,7 @@ public class FormularioActividad extends javax.swing.JDialog {
             while (rs.next()) {
                 int id = rs.getInt("ID_LugarTuristico");
                 String nombre = rs.getString("NombreLugar");
-                cbIDLugarT.addItem(new LugarTuristico(id, nombre)); // Esto ya debe funcionar
+               //  cbIDLugarT.addItem(new LugarTuristico(id, nombre)); // Esto ya debe funcionar
             }
 
         } catch (SQLException ex) {

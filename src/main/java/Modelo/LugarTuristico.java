@@ -1,55 +1,114 @@
 package Modelo;
 
+import java.util.Objects;
+
 public class LugarTuristico {
     private int idLugarTuristico;
-    private String nombre;
-    private String tipo;
+    private String nombreLugar;
+    private String tipoLugar;
     private String descripcion;
-    private int idDestino;
-    private int idProveedor;
-    private String estado;
+    private Destino destino;
+    private Proveedor proveedor;
+    private boolean estado;
 
-    // Constructor para combos: solo ID y nombre
-   public LugarTuristico(int idLugarTuristico, String nombre) {
-       this.idLugarTuristico = idLugarTuristico;
-       this.nombre = nombre;
-   }
+    public LugarTuristico() {
+    }
 
-
-    public LugarTuristico(int idLugarTuristico, String nombre, String tipo, String descripcion, int idDestino, int idProveedor, String estado) {
+    
+    public LugarTuristico(int idLugarTuristico, String nombreLugar, String tipoLugar, String descripcion, Destino destino, Proveedor proveedor, boolean estado) {
         this.idLugarTuristico = idLugarTuristico;
-        this.nombre = nombre;
-        this.tipo = tipo;
+        this.nombreLugar = nombreLugar;
+        this.tipoLugar = tipoLugar;
         this.descripcion = descripcion;
-        this.idDestino = idDestino;
-        this.idProveedor = idProveedor;
+        this.destino = destino;
+        this.proveedor = proveedor;
+        this.estado = true;
+    }
+
+    public LugarTuristico(String nombreLugar, String tipoLugar, String descripcion, Destino destino, Proveedor proveedor, boolean estado) {
+        this.nombreLugar = nombreLugar;
+        this.tipoLugar = tipoLugar;
+        this.descripcion = descripcion;
+        this.destino = destino;
+        this.proveedor = proveedor;
         this.estado = estado;
     }
 
-    public int getIdLugarTuristico() { return idLugarTuristico; }
-    public void setIdLugarTuristico(int idLugarTuristico) { this.idLugarTuristico = idLugarTuristico; }
-
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
-    public int getIdDestino() { return idDestino; }
-    public void setIdDestino(int idDestino) { this.idDestino = idDestino; }
-
-    public int getIdProveedor() { return idProveedor; }
-    public void setIdProveedor(int idProveedor) { this.idProveedor = idProveedor; }
-
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-
-    @Override
-    public String toString() {
-        return nombre; // o getNombre() si así lo tienes
+    public int getIdLugarTuristico() {
+        return idLugarTuristico;
     }
 
+    public void setIdLugarTuristico(int idLugarTuristico) {
+        this.idLugarTuristico = idLugarTuristico;
+    }
+
+    public String getNombreLugar() {
+        return nombreLugar;
+    }
+
+    public void setNombreLugar(String nombreLugar) {
+        this.nombreLugar = nombreLugar;
+    }
+
+    public String getTipoLugar() {
+        return tipoLugar;
+    }
+
+    public void setTipoLugar(String tipoLugar) {
+        this.tipoLugar = tipoLugar;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Destino getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Destino destino) {
+        this.destino = destino;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+
+   @Override
+    public String toString() {
+        return nombreLugar; // Muestra solo el nombre en el ComboBox, es lo más común
+                                 // Original: return "Proveedor{" + "idProveedor=" + idProveedor + ", nombreProveedor='" + nombreProveedor + '\'' + ", contacto='" + contacto + '\'' + ", estado='" + Estado + '\'' + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LugarTuristico lugarTuristico = (LugarTuristico) o;
+        return idLugarTuristico == lugarTuristico.idLugarTuristico; // La igualdad se basa en el ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idLugarTuristico); // El hash se basa en el ID
+    }
+
+    
 }
