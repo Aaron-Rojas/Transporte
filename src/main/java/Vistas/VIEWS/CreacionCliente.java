@@ -4,6 +4,7 @@ package Vistas.VIEWS;
 import Conexión.Conexión;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
+import Modelo.Usuario;
 import dao.ClienteDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +15,18 @@ import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-
 public class CreacionCliente extends javax.swing.JDialog {
 
     private ClienteDAO clienteDAO;
     private GestionClientes padreGestionClientes;
     private Cliente clienteAEditar;
-    
+        private Usuario usuarioActual;
+
     
     public CreacionCliente(JFrame padre, GestionClientes gestionClientesPadre) {
+
     super(padre,true);
+
     initComponents();
     
     this.padreGestionClientes = gestionClientesPadre;
@@ -112,6 +115,7 @@ public class CreacionCliente extends javax.swing.JDialog {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,7 +129,7 @@ public class CreacionCliente extends javax.swing.JDialog {
             }
         });
         jPanel1.add(ToggleButtonActivo);
-        ToggleButtonActivo.setBounds(560, 410, 130, 23);
+        ToggleButtonActivo.setBounds(570, 370, 130, 23);
 
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
         btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -199,58 +203,68 @@ public class CreacionCliente extends javax.swing.JDialog {
         jPanel1.add(btnReportes);
         btnReportes.setBounds(0, 290, 200, 50);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
-        jLabel3.setText("Crear clientes");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel3.setText("CREAR CLIENTE");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 130, 260, 40);
+        jLabel3.setBounds(240, 110, 170, 40);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Nombres:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(250, 190, 120, 30);
+        jLabel4.setBounds(250, 170, 100, 30);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("DNI/Pasaporte");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(570, 180, 140, 40);
+        jLabel5.setBounds(250, 260, 120, 20);
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Estado:");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(490, 400, 120, 27);
+        jLabel6.setBounds(570, 350, 100, 17);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Telefono:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(570, 280, 80, 27);
+        jLabel7.setBounds(570, 260, 60, 17);
 
         txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
         jPanel1.add(txt_telefono);
-        txt_telefono.setBounds(570, 330, 240, 30);
+        txt_telefono.setBounds(570, 280, 240, 30);
 
         txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
         jPanel1.add(txt_nombre);
-        txt_nombre.setBounds(250, 230, 240, 30);
+        txt_nombre.setBounds(250, 200, 240, 30);
 
         txt_preferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
         jPanel1.add(txt_preferencias);
-        txt_preferencias.setBounds(320, 400, 150, 30);
+        txt_preferencias.setBounds(250, 370, 150, 30);
 
         txt_dni.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        txt_dni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_dniActionPerformed(evt);
+            }
+        });
         jPanel1.add(txt_dni);
-        txt_dni.setBounds(570, 230, 240, 30);
+        txt_dni.setBounds(570, 200, 240, 30);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("E-mail:");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(250, 280, 59, 27);
+        jLabel8.setBounds(570, 180, 41, 17);
 
         txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 171, 33), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 171, 33), new java.awt.Color(255, 171, 33)));
+        txt_email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_emailActionPerformed(evt);
+            }
+        });
         jPanel1.add(txt_email);
-        txt_email.setBounds(250, 330, 240, 30);
+        txt_email.setBounds(250, 280, 240, 30);
 
-        btn_crearCliente.setBackground(new java.awt.Color(255, 171, 33));
-        btn_crearCliente.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btn_crearCliente.setBackground(new java.awt.Color(40, 167, 69));
+        btn_crearCliente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btn_crearCliente.setForeground(new java.awt.Color(255, 255, 255));
         btn_crearCliente.setText("Crear cliente");
         btn_crearCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -259,12 +273,12 @@ public class CreacionCliente extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btn_crearCliente);
-        btn_crearCliente.setBounds(710, 410, 170, 40);
+        btn_crearCliente.setBounds(480, 460, 140, 40);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Preferencia:");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(210, 400, 120, 27);
+        jLabel9.setBounds(250, 350, 100, 17);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -323,6 +337,18 @@ public class CreacionCliente extends javax.swing.JDialog {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 380, 200, 170);
 
+        jToggleButton1.setBackground(new java.awt.Color(102, 102, 102));
+        jToggleButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton1.setText("VOLVER\n");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jToggleButton1);
+        jToggleButton1.setBounds(730, 120, 110, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,6 +371,32 @@ public class CreacionCliente extends javax.swing.JDialog {
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Configuracion.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la Configuracion.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Configuracion por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -361,10 +413,62 @@ public class CreacionCliente extends javax.swing.JDialog {
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Proveedores.");
+
+            }
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
+               if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reportes.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver Reportes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btn_crearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearClienteActionPerformed
@@ -546,6 +650,34 @@ public boolean eliminarCliente(int idCliente) {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void txt_dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_dniActionPerformed
+
+    private void txt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_emailActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+//        @Override
+    
+                int confirmacion = JOptionPane.showConfirmDialog(
+                    CreacionCliente.this,
+                    "¿Desea regresar a la pestaña anterior (Gestión de Clientes)?",
+                    "Confirmar Regreso",
+                    JOptionPane.OK_CANCEL_OPTION
+                );
+
+                if (confirmacion == JOptionPane.OK_OPTION) {
+                    if (padreGestionClientes != null) {
+                        padreGestionClientes.setVisible(true);
+                    }
+                    CreacionCliente.this.dispose();
+                }
+            
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ToggleButtonActivo;
@@ -568,6 +700,7 @@ public boolean eliminarCliente(int idCliente) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField txt_dni;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_nombre;

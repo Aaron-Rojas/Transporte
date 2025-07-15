@@ -1,7 +1,6 @@
-package Modelo; // Tu paquete existente
+package Modelo; 
 
 import java.util.Objects;
-
 
 public class Proveedor {
     private int idProveedor;

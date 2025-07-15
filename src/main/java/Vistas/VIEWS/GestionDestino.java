@@ -12,7 +12,8 @@ import dao.DestinoDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel; // Import DefaultTableModel
-
+import Vistas.VIEWS.Principal;
+import javax.swing.JFrame;
 /**
  *
  * @author User
@@ -24,10 +25,15 @@ public class GestionDestino extends javax.swing.JFrame {
     private ClienteDAO clienteDAO;
     private Usuario usuarioActual;
     private Cliente clienteSeleccionado;
+    private GestionItinerario ventanaItinerarioPadre; // <--- ESTA VARIABLE ES CLAVE
+
+    
     
     public GestionDestino(Usuario usuarioLogeado) {
         initComponents();
         this.usuarioActual=usuarioLogeado;
+
+
         this.setLocationRelativeTo(null); // Center the frame on the screen
         destinoDAO = new DestinoDAO(); // Initialize the DAO
         
@@ -94,7 +100,6 @@ public class GestionDestino extends javax.swing.JFrame {
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        btnVolver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -104,6 +109,7 @@ public class GestionDestino extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,7 +117,7 @@ public class GestionDestino extends javax.swing.JFrame {
         jPanel2.setLayout(null);
 
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
-        btnConfiguracion.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText(" CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -123,7 +129,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnConfiguracion.setBounds(-20, 340, 210, 50);
 
         btnHome.setBackground(new java.awt.Color(0, 46, 121));
-        btnHome.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText(" HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +141,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnHome.setBounds(-20, 90, 210, 50);
 
         btnClientes.setBackground(new java.awt.Color(0, 46, 121));
-        btnClientes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText(" CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +153,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnClientes.setBounds(-20, 140, 210, 50);
 
         btnReservas.setBackground(new java.awt.Color(0, 46, 121));
-        btnReservas.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText(" RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +165,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnReservas.setBounds(-20, 190, 210, 50);
 
         btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
-        btnProveedores.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText(" PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +177,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnProveedores.setBounds(-20, 240, 210, 50);
 
         btnReportes.setBackground(new java.awt.Color(0, 46, 121));
-        btnReportes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText(" REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -190,18 +196,6 @@ public class GestionDestino extends javax.swing.JFrame {
         });
         jPanel2.add(jTextField1);
         jTextField1.setBounds(-20, 90, 210, 460);
-
-        btnVolver.setBackground(new java.awt.Color(153, 153, 153));
-        btnVolver.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
-        btnVolver.setText("VOLVER");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnVolver);
-        btnVolver.setBounds(710, 120, 130, 30);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -303,6 +297,18 @@ public class GestionDestino extends javax.swing.JFrame {
         jPanel2.add(jPanel4);
         jPanel4.setBounds(0, 0, 890, 90);
 
+        jToggleButton1.setBackground(new java.awt.Color(102, 102, 102));
+        jToggleButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton1.setText("VOLVER ");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jToggleButton1);
+        jToggleButton1.setBounds(730, 120, 110, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -316,10 +322,6 @@ public class GestionDestino extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         FormularioDestino formulario = new FormularioDestino(this, true);
@@ -382,14 +384,90 @@ public class GestionDestino extends javax.swing.JFrame {
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Configuracion.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la Configuracion.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Configuracion por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
 
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                Principal GI = new Principal(usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();
+                System.out.println("Admin redirigiendo a Principal.");
+
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                Principal GI = new Principal(usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();
+                System.out.println("User redirigiendo a Principal.");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestión Clientes.");
+
+            }
+            if ("usuario".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");           
+            }else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la gestión de clientes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Gestión de Clientes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
@@ -398,10 +476,62 @@ public class GestionDestino extends javax.swing.JFrame {
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Proveedores.");
+
+            }
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestión Clientes .");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
+                if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionClientes GI = new  GestionClientes (usuarioActual);
+                
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Reportes.");
+
+            }
+//            if ("usuario".equalsIgnoreCase(nombreRol)) {
+//                GestionClientes GI = new  GestionClientes (usuarioActual);
+//                GI.setVisible(true);
+//                GI.setLocationRelativeTo(null);
+//                this.dispose();                 
+//                System.out.println("User redirigiendo a Gestión Clientes .");
+////            
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver Reportes.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Reportes por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -418,6 +548,19 @@ public class GestionDestino extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+               int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea volver?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new GestionItinerario(usuarioActual).setVisible(true);
+        }
+        
+
+
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -433,7 +576,6 @@ public class GestionDestino extends javax.swing.JFrame {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
-    private javax.swing.JButton btnVolver;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -441,6 +583,7 @@ public class GestionDestino extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable tbdestino;
     // End of variables declaration//GEN-END:variables
 }

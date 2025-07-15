@@ -99,15 +99,211 @@ public class GestionLugarTuristico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnConfiguracion1 = new javax.swing.JButton();
+        btnHome1 = new javax.swing.JButton();
+        btnClientes1 = new javax.swing.JButton();
+        btnReservas1 = new javax.swing.JButton();
+        btnProveedores1 = new javax.swing.JButton();
+        btnReportes1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        btnVolver = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLugaresTuristicos = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        btnCrear = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(null);
+
+        jPanel4.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton8.setBackground(new java.awt.Color(179, 23, 23));
+        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Cerrar sesión");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(0, 0, 890, 90);
+
+        btnConfiguracion1.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnConfiguracion1.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfiguracion1.setText("CONFIGURACIÓN");
+        btnConfiguracion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracion1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnConfiguracion1);
+        btnConfiguracion1.setBounds(0, 340, 200, 50);
+
+        btnHome1.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnHome1.setForeground(new java.awt.Color(255, 255, 255));
+        btnHome1.setText("HOME");
+        btnHome1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHome1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHome1);
+        btnHome1.setBounds(0, 90, 200, 50);
+
+        btnClientes1.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnClientes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientes1.setText("CLIENTES");
+        btnClientes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientes1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnClientes1);
+        btnClientes1.setBounds(0, 140, 200, 50);
+
+        btnReservas1.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReservas1.setForeground(new java.awt.Color(255, 255, 255));
+        btnReservas1.setText("RESERVAS");
+        btnReservas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReservas1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReservas1);
+        btnReservas1.setBounds(0, 190, 200, 50);
+
+        btnProveedores1.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnProveedores1.setForeground(new java.awt.Color(255, 255, 255));
+        btnProveedores1.setText("PROVEEDORES");
+        btnProveedores1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedores1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnProveedores1);
+        btnProveedores1.setBounds(0, 240, 200, 50);
+
+        btnReportes1.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReportes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes1.setText("REPORTES");
+        btnReportes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportes1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReportes1);
+        btnReportes1.setBounds(0, 290, 200, 50);
+
+        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 380, 200, 170);
+
+        btnVolver.setBackground(new java.awt.Color(102, 102, 102));
+        btnVolver.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnVolver);
+        btnVolver.setBounds(740, 120, 89, 34);
+
+        btnEliminar.setBackground(new java.awt.Color(179, 23, 23));
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(390, 360, 104, 40);
+
+        btnEditar.setBackground(new java.awt.Color(255, 171, 33));
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEditar);
+        btnEditar.setBounds(500, 360, 100, 38);
+
+        btnCrear.setBackground(new java.awt.Color(40, 167, 69));
+        btnCrear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCrear);
+        btnCrear.setBounds(630, 360, 99, 38);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel1.setText("LUGAR TURISTICO");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(220, 120, 191, 25);
 
         tbLugaresTuristicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,77 +318,23 @@ public class GestionLugarTuristico extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbLugaresTuristicos);
 
-        jLabel1.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
-        jLabel1.setText("Lugar Turisitico");
-
-        btnCrear.setText("Crear");
-        btnCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearActionPerformed(evt);
-            }
-        });
-
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(310, 190, 476, 135);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(271, 271, 271)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(7, 7, 7)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(83, 83, 83)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 414, Short.MAX_VALUE))
         );
 
         pack();
@@ -290,14 +432,59 @@ public class GestionLugarTuristico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btnConfiguracion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfiguracion1ActionPerformed
+
+    private void btnHome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome1ActionPerformed
+
+    }//GEN-LAST:event_btnHome1ActionPerformed
+
+    private void btnClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientes1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientes1ActionPerformed
+
+    private void btnReservas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReservas1ActionPerformed
+
+    private void btnProveedores1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedores1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProveedores1ActionPerformed
+
+    private void btnReportes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportes1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportes1ActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClientes1;
+    private javax.swing.JButton btnConfiguracion1;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnHome1;
+    private javax.swing.JButton btnProveedores1;
+    private javax.swing.JButton btnReportes1;
+    private javax.swing.JButton btnReservas1;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbLugaresTuristicos;
     // End of variables declaration//GEN-END:variables
