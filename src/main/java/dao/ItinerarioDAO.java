@@ -96,7 +96,7 @@ public class ItinerarioDAO {
         return itinerario;
     }
     
-    
+   
    public List<Itinerario> obtenerTodosLosItinerariosActivos() {
         List<Itinerario> itinerarios = new ArrayList<>();
         String sql = "SELECT ID_Itinerario, ID_Cliente, ID_UsuarioCreacion, FechaCreacion, FechaInicioViaje, FechaFinViaje, Costo, Estado FROM itinerario WHERE Estado = 1 "; // Filtra por Estado = TRUE

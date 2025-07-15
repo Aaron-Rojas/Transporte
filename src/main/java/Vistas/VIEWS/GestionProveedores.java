@@ -125,6 +125,8 @@ public class GestionProveedores extends javax.swing.JFrame {
         btnLugar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
 
+        btnActividad = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -328,6 +330,15 @@ public class GestionProveedores extends javax.swing.JFrame {
         jPanel1.add(jPanel6);
         jPanel6.setBounds(0, 380, 200, 170);
 
+        btnActividad.setText("Actividad");
+        btnActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActividadActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnActividad);
+        btnActividad.setBounds(420, 460, 200, 50);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -473,9 +484,40 @@ public class GestionProveedores extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLugarActionPerformed
 
+    private void btnActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActividadActionPerformed
+        // TODO add your handling code here:
+               
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionActividad GI = new  GestionActividad (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestion Lugar Turistico.");
+
+            }
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionActividad GI = new  GestionActividad (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose();                 
+                System.out.println("User redirigiendo a Gestion Lugar Turistico .");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }//GEN-LAST:event_btnActividadActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActividad;
     private javax.swing.JButton btnAgregarProveedor;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
