@@ -236,6 +236,9 @@ private void updateToggleButtonText(boolean isActive) {
         jLabel6 = new javax.swing.JLabel();
         txtPlaca = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
+
+        jButton8 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         ToggleButtonEstado = new javax.swing.JToggleButton();
 
@@ -447,6 +450,30 @@ private void updateToggleButtonText(boolean isActive) {
         txtPlaca.setBounds(380, 230, 140, 22);
 
         jPanel4.setBackground(new java.awt.Color(0, 46, 121));
+
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(0, 0, 890, 90);
+
+        jPanel5.setBackground(new java.awt.Color(0, 46, 121));
+
+
+        jButton8.setBackground(new java.awt.Color(179, 23, 23));
+        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Cerrar sesión");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton8);
+
+        jLabel8.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("EXPRESO LOS CHANKAS");
+        jPanel4.add(jLabel8);
+
         jPanel1.add(jPanel4);
         jPanel4.setBounds(0, 0, 890, 90);
 
@@ -639,6 +666,7 @@ private void updateToggleButtonText(boolean isActive) {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -646,6 +674,7 @@ private void updateToggleButtonText(boolean isActive) {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

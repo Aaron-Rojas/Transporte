@@ -235,7 +235,7 @@ public class FormularioViajeProgramado extends javax.swing.JDialog {
 
         jTextField1.setBackground(new java.awt.Color(0, 46, 121));
         jPanel2.add(jTextField1);
-        jTextField1.setBounds(-20, 90, 210, 460);
+        jTextField1.setBounds(0, 90, 190, 460);
 
         btnLimpiar.setBackground(new java.awt.Color(153, 153, 153));
         btnLimpiar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
