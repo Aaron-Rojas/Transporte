@@ -60,24 +60,25 @@ public class GestionItinerario extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
-        jLabel3.setText("Gestionar itinerario");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel3.setText("GESTIONAR ITINERARIO");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 140, 410, 60);
+        jLabel3.setBounds(250, 120, 290, 40);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Selecciona el cliente:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(260, 210, 230, 50);
+        jLabel4.setBounds(250, 180, 160, 40);
 
-        btnAceptar.setBackground(new java.awt.Color(179, 23, 23));
-        btnAceptar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnAceptar.setBackground(new java.awt.Color(40, 167, 69));
+        btnAceptar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +87,7 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(730, 400, 130, 40);
+        btnAceptar.setBounds(490, 210, 130, 40);
 
         cmbClientes.setModel(new javax.swing.DefaultComboBoxModel<Cliente>());
         cmbClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -95,10 +96,10 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbClientes);
-        cmbClientes.setBounds(260, 260, 190, 22);
+        cmbClientes.setBounds(250, 220, 190, 22);
 
-        btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
-        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -107,10 +108,10 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 370, 200, 50);
+        btnConfiguracion.setBounds(0, 340, 200, 50);
 
-        btnReportes.setBackground(new java.awt.Color(8, 8, 100));
-        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -119,10 +120,10 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 320, 200, 50);
+        btnReportes.setBounds(0, 290, 200, 50);
 
-        btnProveedores.setBackground(new java.awt.Color(8, 8, 100));
-        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -131,10 +132,10 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 270, 200, 50);
+        btnProveedores.setBounds(0, 240, 200, 50);
 
-        btnReservas.setBackground(new java.awt.Color(8, 8, 100));
-        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -143,10 +144,10 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 220, 200, 50);
+        btnReservas.setBounds(0, 190, 200, 50);
 
-        btnClientes.setBackground(new java.awt.Color(8, 8, 100));
-        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -155,10 +156,10 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 170, 200, 50);
+        btnClientes.setBounds(0, 140, 200, 50);
 
-        btnHome.setBackground(new java.awt.Color(8, 8, 100));
-        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnHome.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -167,8 +168,11 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 120, 200, 50);
+        btnHome.setBounds(0, 90, 200, 50);
 
+        bntDestino.setBackground(new java.awt.Color(102, 153, 255));
+        bntDestino.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bntDestino.setForeground(new java.awt.Color(255, 255, 255));
         bntDestino.setText("Destinos");
         bntDestino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,8 +180,11 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bntDestino);
-        bntDestino.setBounds(690, 160, 130, 40);
+        bntDestino.setBounds(230, 340, 150, 100);
 
+        btnBus.setBackground(new java.awt.Color(102, 153, 255));
+        btnBus.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBus.setForeground(new java.awt.Color(255, 255, 255));
         btnBus.setText("Lista Buses");
         btnBus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,8 +192,11 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnBus);
-        btnBus.setBounds(690, 220, 130, 40);
+        btnBus.setBounds(550, 340, 150, 100);
 
+        btnItinerario.setBackground(new java.awt.Color(102, 153, 255));
+        btnItinerario.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnItinerario.setForeground(new java.awt.Color(255, 255, 255));
         btnItinerario.setText("Itinerario");
         btnItinerario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,8 +204,11 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnItinerario);
-        btnItinerario.setBounds(690, 280, 130, 40);
+        btnItinerario.setBounds(390, 340, 150, 100);
 
+        btnViaje.setBackground(new java.awt.Color(102, 153, 255));
+        btnViaje.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnViaje.setForeground(new java.awt.Color(255, 255, 255));
         btnViaje.setText("Viaje Programado");
         btnViaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,7 +216,7 @@ public class GestionItinerario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnViaje);
-        btnViaje.setBounds(690, 330, 130, 40);
+        btnViaje.setBounds(710, 340, 160, 100);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -245,6 +258,22 @@ public class GestionItinerario extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(0, 0, 890, 90);
+
+        jPanel6.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel6);
+        jPanel6.setBounds(0, 380, 200, 170);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -609,6 +638,7 @@ public class GestionItinerario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel6;
     // End of variables declaration//GEN-END:variables
 
     private void abrirFrame(String crearReserva) {

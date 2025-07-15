@@ -100,19 +100,20 @@ public class GestionClientes extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
-        jLabel3.setText("Gestionar clientes");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel3.setText("GESTIONAR CLIENTES");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(220, 140, 310, 40);
+        jLabel3.setBounds(240, 120, 270, 40);
 
         btnEliminar.setBackground(new java.awt.Color(179, 23, 23));
-        btnEliminar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +122,7 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(680, 410, 110, 40);
+        btnEliminar.setBounds(310, 450, 120, 30);
 
         tbClientes.setBackground(new java.awt.Color(204, 204, 204));
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -138,22 +139,22 @@ public class GestionClientes extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbClientes);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(240, 210, 610, 180);
+        jScrollPane1.setBounds(240, 250, 610, 180);
 
-        btnAgregar.setBackground(new java.awt.Color(8, 153, 192));
-        btnAgregar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnAgregar.setBackground(new java.awt.Color(40, 167, 69));
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregar.setText("+Agregar cliente");
+        btnAgregar.setText("Agregar cliente");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
         jPanel1.add(btnAgregar);
-        btnAgregar.setBounds(300, 410, 190, 40);
+        btnAgregar.setBounds(610, 450, 170, 30);
 
         btnEditar.setBackground(new java.awt.Color(255, 171, 33));
-        btnEditar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -162,10 +163,10 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEditar);
-        btnEditar.setBounds(530, 410, 110, 40);
+        btnEditar.setBounds(480, 450, 90, 30);
 
-        btnConfiguracion.setBackground(new java.awt.Color(8, 8, 100));
-        btnConfiguracion.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText("CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -174,10 +175,10 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfiguracion);
-        btnConfiguracion.setBounds(0, 370, 200, 50);
+        btnConfiguracion.setBounds(0, 340, 200, 50);
 
-        btnReportes.setBackground(new java.awt.Color(8, 8, 100));
-        btnReportes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -186,10 +187,10 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReportes);
-        btnReportes.setBounds(0, 320, 200, 50);
+        btnReportes.setBounds(0, 290, 200, 50);
 
-        btnProveedores.setBackground(new java.awt.Color(8, 8, 100));
-        btnProveedores.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText("PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -198,10 +199,10 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnProveedores);
-        btnProveedores.setBounds(0, 270, 200, 50);
+        btnProveedores.setBounds(0, 240, 200, 50);
 
-        btnReservas.setBackground(new java.awt.Color(8, 8, 100));
-        btnReservas.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -210,10 +211,10 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnReservas);
-        btnReservas.setBounds(0, 220, 200, 50);
+        btnReservas.setBounds(0, 190, 200, 50);
 
-        btnClientes.setBackground(new java.awt.Color(8, 8, 100));
-        btnClientes.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText("CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -222,10 +223,10 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnClientes);
-        btnClientes.setBounds(0, 170, 200, 50);
+        btnClientes.setBounds(0, 140, 200, 50);
 
-        btnHome.setBackground(new java.awt.Color(8, 8, 100));
-        btnHome.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        btnHome.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -234,10 +235,13 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnHome);
-        btnHome.setBounds(0, 120, 200, 50);
+        btnHome.setBounds(0, 90, 200, 50);
         jPanel1.add(txtBuscar);
-        txtBuscar.setBounds(680, 150, 190, 30);
+        txtBuscar.setBounds(250, 200, 190, 30);
 
+        btnBuscar.setBackground(new java.awt.Color(102, 153, 255));
+        btnBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,7 +249,7 @@ public class GestionClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(580, 160, 75, 23);
+        btnBuscar.setBounds(450, 200, 100, 26);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -303,6 +307,11 @@ public class GestionClientes extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 380, 200, 170);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Ingrese Nombre, DNI, Telefono o e-mail");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(250, 170, 270, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -473,6 +482,7 @@ public class GestionClientes extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -96,10 +96,10 @@ public class FormularioProveedor extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setText("Formulario de Reserva");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel3.setText("FORMULARIO DE RESERVA\n\n");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(250, 130, 220, 30);
+        jLabel3.setBounds(230, 120, 310, 30);
 
         comboboxTipoProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hotel", "Agencia Tour", "Transporte" }));
         comboboxTipoProv.addActionListener(new java.awt.event.ActionListener() {
@@ -108,20 +108,21 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(comboboxTipoProv);
-        comboboxTipoProv.setBounds(380, 173, 190, 30);
+        comboboxTipoProv.setBounds(250, 200, 190, 30);
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tipo Proveedor: ");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(250, 180, 130, 20);
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Estado:");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(250, 310, 130, 20);
+        jLabel9.setBounds(540, 340, 130, 20);
 
-        btnGuardarProveedor.setBackground(new java.awt.Color(102, 153, 255));
+        btnGuardarProveedor.setBackground(new java.awt.Color(40, 167, 69));
         btnGuardarProveedor.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGuardarProveedor.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarProveedor.setText("Guardar Proveedor");
         btnGuardarProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,9 +130,9 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnGuardarProveedor);
-        btnGuardarProveedor.setBounds(580, 370, 230, 30);
+        btnGuardarProveedor.setBounds(630, 450, 190, 30);
         jPanel1.add(txtContacto);
-        txtContacto.setBounds(330, 270, 170, 20);
+        txtContacto.setBounds(250, 360, 170, 20);
 
         txtNombreProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,9 +140,11 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(txtNombreProveedor);
-        txtNombreProveedor.setBounds(330, 220, 170, 20);
+        txtNombreProveedor.setBounds(250, 280, 170, 20);
 
-        btnCancelar.setBackground(new java.awt.Color(102, 153, 255));
+        btnCancelar.setBackground(new java.awt.Color(179, 23, 23));
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +152,7 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnCancelar);
-        btnCancelar.setBounds(280, 380, 130, 23);
+        btnCancelar.setBounds(300, 450, 130, 26);
 
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
         btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -223,11 +226,14 @@ public class FormularioProveedor extends javax.swing.JDialog {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 90, 200, 50);
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Nombre:");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(250, 220, 70, 20);
+        jLabel8.setBounds(250, 260, 70, 20);
 
+        btnLimpiar.setBackground(new java.awt.Color(102, 102, 102));
+        btnLimpiar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,16 +241,16 @@ public class FormularioProveedor extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnLimpiar);
-        btnLimpiar.setBounds(460, 410, 90, 30);
+        btnLimpiar.setBounds(480, 450, 100, 30);
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Contacto:");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(250, 273, 130, 19);
+        jLabel10.setBounds(250, 340, 130, 17);
 
         ToggleButtonActivo.setText("Activo");
         jPanel1.add(ToggleButtonActivo);
-        ToggleButtonActivo.setBounds(370, 310, 112, 23);
+        ToggleButtonActivo.setBounds(540, 360, 112, 23);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 

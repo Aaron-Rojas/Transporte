@@ -135,6 +135,28 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        btnConfiguracion = new javax.swing.JButton();
+        btnHome = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        btnReservas = new javax.swing.JButton();
+        btnProveedores = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        btnConfiguracion1 = new javax.swing.JButton();
+        btnHome1 = new javax.swing.JButton();
+        btnClientes1 = new javax.swing.JButton();
+        btnReservas1 = new javax.swing.JButton();
+        btnProveedores1 = new javax.swing.JButton();
+        btnReportes1 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
         txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -147,42 +169,325 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
         cmbProveedor = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         cmbDestino = new javax.swing.JComboBox<>();
-        btnCancelar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
         ToggleButtonActivo = new javax.swing.JToggleButton();
         txtDescripción = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 84, 200, -1));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(null);
+
+        jPanel2.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton7.setBackground(new java.awt.Color(179, 23, 23));
+        jButton7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Cerrar sesión");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 890, 90);
+
+        btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfiguracion.setText("CONFIGURACIÓN");
+        btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnConfiguracion);
+        btnConfiguracion.setBounds(0, 340, 200, 50);
+
+        btnHome.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnHome.setForeground(new java.awt.Color(255, 255, 255));
+        btnHome.setText("HOME");
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHome);
+        btnHome.setBounds(0, 90, 200, 50);
+
+        btnClientes.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnClientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientes.setText("CLIENTES");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnClientes);
+        btnClientes.setBounds(0, 140, 200, 50);
+
+        btnReservas.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReservas.setForeground(new java.awt.Color(255, 255, 255));
+        btnReservas.setText("RESERVAS");
+        btnReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReservasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReservas);
+        btnReservas.setBounds(0, 190, 200, 50);
+
+        btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
+        btnProveedores.setText("PROVEEDORES");
+        btnProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedoresActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnProveedores);
+        btnProveedores.setBounds(0, 240, 200, 50);
+
+        btnReportes.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setText("REPORTES");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReportes);
+        btnReportes.setBounds(0, 290, 200, 50);
+
+        jPanel3.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 380, 200, 170);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, -1));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(null);
+
+        jPanel5.setBackground(new java.awt.Color(0, 46, 121));
+
+        jButton8.setBackground(new java.awt.Color(179, 23, 23));
+        jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Cerrar sesión");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setBackground(new java.awt.Color(8, 8, 100));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 2, 25)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("EXPRESO LOS CHANKAS");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel5);
+        jPanel5.setBounds(0, 0, 890, 90);
+
+        btnConfiguracion1.setBackground(new java.awt.Color(0, 46, 121));
+        btnConfiguracion1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnConfiguracion1.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfiguracion1.setText("CONFIGURACIÓN");
+        btnConfiguracion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracion1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnConfiguracion1);
+        btnConfiguracion1.setBounds(0, 340, 200, 50);
+
+        btnHome1.setBackground(new java.awt.Color(0, 46, 121));
+        btnHome1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnHome1.setForeground(new java.awt.Color(255, 255, 255));
+        btnHome1.setText("HOME");
+        btnHome1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHome1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnHome1);
+        btnHome1.setBounds(0, 90, 200, 50);
+
+        btnClientes1.setBackground(new java.awt.Color(0, 46, 121));
+        btnClientes1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnClientes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientes1.setText("CLIENTES");
+        btnClientes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientes1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnClientes1);
+        btnClientes1.setBounds(0, 140, 200, 50);
+
+        btnReservas1.setBackground(new java.awt.Color(0, 46, 121));
+        btnReservas1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReservas1.setForeground(new java.awt.Color(255, 255, 255));
+        btnReservas1.setText("RESERVAS");
+        btnReservas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReservas1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnReservas1);
+        btnReservas1.setBounds(0, 190, 200, 50);
+
+        btnProveedores1.setBackground(new java.awt.Color(0, 46, 121));
+        btnProveedores1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnProveedores1.setForeground(new java.awt.Color(255, 255, 255));
+        btnProveedores1.setText("PROVEEDORES");
+        btnProveedores1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedores1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnProveedores1);
+        btnProveedores1.setBounds(0, 240, 200, 50);
+
+        btnReportes1.setBackground(new java.awt.Color(0, 46, 121));
+        btnReportes1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReportes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes1.setText("REPORTES");
+        btnReportes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportes1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnReportes1);
+        btnReportes1.setBounds(0, 290, 200, 50);
+
+        jPanel6.setBackground(new java.awt.Color(0, 46, 121));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        jPanel4.add(jPanel6);
+        jPanel6.setBounds(0, 380, 200, 170);
+        jPanel4.add(txtNombre);
+        txtNombre.setBounds(260, 210, 200, 22);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nombre");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 74, 120, 42));
+        jPanel4.add(jLabel1);
+        jLabel1.setBounds(260, 180, 50, 42);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Descripcion");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 311, 120, 38));
+        jPanel4.add(jLabel2);
+        jLabel2.setBounds(540, 320, 100, 38);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Tipo");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 134, 70, 22));
+        jPanel4.add(jLabel3);
+        jLabel3.setBounds(260, 250, 50, 22);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Estado");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 168, 80, 32));
+        jPanel4.add(jLabel6);
+        jLabel6.setBounds(260, 320, 60, 32);
 
+        btnGuardar.setBackground(new java.awt.Color(40, 167, 69));
+        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 120, 43));
+        jPanel4.add(btnGuardar);
+        btnGuardar.setBounds(620, 440, 110, 30);
 
+        btnLimpiar.setBackground(new java.awt.Color(102, 102, 102));
+        btnLimpiar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 480, 120, 40));
+        jPanel4.add(btnLimpiar);
+        btnLimpiar.setBounds(490, 440, 110, 30);
 
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Historico", "Natural", "Recreativo" }));
         cbTipo.addActionListener(new java.awt.event.ActionListener() {
@@ -190,37 +495,54 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
                 cbTipoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 134, 200, -1));
+        jPanel4.add(cbTipo);
+        cbTipo.setBounds(260, 280, 200, 22);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Destino ");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, 80, 40));
+        jPanel4.add(jLabel4);
+        jLabel4.setBounds(540, 250, 60, 40);
 
         cmbProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbProveedorActionPerformed(evt);
             }
         });
-        getContentPane().add(cmbProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 272, 200, -1));
+        jPanel4.add(cmbProveedor);
+        cmbProveedor.setBounds(540, 280, 200, 22);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Proveedor");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 80, -1));
+        jPanel4.add(jLabel5);
+        jLabel5.setBounds(540, 190, 70, 17);
 
         cmbDestino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbDestinoActionPerformed(evt);
             }
         });
-        getContentPane().add(cmbDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 221, 200, -1));
+        jPanel4.add(cmbDestino);
+        cmbDestino.setBounds(540, 210, 200, 22);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel7.setText("FORMULARIO PARA LUGAR TURISTICO");
+        jPanel4.add(jLabel7);
+        jLabel7.setBounds(230, 120, 420, 37);
+
+        btnCancelar.setBackground(new java.awt.Color(179, 23, 23));
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 420, 130, 43));
-
-        jLabel7.setText("Formulario para Lugar Turisitico");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 220, 37));
+        jPanel4.add(btnCancelar);
+        btnCancelar.setBounds(350, 440, 120, 30);
 
         ToggleButtonActivo.setText("Activo");
-        getContentPane().add(ToggleButtonActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(243, 173, 130, -1));
-        getContentPane().add(txtDescripción, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 319, 200, -1));
+        jPanel4.add(ToggleButtonActivo);
+        ToggleButtonActivo.setBounds(260, 350, 130, 23);
+        jPanel4.add(txtDescripción);
+        txtDescripción.setBounds(540, 350, 200, 22);
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -301,6 +623,74 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTipoActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfiguracionActionPerformed
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReservasActionPerformed
+
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProveedoresActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+
+        if (respuesta == JOptionPane.OK_OPTION) {
+            this.dispose(); // Cierra la ventana actual
+            new Login().setVisible(true); // Abre la ventana de login
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btnConfiguracion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfiguracion1ActionPerformed
+
+    private void btnHome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome1ActionPerformed
+
+    }//GEN-LAST:event_btnHome1ActionPerformed
+
+    private void btnClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientes1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientes1ActionPerformed
+
+    private void btnReservas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReservas1ActionPerformed
+
+    private void btnProveedores1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedores1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProveedores1ActionPerformed
+
+    private void btnReportes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportes1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportes1ActionPerformed
+
 
 //    cbEstado.setSelectedIndex(0);
 
@@ -327,11 +717,25 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ToggleButtonActivo;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnClientes1;
+    private javax.swing.JButton btnConfiguracion;
+    private javax.swing.JButton btnConfiguracion1;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnHome1;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnProveedores;
+    private javax.swing.JButton btnProveedores1;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnReportes1;
+    private javax.swing.JButton btnReservas;
+    private javax.swing.JButton btnReservas1;
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JComboBox<Proveedor> cmbDestino;
     private javax.swing.JComboBox<Destino> cmbProveedor;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -339,6 +743,14 @@ public class FormularioLugarTuristico extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField txtDescripción;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
