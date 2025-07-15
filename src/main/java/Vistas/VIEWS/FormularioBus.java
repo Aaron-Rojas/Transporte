@@ -218,7 +218,6 @@ private void updateToggleButtonText(boolean isActive) {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -236,7 +235,6 @@ private void updateToggleButtonText(boolean isActive) {
         jLabel6 = new javax.swing.JLabel();
         txtPlaca = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-
         jButton8 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -299,22 +297,6 @@ private void updateToggleButtonText(boolean isActive) {
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(0, 0, 890, 90);
-
-        jPanel3.setBackground(new java.awt.Color(8, 8, 100));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(0, 460, 890, 90);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel3.setText("FORMULARIO DE BUSES");
@@ -450,12 +432,6 @@ private void updateToggleButtonText(boolean isActive) {
         txtPlaca.setBounds(380, 230, 140, 22);
 
         jPanel4.setBackground(new java.awt.Color(0, 46, 121));
-
-        jPanel1.add(jPanel4);
-        jPanel4.setBounds(0, 0, 890, 90);
-
-        jPanel5.setBackground(new java.awt.Color(0, 46, 121));
-
 
         jButton8.setBackground(new java.awt.Color(179, 23, 23));
         jButton8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
@@ -677,7 +653,6 @@ private void updateToggleButtonText(boolean isActive) {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField txtCapacidad;

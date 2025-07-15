@@ -111,7 +111,7 @@ public class GestionDestino extends javax.swing.JFrame {
         jPanel2.setLayout(null);
 
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
-        btnConfiguracion.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnConfiguracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
         btnConfiguracion.setText(" CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -123,7 +123,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnConfiguracion.setBounds(-20, 340, 210, 50);
 
         btnHome.setBackground(new java.awt.Color(0, 46, 121));
-        btnHome.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnHome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText(" HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +135,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnHome.setBounds(-20, 90, 210, 50);
 
         btnClientes.setBackground(new java.awt.Color(0, 46, 121));
-        btnClientes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
         btnClientes.setText(" CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +147,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnClientes.setBounds(-20, 140, 210, 50);
 
         btnReservas.setBackground(new java.awt.Color(0, 46, 121));
-        btnReservas.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText(" RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +159,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnReservas.setBounds(-20, 190, 210, 50);
 
         btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
-        btnProveedores.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnProveedores.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
         btnProveedores.setText(" PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +171,7 @@ public class GestionDestino extends javax.swing.JFrame {
         btnProveedores.setBounds(-20, 240, 210, 50);
 
         btnReportes.setBackground(new java.awt.Color(0, 46, 121));
-        btnReportes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText(" REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
