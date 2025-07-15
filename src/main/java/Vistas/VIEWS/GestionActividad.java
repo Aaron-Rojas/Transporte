@@ -1,58 +1,106 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vistas.VIEWS;
 
 import Controlador.NavegacionController;
-import Modelo.Actividad;
-import dao.ActividadDAO;
+import Modelo.ActividadTuristica;
+import Modelo.Usuario;
+import dao.LugarTuristicoDAO;
+import dao.ActividadTuristicaDAO;
+import dao.DestinoDAO;
+import dao.ProveedorDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
 
-/**
- *
- * @author LAB-USR-LCENTRO
- */
+
 public class GestionActividad extends javax.swing.JFrame {
-
-     private final ActividadDAO actividadDAO = new ActividadDAO(); // Instancia del DAO
-
-    public GestionActividad() {
+    private DestinoDAO destinoDAO;
+    private Usuario usuarioActual;
+    private LugarTuristicoDAO lugarTuristicoDAO;
+    private ProveedorDAO proveedorDAO;
+    private DefaultTableModel modeloTabla;
+    private ActividadTuristicaDAO actividadTuristicaDAO;
+            
+            
+    public GestionActividad(Usuario usuarioLogeado) {
+        this.usuarioActual = usuarioLogeado;
+        
         initComponents();
-        setLocationRelativeTo(null); // Centrar la ventana
-        // Asegúrate de que NavegacionController y las vistas referenciadas existan
-        // NavegacionController.configurarBotones(
-        //         btnHome, btnClientes, btnReservas, btnProveedores, btnReportes, btnConfiguracion, this
-        // );
-        refrescarTabla(); // Cargar datos al iniciar la ventana
+        this.setLocationRelativeTo(null);
+                
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            setTitle("Gestión de Lugares Turísticos - Usuario: " + usuarioActual.getNombreCompleto() + " (" + usuarioActual.getRol().getNombreRol() + ")");
+        } else {
+            setTitle("Gestión de Lugares Turísticos");
+        }
+        this.destinoDAO= new DestinoDAO();
+        this.proveedorDAO = new ProveedorDAO ();
+        this.lugarTuristicoDAO= new LugarTuristicoDAO(destinoDAO, proveedorDAO);
+        
+           
+        this.actividadTuristicaDAO = new ActividadTuristicaDAO(proveedorDAO, lugarTuristicoDAO);
+
+        configurarTablaActivadesTuristicas();
+        cargarActividadesTuristicasActivas();
+
     }
 
-    public void refrescarTabla() {
-        DefaultTableModel model = (DefaultTableModel) tbActividades.getModel();
-        model.setRowCount(0); // Limpiar filas existentes
+               
+   
+    public void cargarActividadesTuristicasActivas(){
+      if (modeloTabla == null) {
+            return;
+        }
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
 
-        List<Actividad> actividades = actividadDAO.listarActividades();
-        for (Actividad actividad : actividades) {
-            model.addRow(new Object[]{
-                actividad.getIdActividad(),
-                actividad.getNombre(),
-                actividad.getDescripcion(),
-                actividad.getDuracion(), // Ya es String
-                actividad.getIdLugarTuristico(),
-                actividad.getIdProveedor(),
-                actividad.getEstado()
+        List<ActividadTuristica> actividad = actividadTuristicaDAO.obtenerTodasLasActividadesTuristicasActivas();
+
+        if (actividad.isEmpty()) {
+            System.out.println("DEBUG: No hay lugares turísticos activos para mostrar.");
+        }
+
+        for (ActividadTuristica lt : actividad) {
+            // Para mostrar Destino y Proveedor, accedemos a sus nombres.
+            String nombreLugar = (lt.getLugarTuristico()!= null) ? lt.getLugarTuristico().getNombreLugar() : "N/A"; // Asumo getNombre() en Destino
+            String nombreProveedor = (lt.getProveedor() != null) ? lt.getProveedor().getNombreProveedor() : "N/A"; // Asumo getNombre() en Proveedor
+
+            modeloTabla.addRow(new Object[]{
+                lt.getID_Actividad(),
+                lt.getNombreActividad(),
+                lt.getDescripcion(),
+                lt.getDuracion(),
+                nombreLugar,
+                nombreProveedor,
+                lt.isEstado() ? "Activo" : "Inactivo" // Muestra "Activo" o "Inactivo"
             });
         }
     }
+    
+        public void configurarTablaActivadesTuristicas(){
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace que las celdas de la tabla no sean editables
+            }};
+              
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Descripcion");
+        modeloTabla.addColumn("Duracion");
+        modeloTabla.addColumn("Lugar");
+        modeloTabla.addColumn("Proveedor");
+        modeloTabla.addColumn("Estado");
+         
+        if(tbActividadTuristica !=null){
+            tbActividadTuristica.setModel(modeloTabla);
+            tbActividadTuristica.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tbActividadTuristica.setDefaultEditor(Object.class, null);
+            
+    }
+        
+    }
 
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -66,7 +114,7 @@ public class GestionActividad extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbActividades = new javax.swing.JTable();
+        tbActividadTuristica = new javax.swing.JTable();
         btnCrear = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -74,6 +122,7 @@ public class GestionActividad extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,7 +206,7 @@ public class GestionActividad extends javax.swing.JFrame {
         jPanel1.add(btnHome);
         btnHome.setBounds(0, 120, 200, 50);
 
-        tbActividades.setModel(new javax.swing.table.DefaultTableModel(
+        tbActividadTuristica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -168,7 +217,7 @@ public class GestionActividad extends javax.swing.JFrame {
                 "ID Actividad", "Nombre Actividad", "Descripcion", "Duracion", "ID Lugar Turistico", "ID Proveedor", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(tbActividades);
+        jScrollPane1.setViewportView(tbActividadTuristica);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(210, 170, 650, 200);
@@ -180,7 +229,7 @@ public class GestionActividad extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCrear);
-        btnCrear.setBounds(240, 390, 100, 50);
+        btnCrear.setBounds(240, 390, 130, 50);
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -189,7 +238,7 @@ public class GestionActividad extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEditar);
-        btnEditar.setBounds(370, 390, 100, 50);
+        btnEditar.setBounds(450, 390, 150, 50);
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +247,7 @@ public class GestionActividad extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(780, 410, 80, 30);
+        btnEliminar.setBounds(680, 390, 140, 50);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -257,6 +306,10 @@ public class GestionActividad extends javax.swing.JFrame {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 380, 200, 170);
 
+        btnVolver.setText("Volver");
+        jPanel1.add(btnVolver);
+        btnVolver.setBounds(730, 110, 120, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -301,20 +354,33 @@ public class GestionActividad extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        FormularioActividad formulario = new FormularioActividad(this, null); // null indica nuevo
-        formulario.setVisible(true);
+        if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            // Asumo que "admin" y "usuario" pueden agregar, ajusta según tus reglas de negocio
+            if ("admin".equalsIgnoreCase(nombreRol) || "proveedor".equalsIgnoreCase(nombreRol)) {
+                // Constructor para agregar (sin LugarTuristico)
+                FormularioActividad formulario = new FormularioActividad(this, this);
+                formulario.setVisible(true);
+                // Después de cerrar el formulario, recarga la tabla para ver los cambios
+                cargarActividadesTuristicasActivas();
+            } else {
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para agregar lugares turísticos.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int filaSeleccionada = tbActividades.getSelectedRow();
+        int filaSeleccionada = tbActividadTuristica.getSelectedRow();
 
         if (filaSeleccionada != -1) {
             // Obtener el ID de la actividad de la fila seleccionada (columna 0)
-            int idActividad = (int) tbActividades.getValueAt(filaSeleccionada, 0); 
-            Actividad actividad = actividadDAO.obtenerActividadPorId(idActividad); // Llamada al método de instancia
+            int idActividad = (int) tbActividadTuristica.getValueAt(filaSeleccionada, 0); 
+            ActividadTuristica actividad = actividadTuristicaDAO.obtenerActividadTuristicaPorId(idActividad); // Llamada al método de instancia
 
             if (actividad != null) {
-                FormularioActividad formulario = new FormularioActividad(this, actividad);
+                FormularioActividad formulario = new FormularioActividad(this,this, actividad);
                 formulario.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró la actividad para editar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -325,10 +391,11 @@ public class GestionActividad extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int filaSeleccionada = tbActividades.getSelectedRow();
+        int filaSeleccionada = tbActividadTuristica.getSelectedRow();
 
         if (filaSeleccionada != -1) {
-            int id = (int) tbActividades.getValueAt(filaSeleccionada, 0); // Columna 0 = ID
+            int id = (int) tbActividadTuristica.getValueAt(filaSeleccionada, 0); // Columna 0 = ID
+            String nombreRol = usuarioActual.getRol().getNombreRol();
 
             int confirmacion = JOptionPane.showConfirmDialog(this,
                     "¿Estás seguro de 'desactivar' esta actividad? (Eliminación lógica)", // Mensaje de confirmación claro
@@ -336,14 +403,17 @@ public class GestionActividad extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                if (actividadDAO.eliminarActividad(id)) { 
-                    // Mensaje de éxito explícito para eliminación lógica
-                    JOptionPane.showMessageDialog(this, "✅ Eliminación lógica de actividad exitosa: La actividad ha sido 'desactivada'.", "Éxito - Eliminación Lógica", JOptionPane.INFORMATION_MESSAGE);
-                    refrescarTabla(); // Recarga la tabla para que ya no aparezca la actividad desactivada
+                boolean exito = actividadTuristicaDAO.desactivarActividadTuristica(id);
+                if (exito) {
+                            JOptionPane.showMessageDialog(this, "Lugar turístico desactivado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                                    cargarActividadesTuristicasActivas();// Refrescar la tabla
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Error al desactivar el lugar turístico.", "Error de Desactivación", JOptionPane.ERROR_MESSAGE);
+                        } // Recarga la tabla para que ya no aparezca la actividad desactivada
                 } else {
                     JOptionPane.showMessageDialog(this, "❌ Error al realizar la eliminación lógica de la actividad.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            }
+            
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona una fila para 'desactivar'.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -359,103 +429,7 @@ public class GestionActividad extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionActividad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionActividad().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
@@ -467,6 +441,7 @@ public class GestionActividad extends javax.swing.JFrame {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -474,6 +449,6 @@ public class GestionActividad extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbActividades;
+    private javax.swing.JTable tbActividadTuristica;
     // End of variables declaration//GEN-END:variables
 }

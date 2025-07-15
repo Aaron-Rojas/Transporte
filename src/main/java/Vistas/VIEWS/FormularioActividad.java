@@ -1,75 +1,127 @@
 package Vistas.VIEWS;
 
-import Modelo.Actividad;
 import Conexión.Conexión;
+import Modelo.ActividadTuristica;
 import Modelo.LugarTuristico;
 import Modelo.Proveedor;
-import dao.ActividadDAO;
+import dao.ActividadTuristicaDAO;
+import dao.DestinoDAO; // Necesario para inicializar LugarTuristicoDAO
+import dao.LugarTuristicoDAO;
+import dao.ProveedorDAO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
-/**
- *
- * @author pambi
- */
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 public class FormularioActividad extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormularioActividad.class.getName());
 
-    private Actividad actividadEnEdicion;
-    private final ActividadDAO actividadDAO = new ActividadDAO();
-    private final GestionActividad padre;
-    /**
-     * Creates new form FormularioActividad
-     */
-     public FormularioActividad(GestionActividad padre, Actividad actividadEnEdicion) {
-        super(padre, true); // modal
-        this.padre = padre;
-        this.actividadEnEdicion = actividadEnEdicion;
+    private ActividadTuristica actividadAEditar;
+    private  ActividadTuristicaDAO actividadTuristicaDAO;
+    private LugarTuristicoDAO lugarTuristicoDAO;
+    private ProveedorDAO proveedorDAO;
+    private GestionActividad padreGestionActividad;
+
+     public FormularioActividad(JFrame padre,GestionActividad gestionActividad) {
+        super(padre, true); // Modal
         initComponents();
-        setLocationRelativeTo(null); // Centrar el formulario
-        cargarCombos(); // Cargar combos Lugar Turístico y Proveedor
-        if (actividadEnEdicion != null) {
-            cargarDatosEnFormulario();
+        this.setLocationRelativeTo(padre);
+        setTitle("Crear Nueva Actividad Turística");
+
+        this.padreGestionActividad = gestionActividad;
+
+        // Inicialización de DAOs
+        // Se asume que DestinoDAO es necesario para instanciar LugarTuristicoDAO
+        DestinoDAO destinoDAO = new DestinoDAO();
+        this.proveedorDAO = new ProveedorDAO();
+        this.lugarTuristicoDAO = new LugarTuristicoDAO(destinoDAO, this.proveedorDAO);
+        this.actividadTuristicaDAO = new ActividadTuristicaDAO(this.proveedorDAO, this.lugarTuristicoDAO);
+
+        // Configuración inicial del formulario
+        addToggleButtonActionListener();
+        cargarDatosIniciales();
+    }
+        
+     public FormularioActividad(JFrame padre, GestionActividad gestionActividad, ActividadTuristica actividad) {
+        this(padre, gestionActividad); // Llama al constructor de creación para inicializar todo
+        this.actividadAEditar = actividad;
+        setTitle("Modificar Actividad #" + actividad.getID_Actividad());
+        cargarDatosParaEdicion();
+    }
+     
+    private void cargarComboBoxes() {
+        // Cargar ComboBox de Lugares Turísticos
+        DefaultComboBoxModel<LugarTuristico> lugarModel = new DefaultComboBoxModel<>();
+        // Es buena práctica obtener solo los lugares activos para asociar
+        List<LugarTuristico> lugares = lugarTuristicoDAO.obtenerTodosLosLugaresTuristicosActivos();
+        for (LugarTuristico lugar : lugares) {
+            lugarModel.addElement(lugar);
+        }
+        cbIDLugarT.setModel(lugarModel);
+
+        // Cargar ComboBox de Proveedores
+        DefaultComboBoxModel<Proveedor> proveedorModel = new DefaultComboBoxModel<>();
+        List<Proveedor> proveedores = proveedorDAO.obtenerProveedoresActivos(); // Igualmente, solo activos
+        for (Proveedor prov : proveedores) {
+            proveedorModel.addElement(prov);
+        }
+        cbIDProveedor.setModel(proveedorModel);
+    }
+    
+
+    private void cargarDatosIniciales() {
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtDuracion.setText("");
+        
+        ToggleButtonActivo.setSelected(true);
+        updateToggleButtonText(true);
+        
+        cargarComboBoxes();
+    }
+        
+    private void cargarDatosParaEdicion() {
+        if (actividadAEditar != null) {
+            txtNombre.setText(actividadAEditar.getNombreActividad());
+            txtDescripcion.setText(actividadAEditar.getDescripcion());
+            txtDuracion.setText(actividadAEditar.getDuracion());
+
+            ToggleButtonActivo.setSelected(actividadAEditar.isEstado());
+            updateToggleButtonText(actividadAEditar.isEstado());
+
+            cargarComboBoxes(); // Carga los datos primero
+
+            // Selecciona los elementos correctos en los ComboBox
+            cbIDLugarT.setSelectedItem(actividadAEditar.getLugarTuristico());
+            cbIDProveedor.setSelectedItem(actividadAEditar.getProveedor());
         }
     }
     
-    private void cargarCombos() {
-        cargarComboLugaresTuristicos();
-        cargarComboProveedores();
-
-        cbEstado.removeAllItems();
-        cbEstado.addItem("activo");
-        cbEstado.addItem("desactivo");
+        private void updateToggleButtonText(boolean isActive) {
+        if (ToggleButtonActivo != null) {
+            ToggleButtonActivo.setText(isActive ? "Activo" : "Inactivo");
+        }
     }
 
-       
-    private void cargarDatosEnFormulario() {
-        txtNombre.setText(actividadEnEdicion.getNombre());
-        txtDescripcion.setText(actividadEnEdicion.getDescripcion());
-        txtDuracion.setText(actividadEnEdicion.getDuracion()); // ¡AHORA ES STRING!
-
-        // Seleccionar Lugar Turístico en el ComboBox
-        for (int i = 0; i < cbIDLugarT.getItemCount(); i++) {
-            LugarTuristico lt = cbIDLugarT.getItemAt(i);
-            if (lt.getIdLugarTuristico() == actividadEnEdicion.getIdLugarTuristico()) {
-                cbIDLugarT.setSelectedItem(lt);
-                break;
-            }
+    /**
+     * Añade el listener para que el botón cambie de texto al ser presionado.
+     */
+    private void addToggleButtonActionListener() {
+        if (ToggleButtonActivo != null) {
+            ToggleButtonActivo.addActionListener(e -> {
+                boolean estaActivo = ToggleButtonActivo.isSelected();
+                updateToggleButtonText(estaActivo);
+            });
         }
-        // Seleccionar Proveedor en el ComboBox
-        for (int i = 0; i < cbIDProveedor.getItemCount(); i++) {
-            Proveedor prov = cbIDProveedor.getItemAt(i);
-            if (prov.getIdProveedor() == actividadEnEdicion.getIdProveedor()) {
-                cbIDProveedor.setSelectedItem(prov);
-                break;
-            }
-        }
-        
-        cbEstado.setSelectedItem(actividadEnEdicion.getEstado());
     }
 
     private void cargarComboLugaresTuristicos() {
@@ -114,78 +166,7 @@ public class FormularioActividad extends javax.swing.JDialog {
         }
     }
 
-    private void guardarActividad() {
-        String nombre = txtNombre.getText().trim();
-        String descripcion = txtDescripcion.getText().trim();
-        String duracion = txtDuracion.getText().trim(); // ¡AHORA ES STRING!
 
-        if (nombre.isEmpty() || descripcion.isEmpty() || duracion.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Completa todos los campos.", "Error de validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Validar que la duración sea un número (opcional, pero buena práctica si esperas números)
-        try {
-            // Intenta convertir a int solo para validar si es un número válido.
-            // No guardaremos como int, solo comprobamos formato.
-            Integer.parseInt(duracion); 
-            if (Integer.parseInt(duracion) < 0) { // Opcional: si esperas solo duraciones positivas
-                JOptionPane.showMessageDialog(this, "La duración debe ser un número positivo.", "Error de validación", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "La duración debe ser un número entero válido (aunque se guarde como texto).", "Error de validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-
-        if (cbIDLugarT.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un Lugar Turístico válido.", "Error de validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (cbIDProveedor.getSelectedItem() == null) {
-             JOptionPane.showMessageDialog(this, "Debes seleccionar un Proveedor válido.", "Error de validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Obtener ID del lugar turístico desde el objeto seleccionado
-        LugarTuristico lugarSeleccionado = (LugarTuristico) cbIDLugarT.getSelectedItem();
-        int idLugar = lugarSeleccionado.getIdLugarTuristico();
-
-        // Obtener ID del proveedor desde el objeto seleccionado
-        Proveedor proveedorSeleccionado = (Proveedor) cbIDProveedor.getSelectedItem();
-        int idProveedor = proveedorSeleccionado.getIdProveedor();
-
-        String estado = (String) cbEstado.getSelectedItem();
-
-        if (actividadEnEdicion == null) {
-            // Insertar nueva actividad
-            Actividad nueva = new Actividad(nombre, descripcion, duracion, estado, idLugar, idProveedor);
-            if (actividadDAO.insertarActividad(nueva)) {
-                JOptionPane.showMessageDialog(this, "✅ Actividad registrada correctamente.");
-                padre.refrescarTabla();
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al registrar la actividad.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            // Actualizar actividad existente
-            actividadEnEdicion.setNombre(nombre);
-            actividadEnEdicion.setDescripcion(descripcion);
-            actividadEnEdicion.setDuracion(duracion); // ¡AHORA ES STRING!
-            actividadEnEdicion.setIdLugarTuristico(idLugar);
-            actividadEnEdicion.setIdProveedor(idProveedor);
-            actividadEnEdicion.setEstado(estado);
-
-            if (actividadDAO.actualizarActividad(actividadEnEdicion)) {
-                JOptionPane.showMessageDialog(this, "✅ Actividad actualizada correctamente.");
-                padre.refrescarTabla();
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al actualizar la actividad.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
 
     private void limpiarFormulario() {
         txtNombre.setText("");
@@ -197,7 +178,6 @@ public class FormularioActividad extends javax.swing.JDialog {
         if (cbIDProveedor.getItemCount() > 0) {
             cbIDProveedor.setSelectedIndex(0);
         }
-        cbEstado.setSelectedItem("activo"); // Reiniciar a "Activo"
     }
 
     /**
@@ -225,7 +205,6 @@ public class FormularioActividad extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        cbEstado = new javax.swing.JComboBox<>();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         cbIDProveedor = new javax.swing.JComboBox<>();
@@ -236,6 +215,8 @@ public class FormularioActividad extends javax.swing.JDialog {
         txtDuracion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cbIDLugarT = new javax.swing.JComboBox<>();
+        ToggleButtonActivo = new javax.swing.JToggleButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -388,10 +369,6 @@ public class FormularioActividad extends javax.swing.JDialog {
         jPanel4.add(jLabel7);
         jLabel7.setBounds(680, 340, 47, 17);
 
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-        jPanel4.add(cbEstado);
-        cbEstado.setBounds(680, 360, 76, 22);
-
         btnLimpiar.setBackground(new java.awt.Color(102, 102, 102));
         btnLimpiar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
@@ -452,6 +429,19 @@ public class FormularioActividad extends javax.swing.JDialog {
         jPanel4.add(cbIDLugarT);
         cbIDLugarT.setBounds(310, 360, 118, 22);
 
+        ToggleButtonActivo.setText("Activo");
+        jPanel4.add(ToggleButtonActivo);
+        ToggleButtonActivo.setBounds(660, 360, 120, 23);
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnCancelar);
+        btnCancelar.setBounds(320, 440, 90, 30);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -489,11 +479,56 @@ public class FormularioActividad extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    guardarActividad();
+            // 1. Validar datos
+        if (txtNombre.getText().trim().isEmpty() || txtDuracion.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre y la duración son obligatorios.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        LugarTuristico lugarSeleccionado = (LugarTuristico) cbIDLugarT.getSelectedItem();
+        Proveedor proveedorSeleccionado = (Proveedor) cbIDProveedor.getSelectedItem();
+
+        if (lugarSeleccionado == null || proveedorSeleccionado == null) {
+             JOptionPane.showMessageDialog(this, "Debe seleccionar un lugar y un proveedor.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2. Recolectar datos del formulario
+        String nombre = txtNombre.getText().trim();
+        String descripcion = txtDescripcion.getText().trim();
+        String duracion = txtDuracion.getText().trim();
+        boolean estado = ToggleButtonActivo.isSelected();
+
+        // 3. Crear o actualizar el objeto
+        if (actividadAEditar == null) { // Modo CREAR
+            ActividadTuristica nuevaActividad = new ActividadTuristica(0, nombre, descripcion, duracion, lugarSeleccionado, proveedorSeleccionado, estado);
+            if (actividadTuristicaDAO.insertarActividadTuristica(nuevaActividad)) {
+                JOptionPane.showMessageDialog(this, "Actividad creada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al crear la actividad.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else { // Modo EDITAR
+            actividadAEditar.setNombreActividad(nombre);
+            actividadAEditar.setDescripcion(descripcion);
+            actividadAEditar.setDuracion(duracion);
+            actividadAEditar.setLugarTuristico(lugarSeleccionado);
+            actividadAEditar.setProveedor(proveedorSeleccionado);
+            actividadAEditar.setEstado(estado);
+
+            if (actividadTuristicaDAO.actualizarActividadTuristica(actividadAEditar)) {
+                JOptionPane.showMessageDialog(this, "Actividad actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar la actividad.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        // 4. Refrescar tabla y cerrar
+        padreGestionActividad.cargarActividadesTuristicasActivas();
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    limpiarFormulario();
+        cargarDatosIniciales();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -530,11 +565,18 @@ public class FormularioActividad extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+         this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ToggleButtonActivo;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnGuardar;
@@ -543,7 +585,6 @@ public class FormularioActividad extends javax.swing.JDialog {
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
-    private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JComboBox<LugarTuristico> cbIDLugarT;
     private javax.swing.JComboBox<Proveedor> cbIDProveedor;
     private javax.swing.JButton jButton7;
