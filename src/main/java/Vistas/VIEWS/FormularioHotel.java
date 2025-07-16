@@ -1,87 +1,125 @@
 package Vistas.VIEWS;
 import Conexión.Conexión;
 import Modelo.Hotel;
+import Modelo.Usuario;
+import dao.DestinoDAO;
 import dao.HotelDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import dao.ProveedorDAO;
 import javax.swing.JOptionPane;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JToggleButton;
+import javax.swing.JTextField;
+import Modelo.Destino;
+import Modelo.Proveedor;
 
 public class FormularioHotel extends javax.swing.JDialog {
     
-private boolean esEdicion = false;
-private int idHotelEnEdicion = -1;
-private GestionHotel gestionHotel;
+    private Hotel hotelAEditar;
+    private HotelDAO hotelDAO;
+    private DestinoDAO destinoDAO;
+    private ProveedorDAO proveedorDAO;
+    private Usuario usuarioActual;
+    private GestionHotel padreGestionHotel;
 
+    public FormularioHotel(JFrame padre, GestionHotel gestionHotel) {
+        super(padre, true);
+        initComponents();
 
+        this.padreGestionHotel = gestionHotel;
 
-public void setModoEdicion(boolean esEdicion, Hotel hotel) {
-    this.esEdicion = esEdicion;
-    if (hotel != null) {
-        this.idHotelEnEdicion = hotel.getIdHotel();
-        txtNombreHotel.setText(hotel.getNombreHotel());
-        txtDescripcionHotel1.setText(hotel.getDescripcion());
-        txtDireccionHotel.setText(hotel.getDireccion());
-        jComboBoxCategoria.setSelectedItem(hotel.getCategoria());
-        jComboBoxEstado.setSelectedItem(hotel.getEstado());
+        this.destinoDAO = new DestinoDAO();
+        this.proveedorDAO = new ProveedorDAO();
+        this.hotelDAO = new HotelDAO(this.destinoDAO, this.proveedorDAO);
 
-        // Buscar y seleccionar proveedor en el combo
-        for (int i = 0; i < jComboBoxProveedor.getItemCount(); i++) {
-            ProveedorItem item = (ProveedorItem) jComboBoxProveedor.getItemAt(i);
-            if (item.getId() == hotel.getIdProveedor()) {
-                jComboBoxProveedor.setSelectedIndex(i);
-                break;
+        this.setLocationRelativeTo(padre);
+        setTitle("Crear Nuevo Hotel");
+
+        ToggleButtonActivo.setSelected(true);
+        updateToggleButtonText(true);
+        cargarDatosInicialesParaNuevo();
+        addToggleButtonActionListener();
+    }
+        
+    public FormularioHotel(JFrame padre, GestionHotel gestionHotelPadre, Hotel hotel) {
+        this(padre, gestionHotelPadre);
+        this.hotelAEditar = hotel;
+
+        setTitle("Modificar Hotel #" + hotel.getIdHotel());
+        cargarDatosParaEdicion(hotel);
+    }
+
+    private void cargarDatosParaEdicion(Hotel hotel) {
+        if (hotel != null) {
+            txtNombreHotel.setText(hotel.getNombreHotel());
+            txtDireccionHotel.setText(hotel.getDireccion());
+            cmbCategoria.setSelectedItem(hotel.getCategoria());
+            ToggleButtonActivo.setSelected(hotel.isEstado());
+            updateToggleButtonText(hotel.isEstado());
+
+            cargarComboBoxes();
+
+            if (hotel.getDestino() != null) {
+                cmbDestino.setSelectedItem(hotel.getDestino());
+            }
+            if (hotel.getProveedor() != null) {
+                cmbProveedor.setSelectedItem(hotel.getProveedor());
             }
         }
     }
-}
 
-
-
-
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormularioHotel.class.getName());
-    
-    class ProveedorItem {
-    private int id;
-    private String nombre;
-
-    public ProveedorItem(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+    private void cargarDatosInicialesParaNuevo() {
+        txtNombreHotel.setText("");
+        txtDireccionHotel.setText("");
+        cmbCategoria.setSelectedIndex(0);
+        ToggleButtonActivo.setSelected(true);
+        updateToggleButtonText(true);
+        cargarComboBoxes();
     }
 
-    public int getId() {
-        return id;
+    private void cargarComboBoxes() {
+        cmbCategoria.setModel(new DefaultComboBoxModel<>(new String[]{"1 estrella", "2 estrellas", "3 estrellas", "4 estrellas", "5 estrellas"}));
+
+        DefaultComboBoxModel<Destino> destinoModel = new DefaultComboBoxModel<>();
+        List<Destino> destinos = destinoDAO.obtenerTodosLosDestinos();
+        for (Destino d : destinos) {
+            destinoModel.addElement(d);
+        }
+        cmbDestino.setModel(destinoModel);
+
+        DefaultComboBoxModel<Proveedor> proveedorModel = new DefaultComboBoxModel<>();
+        List<Proveedor> proveedores = proveedorDAO.obtenerTodosLosProveedores();
+        for (Proveedor p : proveedores) {
+            proveedorModel.addElement(p);
+        }
+        cmbProveedor.setModel(proveedorModel);
     }
 
-    @Override
-    public String toString() {
-        return nombre; // Esto se mostrará en el ComboBox
+    private void updateToggleButtonText(boolean isActive) {
+        if (ToggleButtonActivo != null) {
+            if (isActive) {
+                ToggleButtonActivo.setText("Activo");
+            } else {
+                ToggleButtonActivo.setText("Inactivo");
+            }
+        }
     }
-}
-    /**
-     * Constructor del formulario de registro de hoteles.
-     * @param parent El frame padre de esta ventana.
-     * @param modal Indica si el diálogo es modal o no.
-     */
-    public FormularioHotel(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        cargarProveedores();
+
+    private void addToggleButtonActionListener() {
+        if (ToggleButtonActivo != null) {
+            ToggleButtonActivo.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    boolean estaActivo = ToggleButtonActivo.isSelected();
+                    updateToggleButtonText(estaActivo);
+                }
+            });
+        }
     }
-    
 
-    public void setGestionHotel(GestionHotel gestionHotel) {
-        this.gestionHotel = gestionHotel;
-}
-
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -96,22 +134,23 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombreHotel = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtDescripcionHotel1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtDireccionHotel = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBoxCategoria = new javax.swing.JComboBox<>();
+        cmbCategoria = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jComboBoxEstado = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jComboBoxProveedor = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        ToggleButtonActivo = new javax.swing.JToggleButton();
+        jLabel9 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+        cmbDestino = new javax.swing.JComboBox<>();
+        cmbProveedor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -121,7 +160,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnConfiguracion2.setBackground(new java.awt.Color(0, 46, 121));
         btnConfiguracion2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConfiguracion2.setForeground(new java.awt.Color(255, 255, 255));
-        btnConfiguracion2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-config-23 (1).png"))); // NOI18N
         btnConfiguracion2.setText(" CONFIGURACIÓN");
         btnConfiguracion2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,7 +172,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnHome2.setBackground(new java.awt.Color(0, 46, 121));
         btnHome2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHome2.setForeground(new java.awt.Color(255, 255, 255));
-        btnHome2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-house-23.png"))); // NOI18N
         btnHome2.setText(" HOME");
         btnHome2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +184,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnClientes2.setBackground(new java.awt.Color(0, 46, 121));
         btnClientes2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnClientes2.setForeground(new java.awt.Color(255, 255, 255));
-        btnClientes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-customers-23.png"))); // NOI18N
         btnClientes2.setText(" CLIENTES");
         btnClientes2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,7 +196,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnReservas2.setBackground(new java.awt.Color(0, 46, 121));
         btnReservas2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReservas2.setForeground(new java.awt.Color(255, 255, 255));
-        btnReservas2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-calendar-23.png"))); // NOI18N
         btnReservas2.setText(" RESERVAS");
         btnReservas2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +208,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnProveedores2.setBackground(new java.awt.Color(0, 46, 121));
         btnProveedores2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProveedores2.setForeground(new java.awt.Color(255, 255, 255));
-        btnProveedores2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-supplier-23.png"))); // NOI18N
         btnProveedores2.setText(" PROVEEDORES");
         btnProveedores2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,7 +220,6 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         btnReportes2.setBackground(new java.awt.Color(0, 46, 121));
         btnReportes2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReportes2.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-report-23 (1).png"))); // NOI18N
         btnReportes2.setText(" REPORTES");
         btnReportes2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,23 +247,10 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jPanel6.add(txtNombreHotel);
         txtNombreHotel.setBounds(240, 200, 222, 38);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Descripción:");
-        jPanel6.add(jLabel3);
-        jLabel3.setBounds(240, 270, 75, 20);
-
-        txtDescripcionHotel1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDescripcionHotel1ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(txtDescripcionHotel1);
-        txtDescripcionHotel1.setBounds(240, 290, 278, 40);
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Direccion:");
         jPanel6.add(jLabel4);
-        jLabel4.setBounds(240, 360, 61, 17);
+        jLabel4.setBounds(240, 250, 61, 30);
 
         txtDireccionHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,48 +258,31 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
             }
         });
         jPanel6.add(txtDireccionHotel);
-        txtDireccionHotel.setBounds(240, 380, 278, 35);
+        txtDireccionHotel.setBounds(230, 290, 278, 35);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Categoria:");
         jPanel6.add(jLabel5);
         jLabel5.setBounds(580, 180, 63, 17);
 
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Estrella", "2  Estrella", "3  Estrella", "4  Estrella", "5  Estrella" }));
-        jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
+        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Estrella", "2  Estrella", "3  Estrella", "4  Estrella", "5  Estrella" }));
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCategoriaActionPerformed(evt);
+                cmbCategoriaActionPerformed(evt);
             }
         });
-        jPanel6.add(jComboBoxCategoria);
-        jComboBoxCategoria.setBounds(580, 200, 97, 40);
+        jPanel6.add(cmbCategoria);
+        cmbCategoria.setBounds(580, 200, 97, 40);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Estado:");
         jPanel6.add(jLabel6);
         jLabel6.setBounds(580, 270, 47, 17);
 
-        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Desactivo" }));
-        jComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxEstadoActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jComboBoxEstado);
-        jComboBoxEstado.setBounds(580, 290, 85, 40);
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Id Provedor:");
         jPanel6.add(jLabel7);
         jLabel7.setBounds(580, 360, 78, 17);
-
-        jComboBoxProveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxProveedorActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jComboBoxProveedor);
-        jComboBoxProveedor.setBounds(580, 380, 72, 30);
 
         btnGuardar.setBackground(new java.awt.Color(40, 167, 69));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -361,6 +364,26 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         jPanel6.add(jPanel3);
         jPanel3.setBounds(0, 380, 200, 170);
 
+        ToggleButtonActivo.setText("Activo");
+        jPanel6.add(ToggleButtonActivo);
+        ToggleButtonActivo.setBounds(570, 300, 130, 23);
+
+        jLabel9.setText("Destino:");
+        jPanel6.add(jLabel9);
+        jLabel9.setBounds(240, 350, 70, 30);
+
+        btnCancelar.setText("Cancelar");
+        jPanel6.add(btnCancelar);
+        btnCancelar.setBounds(260, 480, 100, 30);
+
+        cmbDestino.setModel(new javax.swing.DefaultComboBoxModel<>());
+        jPanel6.add(cmbDestino);
+        cmbDestino.setBounds(240, 380, 190, 40);
+
+        cmbProveedor.setModel(new javax.swing.DefaultComboBoxModel<>());
+        jPanel6.add(cmbProveedor);
+        cmbProveedor.setBounds(570, 390, 130, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -381,102 +404,78 @@ public void setModoEdicion(boolean esEdicion, Hotel hotel) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-/**
- * Constructor del formulario de registro de hoteles.
- * 
- * @param parent El frame padre de esta ventana.
- * @param modal Indica si el diálogo es modal o no.
- */
 
-private void cargarProveedores() {
-    try (Connection conn = Conexión.conectar();
-         PreparedStatement stmt = conn.prepareStatement("SELECT ID_Proveedor, NombreProveedor FROM proveedor");
-         ResultSet rs = stmt.executeQuery()) {
-
-        while (rs.next()) {
-            int id = rs.getInt("ID_Proveedor");
-            String nombre = rs.getString("NombreProveedor");
-            jComboBoxProveedor.addItem(new ProveedorItem(id, nombre));
-        }
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al cargar proveedores: " + e.getMessage());
-    }
-}
 
     
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    txtNombreHotel.setText("");
-    txtDireccionHotel.setText("");
-    txtDescripcionHotel1.setText("");
-    jComboBoxCategoria.setSelectedIndex(0);
-    jComboBoxEstado.setSelectedIndex(0);
+
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    String nombre = txtNombreHotel.getText().trim();
-    String descripcion = txtDescripcionHotel1.getText().trim();
-    String direccion = txtDireccionHotel.getText().trim();
-    String categoria = jComboBoxCategoria.getSelectedItem().toString();
-    String estado = jComboBoxEstado.getSelectedItem().toString();
-
-    if (nombre.isEmpty() || descripcion.isEmpty() || direccion.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+    // 1. Validar datos obligatorios del formulario
+    if (txtNombreHotel.getText().trim().isEmpty() || txtDireccionHotel.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre y la dirección son obligatorios.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    ProveedorItem proveedorSeleccionado = (ProveedorItem) jComboBoxProveedor.getSelectedItem();
-    int idProveedor = proveedorSeleccionado.getId();
-    int idDestino = 1; // Puedes modificarlo si usas jComboBoxDestino u otro valor
+    // 2. Obtener objetos de los ComboBoxes
+    Destino destino = (Destino) cmbDestino.getSelectedItem();
+    Proveedor proveedor = (Proveedor) cmbProveedor.getSelectedItem();
 
-    HotelDAO hotelDAO = new HotelDAO();
-    boolean exito;
-
-    if (esEdicion && idHotelEnEdicion != -1) {
-        Hotel hotelActualizado = new Hotel(idHotelEnEdicion, nombre, descripcion, direccion, categoria, estado, idDestino, idProveedor);
-        exito = hotelDAO.actualizarHotel(hotelActualizado);
-    } else {
-        Hotel nuevoHotel = new Hotel(nombre, descripcion, direccion, categoria, estado, idDestino, idProveedor);
-        exito = hotelDAO.insertarHotel(nuevoHotel);
+    // 3. Validar que se hayan seleccionado Destino y Proveedor
+    if (destino == null || proveedor == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un Destino y un proveedor.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
-    if (exito) {
-        JOptionPane.showMessageDialog(this, esEdicion ? "Hotel actualizado correctamente." : "Hotel registrado exitosamente.");
+    // 4. Recolectar datos de los campos de texto y el ToggleButton
+    String nombre = txtNombreHotel.getText().trim();
+    String direccion = txtDireccionHotel.getText().trim(); // Corregido: "direcciom" a "direccion"
+    String categoria = (String) cmbCategoria.getSelectedItem();
+    boolean estado = ToggleButtonActivo.isSelected();
 
-        // ✅ Refrescar tabla en GestionHotel si hay referencia
-        if (gestionHotel != null) {
-            gestionHotel.cargarHotelesEnTabla();
+    // 5. Lógica para CREAR o ACTUALIZAR Hotel
+    if (hotelAEditar == null) { // Modo CREAR nuevo Hotel
+        Hotel nuevoHotel = new Hotel(0, nombre, direccion, categoria, destino, proveedor, estado);
+        if (hotelDAO.insertarHotel(nuevoHotel)) {
+            JOptionPane.showMessageDialog(this, "Hotel creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al crear el Hotel.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } else { // Modo EDITAR Hotel existente
+        hotelAEditar.setNombreHotel(nombre);
+        hotelAEditar.setDireccion(direccion);
+        hotelAEditar.setCategoria(categoria);
+        hotelAEditar.setDestino(destino);
+        hotelAEditar.setProveedor(proveedor);
+        hotelAEditar.setEstado(estado);
 
-        this.dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Error al guardar el hotel.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (hotelDAO.actualizarHotel(hotelAEditar)) {
+            JOptionPane.showMessageDialog(this, "Hotel actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el Hotel.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
+    // 6. Refrescar la tabla en el padre y cerrar el formulario
+    // Asegúrate de que padreGestionHotel tenga un método para recargar hoteles, por ejemplo:
+    // padreGestionHotel.cargarHoteles(); o padreGestionHotel.cargarHotelesActivos();
+    // NOTA: 'cargarLugaresTuristicosActivos()' es incorrecto para GestionHotel.
+    padreGestionHotel.cargarLugaresTuristicosActivos(); // Cambiado a un nombre de método más apropiado para Hoteles
+    this.dispose();       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtDireccionHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionHotelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDireccionHotelActionPerformed
 
-    private void jComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaActionPerformed
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
-
-    private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxEstadoActionPerformed
-
-    private void txtDescripcionHotel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionHotel1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDescripcionHotel1ActionPerformed
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
 
     private void txtNombreHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreHotelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreHotelActionPerformed
-
-    private void jComboBoxProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProveedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxProveedorActionPerformed
 
     private void btnConfiguracion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracion2ActionPerformed
         // TODO add your handling code here:
@@ -512,44 +511,12 @@ private void cargarProveedores() {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                FormularioHotel dialog = new FormularioHotel(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ToggleButtonActivo;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnClientes2;
     private javax.swing.JButton btnConfiguracion2;
     private javax.swing.JButton btnGuardar;
@@ -558,22 +525,21 @@ private void cargarProveedores() {
     private javax.swing.JButton btnProveedores2;
     private javax.swing.JButton btnReportes2;
     private javax.swing.JButton btnReservas2;
+    private javax.swing.JComboBox<String> cmbCategoria;
+    private javax.swing.JComboBox<Destino> cmbDestino;
+    private javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBoxCategoria;
-    private javax.swing.JComboBox<String> jComboBoxEstado;
-    private javax.swing.JComboBox<ProveedorItem> jComboBoxProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JTextField txtDescripcionHotel1;
     private javax.swing.JTextField txtDireccionHotel;
     private javax.swing.JTextField txtNombreHotel;
     // End of variables declaration//GEN-END:variables

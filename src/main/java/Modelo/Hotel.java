@@ -1,80 +1,39 @@
+
 package Modelo;
 
-/**
- * Clase que representa un Hotel en el sistema de gestión de viajes.
- */
+import java.util.Objects;
+
 public class Hotel {
 
     private int idHotel;
-    private int idDestino;
-    private int idProveedor;
     private String nombreHotel;
-    private String descripcion;
     private String direccion;
     private String categoria;
-    private String estado;
+    private Destino destino;
+    private Proveedor proveedor;    
+    private boolean estado;
 
-    // ─────────────────────────────────────────────────────────────
-    // Constructores
-    // ─────────────────────────────────────────────────────────────
+    public Hotel() {
+    }
 
-    /**
-     * Constructor reducido (usado para mostrar en tablas).
-     * @param idHotel ID del hotel.
-     * @param nombreHotel Nombre del hotel.
-     * @param descripcion Descripción del hotel.
-     */
-    public Hotel(int idHotel, String nombreHotel, String descripcion) {
+    public Hotel(int idHotel, String nombreHotel, String direccion, String categoria, Destino destino, Proveedor proveedor, boolean estado) {
         this.idHotel = idHotel;
         this.nombreHotel = nombreHotel;
-        this.descripcion = descripcion;
-    }
-
-    /**
-     * Constructor para registrar un nuevo hotel (sin ID).
-     * @param nombreHotel Nombre del hotel.
-     * @param descripcion Descripción del hotel.
-     * @param direccion Dirección del hotel.
-     * @param categoria Categoría (Ej. 3 Estrellas).
-     * @param estado Estado del hotel (Ej. Activo, Inactivo).
-     * @param idDestino ID del destino asociado.
-     * @param idProveedor ID del proveedor asociado.
-     */
-    public Hotel(String nombreHotel, String descripcion, String direccion, String categoria, String estado, int idDestino, int idProveedor) {
-        this.nombreHotel = nombreHotel;
-        this.descripcion = descripcion;
         this.direccion = direccion;
         this.categoria = categoria;
-        this.estado = estado;
-        this.idDestino = idDestino;
-        this.idProveedor = idProveedor;
+        this.destino = destino;
+        this.proveedor = proveedor;
+        this.estado = true;
     }
 
-    /**
-     * Constructor completo con ID (usado para actualización o lectura de base de datos).
-     * @param idHotel ID del hotel.
-     * @param nombreHotel Nombre del hotel.
-     * @param descripcion Descripción del hotel.
-     * @param direccion Dirección del hotel.
-     * @param categoria Categoría del hotel.
-     * @param estado Estado del hotel.
-     * @param idDestino ID del destino asociado.
-     * @param idProveedor ID del proveedor asociado.
-     */
-    public Hotel(int idHotel, String nombreHotel, String descripcion, String direccion, String categoria, String estado, int idDestino, int idProveedor) {
-        this.idHotel = idHotel;
+    public Hotel(String nombreHotel, String direccion, String categoria, Destino destino, Proveedor proveedor, boolean estado) {
         this.nombreHotel = nombreHotel;
-        this.descripcion = descripcion;
         this.direccion = direccion;
         this.categoria = categoria;
+        this.destino = destino;
+        this.proveedor = proveedor;
         this.estado = estado;
-        this.idDestino = idDestino;
-        this.idProveedor = idProveedor;
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // Getters y Setters
-    // ─────────────────────────────────────────────────────────────
 
     public int getIdHotel() {
         return idHotel;
@@ -84,36 +43,12 @@ public class Hotel {
         this.idHotel = idHotel;
     }
 
-    public int getIdDestino() {
-        return idDestino;
-    }
-
-    public void setIdDestino(int idDestino) {
-        this.idDestino = idDestino;
-    }
-
-    public int getIdProveedor() {
-        return idProveedor;
-    }
-
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
-    }
-
     public String getNombreHotel() {
         return nombreHotel;
     }
 
     public void setNombreHotel(String nombreHotel) {
         this.nombreHotel = nombreHotel;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public String getDireccion() {
@@ -132,11 +67,45 @@ public class Hotel {
         this.categoria = categoria;
     }
 
-    public String getEstado() {
+    public Destino getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Destino destino) {
+        this.destino = destino;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString(){
+        return nombreHotel;
+    }
+    
+    @Override 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hotel hotel = (Hotel) o;
+        return idHotel == hotel.idHotel; // La igualdad se basa en el ID
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(idHotel); // El hash se basa en el ID
+    }
+    
 }

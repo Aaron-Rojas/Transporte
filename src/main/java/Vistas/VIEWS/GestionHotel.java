@@ -1,38 +1,100 @@
 package Vistas.VIEWS;
 
 import Modelo.Hotel;
+import Modelo.Usuario;
+import dao.DestinoDAO;
 import dao.HotelDAO;
+import dao.ProveedorDAO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class GestionHotel extends javax.swing.JFrame {
     
-   private final HotelDAO hotelDAO = new HotelDAO();
-    private DefaultTableModel modeloTablaHoteles;
-    private static final Logger logger = Logger.getLogger(GestionHotel.class.getName());
+  
+    private Usuario usuarioActual;
+    private DestinoDAO destinoDAO;
+    private ProveedorDAO proveedorDAO;
+    private DefaultTableModel modeloTabla;
+    private HotelDAO hotelDAO;
     
-public GestionHotel() {
+    public GestionHotel(Usuario usuarioLogeado) {
+    this.usuarioActual= usuarioLogeado;
     initComponents();
-    modeloTablaHoteles = (DefaultTableModel) tbHotel.getModel();
-    cargarHotelesEnTabla();
+       
+    this.setLocationRelativeTo(null);
+                
+        
+    if (usuarioActual != null && usuarioActual.getRol() != null) {
+            setTitle("Gestión de Lugares Turísticos - Usuario: " + usuarioActual.getNombreCompleto() + " (" + usuarioActual.getRol().getNombreRol() + ")");
+    } else {
+        setTitle("Gestión de Lugares Turísticos");
+    }
+    
+    this.destinoDAO = new DestinoDAO();
+    this.proveedorDAO = new ProveedorDAO();
+    this.hotelDAO = new HotelDAO(destinoDAO, proveedorDAO);
+    
+     
+    configurarTablaLugaresTuristicos();
+    cargarLugaresTuristicosActivos();
 }
 
+ public void configurarTablaLugaresTuristicos() {
+    
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace que las celdas de la tabla no sean editables
+            }
+        };
+        // Define las columnas para la tabla de Lugares Turísticos
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Direccion");
+        modeloTabla.addColumn("Categoria");
+        modeloTabla.addColumn("Destino");
+        modeloTabla.addColumn("Proveedor");
+        modeloTabla.addColumn("Estado");
 
-public void cargarHotelesEnTabla() {
-    modeloTablaHoteles.setRowCount(0); // Limpiar tabla
+        if (tbHotel != null) {
+            tbHotel.setModel(modeloTabla);
+            tbHotel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Solo permitir una fila seleccionada
+            tbHotel.setDefaultEditor(Object.class, null); // Evitar que se puedan editar las celdas
+        } else {
+        }
+    }
 
-    List<Hotel> lista = hotelDAO.listarHoteles();
-    for (Hotel hotel : lista) {
-        modeloTablaHoteles.addRow(new Object[]{
-            hotel.getIdHotel(),
-            hotel.getNombreHotel(),
-            hotel.getDescripcion()
-    });
-}
-}
+    
+    public void cargarLugaresTuristicosActivos() {
 
+        if (modeloTabla == null) {
+            return;
+        }
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+
+        List<Hotel> hotel = hotelDAO.obtenerTodosLosHotelesActivos();
+
+        if (hotel.isEmpty()) {
+            System.out.println("DEBUG: No hay lugares turísticos activos para mostrar.");
+        }
+
+        for (Hotel lt : hotel) {
+            // Para mostrar Destino y Proveedor, accedemos a sus nombres.
+            String nombreDestino = (lt.getDestino() != null) ? lt.getDestino().getNombreDestino() : "N/A"; // Asumo getNombre() en Destino
+            String nombreProveedor = (lt.getProveedor() != null) ? lt.getProveedor().getNombreProveedor() : "N/A"; // Asumo getNombre() en Proveedor
+
+            modeloTabla.addRow(new Object[]{
+                lt.getIdHotel(),
+                lt.getNombreHotel(),
+                lt.getDireccion(),
+                lt.getCategoria(),
+                nombreDestino,
+                nombreProveedor,
+                lt.isEstado() ? "Activo": "Inactivo"
+            });
+        }
+    }
 
 
 
@@ -40,10 +102,6 @@ public void cargarHotelesEnTabla() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCrear = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbHotel = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         btnConfiguracion = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
@@ -57,45 +115,12 @@ public void cargarHotelesEnTabla() {
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbHotel = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnCrear.setBackground(new java.awt.Color(40, 167, 69));
-        btnCrear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-plus-sign-21.png"))); // NOI18N
-        btnCrear.setText("Crear");
-        btnCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearActionPerformed(evt);
-            }
-        });
-
-        btnVolver.setBackground(new java.awt.Color(153, 153, 153));
-        btnVolver.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
-        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-left-arrow-21.png"))); // NOI18N
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
-
-        tbHotel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tbHotel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "ID_hotel", "Nombre Hotel", "Descripción"
-            }
-        ));
-        jScrollPane2.setViewportView(tbHotel);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(null);
@@ -103,7 +128,6 @@ public void cargarHotelesEnTabla() {
         btnConfiguracion.setBackground(new java.awt.Color(0, 46, 121));
         btnConfiguracion.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnConfiguracion.setForeground(new java.awt.Color(255, 255, 255));
-        btnConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-config-23 (1).png"))); // NOI18N
         btnConfiguracion.setText(" CONFIGURACIÓN");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,7 +140,6 @@ public void cargarHotelesEnTabla() {
         btnHome.setBackground(new java.awt.Color(0, 46, 121));
         btnHome.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-house-23.png"))); // NOI18N
         btnHome.setText(" HOME");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +152,6 @@ public void cargarHotelesEnTabla() {
         btnClientes.setBackground(new java.awt.Color(0, 46, 121));
         btnClientes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-customers-23.png"))); // NOI18N
         btnClientes.setText(" CLIENTES");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,7 +164,6 @@ public void cargarHotelesEnTabla() {
         btnReservas.setBackground(new java.awt.Color(0, 46, 121));
         btnReservas.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
-        btnReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-calendar-23.png"))); // NOI18N
         btnReservas.setText(" RESERVAS");
         btnReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +176,6 @@ public void cargarHotelesEnTabla() {
         btnProveedores.setBackground(new java.awt.Color(0, 46, 121));
         btnProveedores.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(255, 255, 255));
-        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-supplier-23.png"))); // NOI18N
         btnProveedores.setText(" PROVEEDORES");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,7 +188,6 @@ public void cargarHotelesEnTabla() {
         btnReportes.setBackground(new java.awt.Color(0, 46, 121));
         btnReportes.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-report-23 (1).png"))); // NOI18N
         btnReportes.setText(" REPORTES");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,14 +207,13 @@ public void cargarHotelesEnTabla() {
         jTextField1.setBounds(-20, 90, 210, 460);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel1.setText("GESTIÓ DE HOTEL");
+        jLabel1.setText("GESTIÓN DE HOTEL");
         jPanel4.add(jLabel1);
         jLabel1.setBounds(240, 130, 170, 20);
 
         btnEditar.setBackground(new java.awt.Color(0, 123, 255));
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-edit-21 (1).png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,7 +221,7 @@ public void cargarHotelesEnTabla() {
             }
         });
         jPanel4.add(btnEditar);
-        btnEditar.setBounds(500, 420, 130, 40);
+        btnEditar.setBounds(460, 420, 130, 40);
 
         jPanel2.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -246,57 +264,55 @@ public void cargarHotelesEnTabla() {
         jPanel4.add(jPanel2);
         jPanel2.setBounds(0, 0, 890, 90);
 
-        btnEliminar.setBackground(new java.awt.Color(179, 23, 23));
-        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/icons8-trash-can-21.png"))); // NOI18N
+        tbHotel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbHotel);
+
+        jPanel4.add(jScrollPane1);
+        jScrollPane1.setBounds(222, 160, 590, 240);
+
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
+        jPanel4.add(btnEliminar);
+        btnEliminar.setBounds(290, 430, 100, 30);
+
+        btnGuardar.setText("Crear");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnGuardar);
+        btnGuardar.setBounds(650, 420, 110, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnVolver)
-                .addGap(73, 73, 73))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(350, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(181, 181, 181)
-                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(111, 111, 111))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(7, 7, 7)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(102, 102, 102))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(2, 2, 2)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addGap(2, 2, 2)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -304,39 +320,6 @@ public void cargarHotelesEnTabla() {
 
     
     
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    int selectedRow = tbHotel.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un hotel de la tabla para eliminar.", "Ningún Hotel Seleccionado", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    int idHotel = (int) modeloTablaHoteles.getValueAt(selectedRow, 0); // Columna 0: ID
-    String nombreHotel = (String) modeloTablaHoteles.getValueAt(selectedRow, 1); // Columna 1: Nombre
-
-    int confirm = JOptionPane.showConfirmDialog(
-        this,
-        "¿Está seguro de que desea eliminar el hotel: " + nombreHotel + " (ID: " + idHotel + ")?",
-        "Confirmar Eliminación",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE
-    );
-
-    if (confirm == JOptionPane.YES_OPTION) {
-        boolean exito = hotelDAO.eliminarHotel(idHotel);
-        if (exito) {
-            JOptionPane.showMessageDialog(this, "Hotel eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            cargarHotelesEnTabla(); // Recarga la tabla
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al eliminar el hotel. Consulte la consola para más detalles.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
     int filaSeleccionada = tbHotel.getSelectedRow();
 
@@ -347,17 +330,13 @@ public void cargarHotelesEnTabla() {
 
     // Obtener el ID del hotel desde la tabla (columna 0)
     int idHotel = (int) tbHotel.getValueAt(filaSeleccionada, 0);
-
-    HotelDAO hotelDAO = new HotelDAO();
-    Hotel hotelSeleccionado = hotelDAO.obtenerHotelPorId(idHotel);
-
-    if (hotelSeleccionado != null) {
-        FormularioHotel formulario = new FormularioHotel(this, true);
-        formulario.setGestionHotel(this); // Para refrescar la tabla después de editar
-        formulario.setModoEdicion(true, hotelSeleccionado);
+    
+    Hotel hotel = hotelDAO.obtenerHotelPorId(idHotel);
+    if (hotel != null) {
+        FormularioHotel formulario = new FormularioHotel(this,this, hotel);// Para refrescar la tabla después de editar
         formulario.setVisible(true);
     } else {
-        JOptionPane.showMessageDialog(this, "No se pudo cargar el hotel.");
+        JOptionPane.showMessageDialog(this, "No se encontro el hotel.");
     }
     
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -390,12 +369,6 @@ public void cargarHotelesEnTabla() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        FormularioHotel formulario = new FormularioHotel(this, true);
-        formulario.setVisible(true);
-        cargarHotelesEnTabla(); // Refrescar tabla después de cerrar el formulario
-    }//GEN-LAST:event_btnCrearActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
@@ -406,48 +379,78 @@ public void cargarHotelesEnTabla() {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+                 
+        int filaSeleccionada = tbHotel.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+             if (usuarioActual != null && usuarioActual.getRol() != null) {
+                String nombreRol = usuarioActual.getRol().getNombreRol();
+                // Solo admin puede desactivar, ajusta según tus reglas de negocio
+                if ("admin".equalsIgnoreCase(nombreRol)|| "proveedor".equalsIgnoreCase(nombreRol)) {
+                    int idHotel = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+                    String nombreLugar = (String) modeloTabla.getValueAt(filaSeleccionada, 1); // Asumiendo que el nombre está en la columna 1
+                 
+                    int confirmacion = JOptionPane.showConfirmDialog(this,
+                            "¿Está seguro de que desea DESACTIVAR el lugar turístico '" + nombreLugar + "' (ID: " + idHotel + ")?",
+                            "Confirmar Desactivación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GestionHotel().setVisible(true));
-    }
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        boolean exito = hotelDAO.eliminarHotel(idHotel);
+                        if (exito) {
+                            JOptionPane.showMessageDialog(this, "Lugar turístico desactivado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            cargarLugaresTuristicosActivos(); // Refrescar la tabla
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Error al desactivar el lugar turístico.", "Error de Desactivación", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Acceso denegado. Solo administradores pueden desactivar lugares turísticos.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un lugar turístico de la tabla para desactivar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+         if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+            // Asumo que "admin" y "usuario" pueden agregar, ajusta según tus reglas de negocio
+            if ("admin".equalsIgnoreCase(nombreRol) || "proveedor".equalsIgnoreCase(nombreRol)) {
+                // Constructor para agregar (sin LugarTuristico)
+                FormularioHotel formulario = new FormularioHotel(this, this);
+                formulario.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para agregar lugares turísticos.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
-    private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReservas;
-    private javax.swing.JButton btnVolver;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbHotel;
     // End of variables declaration//GEN-END:variables

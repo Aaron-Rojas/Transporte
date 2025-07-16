@@ -68,7 +68,7 @@ public class FormularioViajeItinerario extends javax.swing.JDialog {
         updateToggleButtonText(true);
 
         addToggleButtonActionListener();
-        cargarClientesEnComboBox();
+        cargarClientesEnComboBox();  
         
     }
     public FormularioViajeItinerario(JFrame padre, GestionViajeItinerario gestionViajeItinerarioPadre, Itinerario itinerario, Usuario usuarioLogeado){
