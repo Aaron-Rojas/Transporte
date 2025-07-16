@@ -27,16 +27,6 @@ public class GestionProveedores extends javax.swing.JFrame {
     public GestionProveedores(Usuario usuarioLogeado) {
         this.usuarioActual=usuarioLogeado;
         initComponents();
-        
-//        NavegacionController.configurarBotones(
-//            btnHome, 
-//            btnClientes, 
-//            btnReservas, 
-//            btnProveedores, 
-//            btnReportes, 
-//            btnConfiguracion, 
-//            this
-//        );
         this.setLocationRelativeTo(null);
         proveedorDAO = new ProveedorDAO();
         tbproveedor.setDefaultEditor(Object.class,null);
@@ -124,9 +114,9 @@ public class GestionProveedores extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnLugar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-
-
         btnActividad = new javax.swing.JButton();
+        btnActividad1 = new javax.swing.JButton();
+        btnHotel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -313,7 +303,7 @@ public class GestionProveedores extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnLugar);
-        btnLugar.setBounds(240, 450, 180, 30);
+        btnLugar.setBounds(220, 450, 180, 30);
 
         jPanel6.setBackground(new java.awt.Color(0, 46, 121));
 
@@ -338,16 +328,25 @@ public class GestionProveedores extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnActividad);
-        btnActividad.setBounds(420, 460, 200, 50);
+        btnActividad.setBounds(440, 440, 200, 50);
 
-        btnActividad.setText("Actividad");
-        btnActividad.addActionListener(new java.awt.event.ActionListener() {
+        btnActividad1.setText("Actividad");
+        btnActividad1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActividadActionPerformed(evt);
             }
         });
-        jPanel1.add(btnActividad);
-        btnActividad.setBounds(420, 460, 200, 50);
+        jPanel1.add(btnActividad1);
+        btnActividad1.setBounds(440, 440, 200, 50);
+
+        btnHotel.setText("Hotel");
+        btnHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHotelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHotel);
+        btnHotel.setBounds(700, 450, 100, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -403,10 +402,7 @@ public class GestionProveedores extends javax.swing.JFrame {
     private void btnModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProveedorActionPerformed
         int selectedRow = tbproveedor.getSelectedRow();
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla para modificar.", "Ningún Proveedor Seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;  
-        }
+        if (selectedRow != -1) {
         int idProveedor = (int) tbproveedor.getValueAt(selectedRow, 0);
         Proveedor proveedorAEditar = proveedorDAO.obtenerProveedorPorId(idProveedor); // Obtener el objeto Proveedor completo
 
@@ -416,6 +412,7 @@ public class GestionProveedores extends javax.swing.JFrame {
             formulario.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo cargar la información del proveedor seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         }
     }//GEN-LAST:event_btnModificarProveedorActionPerformed
 
@@ -524,15 +521,48 @@ public class GestionProveedores extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_btnActividadActionPerformed
 
+    private void btnHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHotelActionPerformed
+        // TODO add your handling code here:
+                
+    if (usuarioActual != null && usuarioActual.getRol() != null) {
+            String nombreRol = usuarioActual.getRol().getNombreRol();
+
+            if ("admin".equalsIgnoreCase(nombreRol)) {
+                GestionHotel GI = new  GestionHotel (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestion Hotel.");
+
+            }
+            if ("proveedor".equalsIgnoreCase(nombreRol)) {
+                GestionHotel GI = new  GestionHotel (usuarioActual);
+                GI.setVisible(true);
+                GI.setLocationRelativeTo(null);
+                this.dispose(); 
+                System.out.println("Admin redirigiendo a Gestion Hotel.");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Acceso denegado. No tienes permisos para ver la seccion de Proveedores.", "Permiso Denegado", JOptionPane.WARNING_MESSAGE);
+                System.out.println("Intento de acceso no autorizado a Proveedores por rol: " + nombreRol);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Error de seguridad. No se pudo verificar su rol.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+    }//GEN-LAST:event_btnHotelActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActividad;
+    private javax.swing.JButton btnActividad1;
     private javax.swing.JButton btnAgregarProveedor;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracion;
     private javax.swing.JButton btnEliminarProveedor;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnHotel;
     private javax.swing.JButton btnLugar;
     private javax.swing.JButton btnModificarProveedor;
     private javax.swing.JButton btnProveedores;
